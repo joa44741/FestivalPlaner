@@ -1,0 +1,1 @@
+.\mysql.exe -u andreas_john -p -h im-lamport.oth-regensburg.de

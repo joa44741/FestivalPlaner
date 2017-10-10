@@ -1,1 +1,3 @@
-de\oth\joa44741\swprojektjohn\facade\NewSessionBean.class
+de\oth\joa44741\swprojektjohn\facade\entitymapper\CustomerEntityToDtoMapper.class
+de\oth\joa44741\swprojektjohn\facade\entitymapper\EntityToDtoMapper.class
+de\oth\joa44741\swprojektjohn\facade\FacadeImpl.class
