@@ -24,6 +24,6 @@ public class WebserviceInitializer extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(CustomerResource.class);
+        resources.add(de.oth.joa44741.swprojektjohn.web.CustomerResource.class);
     }
 }
