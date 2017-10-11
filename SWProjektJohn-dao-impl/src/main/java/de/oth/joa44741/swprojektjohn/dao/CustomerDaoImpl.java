@@ -6,6 +6,7 @@
 package de.oth.joa44741.swprojektjohn.dao;
 
 import de.oth.joa44741.swprojektjohn.entity.CustomerEntity;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author Andi
  */
 @Stateless
+@Local(value = CustomerDao.class)
 public class CustomerDaoImpl extends AbstractGenericDaoImpl<CustomerEntity> implements CustomerDao {
 
     @PersistenceContext(unitName = "sw_projekt_john_pu")

@@ -18,7 +18,7 @@ import javax.inject.Inject;
  * @author Andi
  */
 @Stateless
-@Local
+@Local(value = Facade.class)
 public class FacadeImpl implements Facade {
 
     @Inject

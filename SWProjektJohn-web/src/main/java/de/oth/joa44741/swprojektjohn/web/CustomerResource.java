@@ -40,7 +40,7 @@ public class CustomerResource {
     @POST
     @Path("/dummy")
     public Response retrieveCustomerById() {
-        final CustomerDto customerDto = new CustomerDto("Robert", "Martin");
+        final CustomerDto customerDto = new CustomerDto("John", "Doe");
         CustomerDto persistedCustomerDto = facade.createCustomer(customerDto);
         return Response.status(201).entity(persistedCustomerDto.toString()).build();
     }
