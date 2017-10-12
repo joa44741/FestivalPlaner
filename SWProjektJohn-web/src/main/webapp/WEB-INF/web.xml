@@ -23,7 +23,7 @@
         </servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>de.oth.joa44741.swprojektjohn.web.WebserviceInitializer</param-value>
+            <param-value>de.oth.joa44741.swprojektjohn.web.webservices.WebserviceInitializer</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>
