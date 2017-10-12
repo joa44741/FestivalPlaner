@@ -5,6 +5,9 @@
  */
 package de.oth.joa44741.swprojektjohn.core.dto;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,10 +15,16 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author Andi
  */
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CustomerDto extends BaseDto {
 
-    private final String vorname;
-    private final String nachname;
+    private String vorname;
+    private String nachname;
+
+    public CustomerDto() {
+
+    }
 
     public CustomerDto(Long id, String vorname, String nachname) {
         super(id);
