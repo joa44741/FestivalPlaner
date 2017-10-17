@@ -5,10 +5,13 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
+import de.oth.joa44741.swprojektjohn.core.RegexPattern;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,30 +23,54 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@Table(name = "Customer")
+@Table(name = "FestivalDefinition")
 public class FestivalDefinitionEntity extends AbstractLongEntity {
 
     @Basic(optional = false)
     @Column(nullable = false)
-    private String vorname;
+    @NotNull
+    private String name;
 
-    @Basic(optional = false)
-    @Column(nullable = false)
-    private String nachname;
+//    @Column(nullable = true)
+    private String veranstalter;
 
-    public String getVorname() {
-        return vorname;
+//    @Column(nullable = true)
+    @Pattern(regexp = RegexPattern.REGEX_URL)
+    private String webseite;
+
+//    @Column(nullable = true)
+    @Pattern(regexp = RegexPattern.REGEX_URL)
+    private String logoUrl;
+
+    public String getName() {
+        return name;
     }
 
-    public void setVorname(String vorname) {
-        this.vorname = vorname;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getNachname() {
-        return nachname;
+    public String getVeranstalter() {
+        return veranstalter;
     }
 
-    public void setNachname(String nachname) {
-        this.nachname = nachname;
+    public void setVeranstalter(String veranstalter) {
+        this.veranstalter = veranstalter;
+    }
+
+    public String getWebseite() {
+        return webseite;
+    }
+
+    public void setWebseite(String webseite) {
+        this.webseite = webseite;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 }
