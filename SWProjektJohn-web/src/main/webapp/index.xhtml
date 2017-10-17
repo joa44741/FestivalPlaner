@@ -12,10 +12,10 @@
         <div class="mainContainer">
             <div class="container">
                 <div class="jumbotron">
-                    <h1>Customers</h1>
+                    <h1>Festivals</h1>
                 </div>
             </div>
-            <div class="container">
+            <article class="container">
                 <h:dataTable value = "#{customerBean.customers}" var = "customer" styleClass="table">
                     <h:column>    				
                         <f:facet name = "header">Id</f:facet>    				
@@ -33,7 +33,7 @@
                     </h:column>
 
                 </h:dataTable>
-            </div>
+            </article>
         </div>
         <h:outputScript library="js" name="jquery-3.2.1.slim.min.js"/>
         <h:outputScript library="js" name="popper.min.js"/>

@@ -6,14 +6,10 @@
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
 import de.oth.joa44741.swprojektjohn.bservice.CustomerBusinessService;
-import de.oth.joa44741.swprojektjohn.core.dto.CustomerDto;
 import de.oth.joa44741.swprojektjohn.entity.CustomerEntity;
-import de.oth.joa44741.swprojektjohn.facade.entitymapper.CustomerEntityToDtoMapper;
 import java.io.Serializable;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,25 +18,19 @@ import javax.inject.Named;
 @RequestScoped
 public class CustomerBean implements Serializable {
 
-    @EJB
-    private CustomerBusinessService customerBusinessService;
-
     @Inject
-    private CustomerEntityToDtoMapper customerEntityToDtoMapper;
+    private CustomerBusinessService customerBusinessService;
 
     private static final long serialVersionUID = 1L;
 
-    private List<CustomerDto> customers;
+    private List<CustomerEntity> customers;
 
     @PostConstruct
     public void initFields() {
-        final List<CustomerEntity> customerEntities = customerBusinessService.findAllCustomers();
-        customers = customerEntities.stream()
-                .map(c -> customerEntityToDtoMapper.mapToDto(c))
-                .collect(Collectors.toList());
+        customers = customerBusinessService.findAllCustomers();
     }
 
-    public List<CustomerDto> getCustomers() {
+    public List<CustomerEntity> getCustomers() {
         return customers;
     }
 

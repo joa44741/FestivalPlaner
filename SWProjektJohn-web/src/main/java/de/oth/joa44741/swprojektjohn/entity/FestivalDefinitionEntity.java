@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "Customer")
-public class CustomerEntity extends AbstractLongEntity {
+public class FestivalDefinitionEntity extends AbstractLongEntity {
 
     @Basic(optional = false)
     @Column(nullable = false)
