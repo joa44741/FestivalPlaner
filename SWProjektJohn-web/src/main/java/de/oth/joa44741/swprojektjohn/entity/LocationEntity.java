@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@Table(name = "FestivalDefinition")
+@Table(name = "Location")
 public class LocationEntity extends AbstractLongEntity {
 
     @Column(nullable = true)
@@ -34,8 +34,8 @@ public class LocationEntity extends AbstractLongEntity {
     @NotNull
     private String strasse;
 
-    @Basic(optional = false)
-    @Column(nullable = false)
+    @Basic(optional = false)// --> runtime
+    @Column(nullable = false) // --> database
     @NotNull
     private String ort;
 
@@ -44,10 +44,9 @@ public class LocationEntity extends AbstractLongEntity {
     @NotNull
     private String plz;
 
-    @Basic(optional = false)
-    @Column(nullable = false)
+    // only german?
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
-    @NotNull
     private BundeslandEnum bundesland;
 
     public String getName() {

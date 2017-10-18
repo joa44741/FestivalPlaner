@@ -3,14 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.dao;
+package de.oth.joa44741.swprojektjohn.boundary;
 
 import de.oth.joa44741.swprojektjohn.entity.CustomerEntity;
+import java.util.List;
 
 /**
  *
  * @author Andi
  */
-public interface CustomerDao extends AbstractGenericDao<CustomerEntity> {
+public interface CustomerBusinessService {
 
+    CustomerEntity retrieveCustomerById(Long id);
+
+    CustomerEntity persistCustomer(CustomerEntity entity);
+
+    List<CustomerEntity> findAllCustomers();
 }

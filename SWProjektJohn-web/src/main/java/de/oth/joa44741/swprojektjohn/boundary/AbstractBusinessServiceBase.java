@@ -3,27 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.dao;
+package de.oth.joa44741.swprojektjohn.boundary;
 
 import de.oth.joa44741.swprojektjohn.entity.AbstractLongEntity;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-public abstract class AbstractGenericDaoImpl<T extends AbstractLongEntity> implements AbstractGenericDao<T> {
+/**
+ *
+ * @author Andi
+ * @param <T>
+ */
+public abstract class AbstractBusinessServiceBase<T extends AbstractLongEntity> {
+
+    @PersistenceContext(unitName = "sw_projekt_john_pu")
+    private EntityManager entityManager;
 
     private final Class<AbstractLongEntity> clazz;
 
-    protected abstract EntityManager getEntityManager();
+    protected EntityManager getEntityManager() {
+        return this.entityManager;
+    }
 
-    public AbstractGenericDaoImpl() {
+    protected AbstractBusinessServiceBase() {
         ParameterizedType genericSuperClass = (ParameterizedType) getClass().getGenericSuperclass();
         this.clazz = (Class<AbstractLongEntity>) genericSuperClass.getActualTypeArguments()[0];
     }
 
-    @Override
     public T retrieveById(Long id) {
         T entity = (T) getEntityManager().find(this.clazz, id);
         if (entity == null) {
@@ -33,16 +43,15 @@ public abstract class AbstractGenericDaoImpl<T extends AbstractLongEntity> imple
         return entity;
     }
 
-    @Override
     public T persistEntity(T entity) {
         getEntityManager().persist(entity);
         return entity;
     }
 
-    @Override
     public List<T> findAll() {
         final String statement = "SELECT t FROM " + clazz.getSimpleName() + " t";
         final Query query = getEntityManager().createQuery(statement);
         return query.getResultList();
     }
+
 }

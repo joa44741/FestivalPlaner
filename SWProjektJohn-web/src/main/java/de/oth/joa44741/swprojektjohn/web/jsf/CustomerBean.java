@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
-import de.oth.joa44741.swprojektjohn.bservice.CustomerBusinessService;
+import de.oth.joa44741.swprojektjohn.boundary.CustomerBusinessService;
 import de.oth.joa44741.swprojektjohn.entity.CustomerEntity;
 import java.io.Serializable;
 import java.util.List;
