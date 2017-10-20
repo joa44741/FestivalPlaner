@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
+import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,10 +24,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
-@Table(name = "Location")
+@Table(name = "Locations")
 public class LocationEntity extends AbstractLongEntity {
 
-    @Column(nullable = true)
+    @Column
     private String name;
 
     @Basic(optional = false)

@@ -5,9 +5,9 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
-import de.oth.joa44741.swprojektjohn.entity.BundeslandEnum;
+import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
-import javax.persistence.PersistenceException;
+import javax.validation.ConstraintViolationException;
 import org.junit.Test;
 
 /**
@@ -29,7 +29,7 @@ public class LocationBusinessServiceImplTest extends BusinessServiceImplTestBase
         commit();
     }
 
-    @Test(expected = PersistenceException.class)
+    @Test(expected = ConstraintViolationException.class)
     public void testPersistEntity_fail_noOrt() throws Exception {
         begin();
         LocationEntity locationEntity = new LocationEntity();

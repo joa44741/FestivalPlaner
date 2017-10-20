@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.entity;
+package de.oth.joa44741.swprojektjohn.core;
 
 /**
  *

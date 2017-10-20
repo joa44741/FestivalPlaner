@@ -25,7 +25,7 @@ public class BusinessServiceImplTestBase {
 
     @Before
     public void setup() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("mnf-pu-test");
+        entityManagerFactory = Persistence.createEntityManagerFactory("sw_projekt_john_pu-test");
         entityManager = entityManagerFactory.createEntityManager();
     }
 
