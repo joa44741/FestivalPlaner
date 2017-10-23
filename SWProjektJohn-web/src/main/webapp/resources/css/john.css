@@ -8,6 +8,16 @@ and open the template in the editor.
     Author     : Johnny
 */
 
+.jumbotron, .card-header{
+    background-color: #0062cc;
+    color: white;
+}
+
 .mainContainer{
     margin-top: 50px;
+}
+
+img{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

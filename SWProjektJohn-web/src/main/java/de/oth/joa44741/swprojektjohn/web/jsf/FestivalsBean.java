@@ -33,5 +33,4 @@ public class FestivalsBean implements Serializable {
     public List<FestivalEntity> getFestivals() {
         return festivals;
     }
-
 }

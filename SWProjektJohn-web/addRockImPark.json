@@ -6,11 +6,9 @@
         "ort": "Nürnberg",
         "bundesland": "BAYERN"
     },
-    "festivalDefinition": {
-        "name": "Rock im Park",
-        "veranstalter": "ARGO Konzerte GmbH",
-        "webseite": "http://www.rock-im-park.com/"
-    },
+    "name": "Rock im Park",
+    "veranstalter": "ARGO Konzerte GmbH",
+    "webseite": "http://www.rock-im-park.com/",
     "ticketKontingent": 50000,
     "verkaufteTickets": 20000,
     "dauer": 3,
@@ -23,12 +21,89 @@
             "lineupDates": [
                 {
                     "tag": "2018-06-01",
-                    "uhrzeitVon": "10:00",
+                    "uhrzeitVon": "13:00",
                     "uhrzeitBis": "14:00",
                     "band": {
                         "name": "The Royal Stereo Division",
                         "webseite": "https://www.theroyalstereodivision.com/",
                         "facebookseite": "https://de-de.facebook.com/TheRoyalStereoDivision/"
+                    }
+                },
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "14:30",
+                    "uhrzeitBis": "15:30",
+                    "band": {
+                        "name": "Impala Ray",
+                        "webseite": "http://impalaray.com/",
+                        "facebookseite": "https://www.facebook.com/ImpalaRay.music/"
+                    }
+                },
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "16:00",
+                    "uhrzeitBis": "17:00",
+                    "band": {
+                        "name": "Morla"
+                    }
+                },
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "17:30",
+                    "uhrzeitBis": "19:00",
+                    "band": {
+                        "name": "Led Zeppelin",
+                        "webseite": "www.ledzeppelin.com/"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Alterna Stage",
+            "ueberdacht": false,
+            "lineupDates": [
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "13:30",
+                    "uhrzeitBis": "14:30",
+                    "band": {
+                        "name": "Cat Stash",
+                        "facebookseite": "https://www.facebook.com/catstash/"
+                    }
+                },
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "15:00",
+                    "uhrzeitBis": "16:00",
+                    "band": {
+                        "name": "Medusa"
+                    }
+                },
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "16:30",
+                    "uhrzeitBis": "17:30",
+                    "band": {
+                        "name": "Alt-J"
+                    }
+                },
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "17:30",
+                    "uhrzeitBis": "19:00",
+                    "band": {
+                        "name": "Blumentopf",
+                        "facebookseite" : "https://de-de.facebook.com/derTopf/"
+                    }
+                },
+                {
+                    "tag": "2018-06-02",
+                    "uhrzeitVon": "22:00",
+                    "uhrzeitBis": "23:30",
+                    "band": {
+                        "name": "The Prodigy",
+                        "webseite" : "www.theprodigy.com/",
+                        "facebookseite" : "https://de-de.facebook.com/theprodigyofficial"
                     }
                 }
             ]

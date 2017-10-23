@@ -6,10 +6,13 @@
 package de.oth.joa44741.swprojektjohn.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.oth.joa44741.swprojektjohn.core.RegexPattern;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +25,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,16 +40,31 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Festivals")
 public class FestivalEntity extends AbstractLongEntity {
 
+    @Column(nullable = false, unique = true)
+    @Basic(optional = false)
+    @NotNull
+    private String name;
+
+    @Column
+    private String veranstalter;
+
+    @Column(unique = true)
+    @Pattern(regexp = RegexPattern.REGEX_URL)
+    private String webseite;
+
+    @Column(unique = true)
+    @Pattern(regexp = RegexPattern.REGEX_URL)
+    private String logoUrl;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = false)
     private LocationEntity location;
 
-    @NotNull
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "festivalDefinitionId", referencedColumnName = "id", nullable = false)
-    private FestivalDefinitionEntity festivalDefinition;
-
+//    @NotNull
+//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "festivalDefinitionId", referencedColumnName = "id", nullable = false)
+//    private FestivalDefinitionEntity festivalDefinition;
     @Column
     @Min(1)
     private Integer ticketKontingent;
@@ -82,7 +101,7 @@ public class FestivalEntity extends AbstractLongEntity {
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
     private final List<CampingVarianteEntity> campingVarianten = new ArrayList<>();
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
     private final List<BuehneEntity> buehnen = new ArrayList<>();
@@ -98,12 +117,36 @@ public class FestivalEntity extends AbstractLongEntity {
 //    @Column(name = "ngadiensttyp", nullable = false)
 //    @Enumerated(EnumType.STRING)
 //    private final List<ZusatzeigenschaftEnum> zusatzeigenschaften = new ArrayList();
-    public FestivalDefinitionEntity getFestivalDefinition() {
-        return festivalDefinition;
+    public String getName() {
+        return name;
     }
 
-    public void setFestivalDefinition(FestivalDefinitionEntity festivalDefinition) {
-        this.festivalDefinition = festivalDefinition;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVeranstalter() {
+        return veranstalter;
+    }
+
+    public void setVeranstalter(String veranstalter) {
+        this.veranstalter = veranstalter;
+    }
+
+    public String getWebseite() {
+        return webseite;
+    }
+
+    public void setWebseite(String webseite) {
+        this.webseite = webseite;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
     public LocationEntity getLocation() {
@@ -208,5 +251,14 @@ public class FestivalEntity extends AbstractLongEntity {
 
     public void clearBuehnen() {
         this.buehnen.clear();
+    }
+
+    public Integer getProzentAusverkauft() {
+        final BigDecimal verkaufteTicketsAsBigDecimal = BigDecimal.valueOf(verkaufteTickets);
+        final BigDecimal ticketKontingentAsBigDecimal = BigDecimal.valueOf(ticketKontingent);
+        return verkaufteTicketsAsBigDecimal.
+                divide(ticketKontingentAsBigDecimal).
+                multiply(BigDecimal.valueOf(100)).
+                intValue();
     }
 }

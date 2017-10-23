@@ -37,10 +37,12 @@ public class FestivalsResource {
 
     @GET
     @Path("{id}")
-    @Produces({"application/json", "application/xml"})
+    @Produces("application/json")
     public Response retrieveFestivalById(@PathParam("id") Long id) {
         try {
             final FestivalEntity festivalEntity = festivalBusinessService.retrieveFestivalById(id);
+            // avoid lazy loading exception --> traverse buehnen Collection
+            festivalEntity.getBuehnen().forEach(b -> LOG.debug("Buehne mit ID " + b.getId() + " geladen"));
             return Response.ok(festivalEntity).build();
         } catch (RuntimeException ex) {
             return Response.status(Response.Status.NOT_FOUND).entity("Kein Festival mit Id: " + id + " gefunden.").build();
