@@ -1,0 +1,37 @@
+{
+    "location": {
+        "name": "Zeppelinfeld",
+        "strasse": "Zeppelinstraße",
+        "plz": "90402",
+        "ort": "Nürnberg",
+        "bundesland": "BAYERN"
+    },
+    "festivalDefinition": {
+        "name": "Rock im Park",
+        "veranstalter": "ARGO Konzerte GmbH",
+        "webseite": "http://www.rock-im-park.com/"
+    },
+    "ticketKontingent": 50000,
+    "verkaufteTickets": 20000,
+    "dauer": 3,
+    "datumVon": "2018-06-01",
+    "datumBis": "2018-06-03",
+    "buehnen": [
+        {
+            "name": "Center Stage",
+            "ueberdacht": false,
+            "lineupDates": [
+                {
+                    "tag": "2018-06-01",
+                    "uhrzeitVon": "10:00",
+                    "uhrzeitBis": "14:00",
+                    "band": {
+                        "name": "The Royal Stereo Division",
+                        "webseite": "https://www.theroyalstereodivision.com/",
+                        "facebookseite": "https://de-de.facebook.com/TheRoyalStereoDivision/"
+                    }
+                }
+            ]
+        }
+    ]
+} 

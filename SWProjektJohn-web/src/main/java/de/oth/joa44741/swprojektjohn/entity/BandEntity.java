@@ -46,7 +46,8 @@ public class BandEntity extends AbstractLongEntity {
     @Pattern(regexp = RegexPattern.REGEX_URL)
     private String facebookseite;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // test eager
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "genreId", referencedColumnName = "id", nullable = true)
     private final List<GenreEntity> genres = new ArrayList<>();
 

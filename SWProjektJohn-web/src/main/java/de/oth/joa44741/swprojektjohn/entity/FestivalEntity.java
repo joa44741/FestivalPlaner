@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class FestivalEntity extends AbstractLongEntity {
     private LocationEntity location;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "festivalDefinitionId", referencedColumnName = "id", nullable = false)
     private FestivalDefinitionEntity festivalDefinition;
 
@@ -71,16 +72,19 @@ public class FestivalEntity extends AbstractLongEntity {
     @Temporal(TemporalType.DATE)
     private Date datumBis;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "zusatzeigenschaftId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
     private final List<FestivalZusatzeigenschaftEntity> zusatzeigenschaften = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "campingvarianteId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
     private final List<CampingVarianteEntity> campingVarianten = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "buehneId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
     private final List<BuehneEntity> buehnen = new ArrayList<>();
 
     /*

@@ -34,11 +34,11 @@ public class FestivalDefinitionEntity extends AbstractLongEntity {
     @Column
     private String veranstalter;
 
-    @Column
+    @Column(unique = true)
     @Pattern(regexp = RegexPattern.REGEX_URL)
     private String webseite;
 
-    @Column
+    @Column(unique = true)
     @Pattern(regexp = RegexPattern.REGEX_URL)
     private String logoUrl;
 

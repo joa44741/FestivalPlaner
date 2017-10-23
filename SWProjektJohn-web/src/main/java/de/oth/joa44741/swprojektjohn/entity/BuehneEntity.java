@@ -37,7 +37,7 @@ public class BuehneEntity extends AbstractLongEntity {
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "lineupDateId", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "buehneId", referencedColumnName = "id", nullable = false)
     private final List<LineupDateEntity> lineupDates = new ArrayList<>();
 
     @Column

@@ -22,6 +22,9 @@ public final class RegexPattern {
 
     public static final String REGEX_URL = "(?:" + REGEX_SCHEME + REGEX_AUTHORATIVE_DECLARATION + ")?(?:" + REGEX_USERINFO + ")?" + REGEX_HOST + "(?:" + REGEX_PORT + ")?(?:" + REGEX_PATH + ")*(?:" + REGEX_QUERY + ")?";
 
+    public static final String REGEX_TIME24HOURS
+            = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
+
     private RegexPattern() {
 
     }

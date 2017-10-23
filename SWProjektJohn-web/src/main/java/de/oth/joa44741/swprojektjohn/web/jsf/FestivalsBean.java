@@ -5,8 +5,8 @@
  */
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
-import de.oth.joa44741.swprojektjohn.bservice.CustomerBusinessService;
-import de.oth.joa44741.swprojektjohn.entity.CustomerEntity;
+import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
+import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -14,24 +14,24 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("customerBean")
+@Named("festivalsBean")
 @RequestScoped
-public class CustomerBean implements Serializable {
+public class FestivalsBean implements Serializable {
 
     @Inject
-    private CustomerBusinessService customerBusinessService;
+    private FestivalBusinessService festivalBusinessService;
 
     private static final long serialVersionUID = 1L;
 
-    private List<CustomerEntity> customers;
+    private List<FestivalEntity> festivals;
 
     @PostConstruct
     public void initFields() {
-        customers = customerBusinessService.findAllCustomers();
+        festivals = festivalBusinessService.findAllFestivals();
     }
 
-    public List<CustomerEntity> getCustomers() {
-        return customers;
+    public List<FestivalEntity> getFestivals() {
+        return festivals;
     }
 
 }

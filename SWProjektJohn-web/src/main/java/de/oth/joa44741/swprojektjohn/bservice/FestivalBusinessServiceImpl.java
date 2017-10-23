@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.boundary;
+package de.oth.joa44741.swprojektjohn.bservice;
 
-import de.oth.joa44741.swprojektjohn.entity.CustomerEntity;
+import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 
@@ -14,20 +14,20 @@ import javax.ejb.Stateless;
  * @author Andi
  */
 @Stateless
-public class CustomerBusinessServiceImpl extends AbstractBusinessServiceBase<CustomerEntity> implements CustomerBusinessService {
+public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<FestivalEntity> implements FestivalBusinessService {
 
     @Override
-    public CustomerEntity retrieveCustomerById(Long id) {
+    public FestivalEntity retrieveFestivalById(Long id) {
         return retrieveById(id);
     }
 
     @Override
-    public CustomerEntity persistCustomer(CustomerEntity entity) {
+    public FestivalEntity persistFestival(FestivalEntity entity) {
         return persistEntity(entity);
     }
 
     @Override
-    public List<CustomerEntity> findAllCustomers() {
+    public List<FestivalEntity> findAllFestivals() {
         return findAll();
     }
 }

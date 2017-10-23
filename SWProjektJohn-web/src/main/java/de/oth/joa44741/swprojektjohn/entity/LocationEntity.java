@@ -30,9 +30,7 @@ public class LocationEntity extends AbstractLongEntity {
     @Column
     private String name;
 
-    @Basic(optional = false)
-    @Column(nullable = false)
-    @NotNull
+    @Column
     private String strasse;
 
     @Basic(optional = false)// --> runtime
@@ -40,6 +38,7 @@ public class LocationEntity extends AbstractLongEntity {
     @NotNull
     private String ort;
 
+    // regular expression
     @Basic(optional = false)
     @Column(nullable = false)
     @NotNull

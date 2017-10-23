@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.web.webservices;
+package de.oth.joa44741.swprojektjohn.web.webservice;
 
-import de.oth.joa44741.swprojektjohn.boundary.CustomerBusinessService;
+import de.oth.joa44741.swprojektjohn.bservice.CustomerBusinessService;
 import de.oth.joa44741.swprojektjohn.entity.CustomerEntity;
 import java.net.URI;
 import javax.ejb.Stateless;

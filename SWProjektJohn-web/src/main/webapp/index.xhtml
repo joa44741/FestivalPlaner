@@ -4,7 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Customer Page</title>
+        <title>Festivals</title>
         <h:outputStylesheet library="css" name="bootstrap.min.css" />
         <h:outputStylesheet library="css" name="john.css" />
     </h:head>
@@ -16,20 +16,25 @@
                 </div>
             </div>
             <article class="container">
-                <h:dataTable value = "#{customerBean.customers}" var = "customer" styleClass="table">
+                <h:dataTable value = "#{festivalsBean.festivals}" var = "festival" styleClass="table">
                     <h:column>    				
                         <f:facet name = "header">Id</f:facet>    				
-                            #{customer.id}
+                            #{festival.id}
                     </h:column>
 
                     <h:column>
-                        <f:facet name = "header">Vorname</f:facet>
-                            #{customer.vorname}
+                        <f:facet name = "header">Name</f:facet>
+                            #{festival.festivalDefinition.name}
                     </h:column>
 
                     <h:column>
-                        <f:facet name = "header">Nachname</f:facet>
-                            #{customer.nachname}
+                        <f:facet name = "header">Von</f:facet>
+                            #{festival.datumVon}
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name = "header">Bis</f:facet>
+                            #{festival.datumBis}
                     </h:column>
 
                 </h:dataTable>

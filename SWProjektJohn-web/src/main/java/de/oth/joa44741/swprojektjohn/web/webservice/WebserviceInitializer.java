@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.web.webservices;
+package de.oth.joa44741.swprojektjohn.web.webservice;
 
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
@@ -24,6 +24,8 @@ public class WebserviceInitializer extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(de.oth.joa44741.swprojektjohn.web.webservices.CustomersResource.class);
+        resources.add(de.oth.joa44741.swprojektjohn.web.webservice.CustomersResource.class);
+        resources.add(de.oth.joa44741.swprojektjohn.web.webservice.FestivalsResource.class);
+        resources.add(de.oth.joa44741.swprojektjohn.web.webservice.JacksonHibernate4ModuleConfig.class);
     }
 }
