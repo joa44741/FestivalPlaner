@@ -13,6 +13,10 @@ and open the template in the editor.
     color: white;
 }
 
+.jumbotron{
+    border-radius: 0px;
+}
+
 .mainContainer{
     margin-top: 50px;
 }
@@ -20,4 +24,13 @@ and open the template in the editor.
 img{
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+header a{
+    color:white;
+}
+
+a:hover{
+    text-decoration: none;
+    color: black;
 }

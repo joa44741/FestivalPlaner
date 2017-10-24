@@ -16,6 +16,8 @@ public interface FestivalBusinessService {
 
     FestivalEntity retrieveFestivalById(Long id);
 
+    FestivalEntity retrieveFestivalByIdIncludingDetails(Long id);
+
     FestivalEntity persistFestival(FestivalEntity entity);
 
     List<FestivalEntity> findAllFestivals();

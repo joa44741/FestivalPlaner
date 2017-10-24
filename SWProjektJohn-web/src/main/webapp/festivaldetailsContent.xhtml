@@ -2,49 +2,52 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:body>
-        <article class="container">
-            <div class="row">
-                <ui:repeat var="festival" value="#{festivalsBean.festivals}" varStatus="status">
-                    <div class="col-3">
-                        <div class="card">
-                            <div class="card-header">
-                                #{festival.name}
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-4">
-                                        von: 
-                                    </div>
-                                    <div class="col-8">
-                                        #{festival.datumVon}
-                                    </div>
-                                    <div class="col-4">
-                                        bis: 
-                                    </div>
-                                    <div class="col-8">
-                                        #{festival.datumBis}
-                                    </div>
-                                    <div class="col-12">
-                                        <h:outputLink class="font-weight-bold">zeige Details</h:outputLink>
-                                    </div>
-                                    <div class="col-12 text-center">
-                                        <img src="#{festival.logoUrl}" class="img-fluid"/>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="progress">
-                                            <div class="progress-bar" role="progressbar" style="width: #{festival.prozentAusverkauft}%;" aria-valuenow="#{festival.prozentAusverkauft}" aria-valuemin="0" aria-valuemax="100">#{festival.prozentAusverkauft}%</div>
-                                        </div>
-                                        <h:outputLabel rendered="#{festival.ticketKontingent == festival.verkaufteTickets}">ausverkauft!</h:outputLabel>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="row">
+        <div class="col-12">
+            <h2>#{festivaldetailsBean.festival.name}</h2>
+        </div>
+        <ui:repeat value="#{festivaldetailsBean.festival.buehnen}" var="buehne">
+            <div class="col-#{festivaldetailsBean.calculateBootstrapColSize()}">
+                <div class="card">
+                    <div class="card-header">
+                        #{buehne.name}
                     </div>
-                </ui:repeat>
+                    <div class="card-body">
+                        <h:form>
+                            <h:dataTable var="mapEntry" value="#{festivaldetailsBean.getLineupDatesPerTagByBuehne(buehne.id)}">
+                                <h:column>
+                                    #{mapEntry.key}
+                                </h:column>
+                            </h:dataTable>
+
+                            <h:dataTable value = "#{buehne.lineupDates}" var = "lineup"
+                                         class = "table">
+                                <h:column>    				
+                                    <f:facet name = "header">Von</f:facet>    				
+                                    <h:outputText value="#{lineup.uhrzeitVon}">
+                                        <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                                    </h:outputText>
+                                </h:column>
+                                <h:column>    				
+                                    <f:facet name = "header">Bis</f:facet>    				
+                                    <h:outputText value="#{lineup.uhrzeitBis}">
+                                        <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                                    </h:outputText>
+                                </h:column>
+                                <h:column>    				
+                                    <f:facet name = "header">Band</f:facet>    				
+                                    <h:outputText value="#{lineup.band.name}"></h:outputText>
+                                </h:column>
+                            </h:dataTable>
+                        </h:form>
+                    </div>
+                </div>
             </div>
-        </article>
-    </h:body>
+        </ui:repeat>
+        <div class="col-12">
+            <h:messages layout="table" globalOnly="true" />
+        </div>
+    </div>
 </html>
