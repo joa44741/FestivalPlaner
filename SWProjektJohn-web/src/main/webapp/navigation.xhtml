@@ -3,10 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <nav class="container">
-        <h:form>
-            <div class="row">
-            <h:commandLink>Home</h:commandLink>
-            </div>
-        </h:form>
+        <div>
+            <h:outputLink value="index.xhtml"><i class="fa fa-home" aria-hidden="true"></i> Home</h:outputLink>
+            <h:outputLink value="index.xhtml"><i class="fa fa-search" aria-hidden="true"></i> Festivals suchen</h:outputLink>
+            <h:outputLink value="index.xhtml"><i class="fa fa-search" aria-hidden="true"></i> Bands suchen</h:outputLink>
+            <h:outputLink value="index.xhtml"><i class="fa fa-pencil" aria-hidden="true"></i> Daten eintragen</h:outputLink>
+            <h:outputLink value="index.xhtml" class="pull-right"><i class="fa fa-sign-in" aria-hidden="true"></i> Adminbereich</h:outputLink>
+        </div>
     </nav>
 </html>

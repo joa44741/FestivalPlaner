@@ -8,6 +8,7 @@ package de.oth.joa44741.swprojektjohn.bservice;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
 import org.jboss.logging.Logger;
 
 /**
@@ -26,10 +27,10 @@ public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<Fes
 
     @Override
     public FestivalEntity retrieveFestivalByIdIncludingDetails(Long id) {
-        final FestivalEntity festival = retrieveById(id);
-        // lazy initialization
-        festival.getBuehnen().forEach(b -> LOG.debug(b.getName() + " loaded..."));
-        return festival;
+        final String statement = "SELECT t FROM " + FestivalEntity.class.getSimpleName() + " t JOIN FETCH t.location l LEFT JOIN FETCH t.buehnen WHERE t.id = :id";
+        final TypedQuery<FestivalEntity> query = getEntityManager().createQuery(statement, FestivalEntity.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override

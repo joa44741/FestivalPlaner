@@ -13,7 +13,7 @@ import javax.ws.rs.core.Application;
  *
  * @author Andi
  */
-@ApplicationPath("resources")
+@ApplicationPath("webresources")
 public class WebserviceInitializer extends Application {
 
     @Override

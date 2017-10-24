@@ -9,16 +9,39 @@ and open the template in the editor.
 */
 
 .jumbotron, .card-header{
-    background-color: #0062cc;
     color: white;
 }
 
+.card-header, nav div, .progress-bar{
+    background-color: #D68910;
+}
+
+a{
+    color: #D68910;
+}
+
+nav div{
+    border-top: 1px solid white;
+    padding: 10px 0px;
+}
+
 .jumbotron{
+    padding-bottom: 20px;
     border-radius: 0px;
+    margin-bottom: 0px;
+    background:url("../resources/images/bgPic.jpg") no-repeat center center; 
+    background-size: cover;
+}
+
+.jumbotron h1{
+    padding-top: 40px;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-size: 56px;
 }
 
 .mainContainer{
     margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 img{
@@ -34,3 +57,19 @@ a:hover{
     text-decoration: none;
     color: black;
 }
+
+nav a{
+    color: white;
+}
+
+nav{
+    margin-bottom: 20px;
+}
+
+nav div a{
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 20px;
+}
+
+

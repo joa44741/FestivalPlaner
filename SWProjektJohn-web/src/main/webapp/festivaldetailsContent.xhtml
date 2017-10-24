@@ -7,12 +7,42 @@
     <div class="row">
         <div class="col-12">
             <h2>#{festivaldetailsBean.festival.name}</h2>
+            <hr/>
+        </div>
+        <div class="col-6">
+            <h3>Location</h3>
+            <div class="row">
+                <div class="col-5">
+                    #{festivaldetailsBean.festival.location.name}<br/>
+                    #{festivaldetailsBean.festival.location.strasse}<br/>
+                    #{festivaldetailsBean.festival.location.plz}<br/>
+                    #{festivaldetailsBean.festival.location.ort}<br/>
+                </div>
+                <div class="col-7">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://www.google.com/maps?q=#{festivaldetailsBean.festival.location.addressAsString}&amp;output=embed"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h3>Wetter</h3>
+            am <h:outputText value="#{festivaldetailsBean.festival.datumVon}">
+                <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+            </h:outputText>:<br/>
+            14&#x2103;<br/>
+            wolkig<br/>
+            Niederschlagswahrscheinlichkeit: 35%
+        </div>
+        <div class="col-12">
+            <hr/>
+            <h3>B&uuml;hnen</h3>
         </div>
         <ui:repeat value="#{festivaldetailsBean.festival.buehnen}" var="buehne">
             <div class="col-#{festivaldetailsBean.calculateBootstrapColSize()}">
                 <div class="card">
                     <div class="card-header">
-                        <h4>#{buehne.name}</h4>
+                        <h5>#{buehne.name}</h5>
                     </div>
                     <div class="card-body">
                         <ui:repeat var="tag" value="#{festivaldetailsBean.getTageOfLineupDatesByBuehne(buehne.id)}">

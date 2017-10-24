@@ -28,11 +28,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>resteasy-servlet</servlet-name>
-        <url-pattern>/resources/*</url-pattern>
+        <url-pattern>/webresources/*</url-pattern>
     </servlet-mapping>
     <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>
-        <param-value>/resources</param-value>
+        <param-value>/webresources</param-value>
     </context-param>
     
     <servlet>

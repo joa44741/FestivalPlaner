@@ -7,6 +7,7 @@ package de.oth.joa44741.swprojektjohn.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -60,6 +61,28 @@ public class AbstractLongEntity {
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AbstractLongEntity other = (AbstractLongEntity) obj;
+        return Objects.equals(this.id, other.id);
     }
 
 }

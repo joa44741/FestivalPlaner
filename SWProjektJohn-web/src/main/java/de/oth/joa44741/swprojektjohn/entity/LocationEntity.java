@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -89,4 +90,13 @@ public class LocationEntity extends AbstractLongEntity {
         this.bundesland = bundesland;
     }
 
+    public String getAddressAsString() {
+        String address = "";
+        if (StringUtils.isNotEmpty(strasse)) {
+            address += strasse + " ";
+        }
+        address += plz + " ";
+        address += ort;
+        return address;
+    }
 }
