@@ -12,17 +12,14 @@
             <div class="col-#{festivaldetailsBean.calculateBootstrapColSize()}">
                 <div class="card">
                     <div class="card-header">
-                        #{buehne.name}
+                        <h4>#{buehne.name}</h4>
                     </div>
                     <div class="card-body">
-                        <h:form>
-                            <h:dataTable var="mapEntry" value="#{festivaldetailsBean.getLineupDatesPerTagByBuehne(buehne.id)}">
-                                <h:column>
-                                    #{mapEntry.key}
-                                </h:column>
-                            </h:dataTable>
-
-                            <h:dataTable value = "#{buehne.lineupDates}" var = "lineup"
+                        <ui:repeat var="tag" value="#{festivaldetailsBean.getTageOfLineupDatesByBuehne(buehne.id)}">
+                            <h4><h:outputText value="#{tag}">
+                                    <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                </h:outputText></h4>
+                            <h:dataTable value = "#{festivaldetailsBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
                                          class = "table">
                                 <h:column>    				
                                     <f:facet name = "header">Von</f:facet>    				
@@ -41,7 +38,7 @@
                                     <h:outputText value="#{lineup.band.name}"></h:outputText>
                                 </h:column>
                             </h:dataTable>
-                        </h:form>
+                        </ui:repeat>
                     </div>
                 </div>
             </div>

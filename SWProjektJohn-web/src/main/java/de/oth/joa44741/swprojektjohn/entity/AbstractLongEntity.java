@@ -30,7 +30,9 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 @XmlAccessorType(XmlAccessType.FIELD)
 @MappedSuperclass
 public class AbstractLongEntity {
+    //TODO: equals, compareTo, hashCode
 
+    // TODO: jede relation art manyToMany
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

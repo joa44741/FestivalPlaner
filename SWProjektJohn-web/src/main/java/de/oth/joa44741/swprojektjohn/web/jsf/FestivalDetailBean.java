@@ -10,15 +10,11 @@ import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -49,18 +45,33 @@ public class FestivalDetailBean implements Serializable {
         return size;
     }
 
-    public Map<Date, List<LineupDateEntity>> getLineupDatesPerTagByBuehne(Long buehnenId) {
+    public List<Date> getTageOfLineupDatesByBuehne(Long buehnenId) {
         final Optional<BuehneEntity> optBuehne = this.festival.getBuehnen().stream().filter(b -> b.getId() == buehnenId).findFirst();
-        if (optBuehne.isPresent()) {
-            Map<Date, List<LineupDateEntity>> lineupDatesPerTag = optBuehne.get()
-                    .getLineupDates()
-                    .stream()
-                    .collect(Collectors.toMap(LineupDateEntity::getTag, (d) -> d.g);
-            return lineupDatesPerTag;
-        } else {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("The message to display in client"));
-        }
-        return Collections.EMPTY_MAP;
+        final List<Date> tage = optBuehne.get().getLineupDates().stream().map(l -> l.getTag()).distinct().sorted(Date::compareTo).collect(Collectors.toList());
+        return tage;
     }
+
+    public List<LineupDateEntity> getLineupDatesByBuehneAndTag(Long buehnenId, Date tag) {
+        final Optional<BuehneEntity> optBuehne = this.festival.getBuehnen().stream().filter(b -> b.getId() == buehnenId).findFirst();
+        final List<LineupDateEntity> lineupDates = optBuehne.get().getLineupDates().stream().filter(l -> l.getTag().equals(tag))
+                .sorted((l1, l2) -> {
+                    return l1.getUhrzeitVon().compareTo(l2.getUhrzeitVon());
+                }).collect(Collectors.toList());
+        return lineupDates;
+    }
+
+//    public Set<Map.Entry<Date, List<LineupDateEntity>>> getLineupDatesPerTagByBuehne(Long buehnenId) {
+//        final Optional<BuehneEntity> optBuehne = this.festival.getBuehnen().stream().filter(b -> b.getId() == buehnenId).findFirst();
+//        if (optBuehne.isPresent()) {
+//            Map<Date, List<LineupDateEntity>> lineupDatesPerTag = optBuehne.get()
+//                    .getLineupDates()
+//                    .stream()
+//                    .collect(Collectors.groupingBy(LineupDateEntity::getTag));
+//            return lineupDatesPerTag.entrySet();
+//        } else {
+//            FacesContext context = FacesContext.getCurrentInstance();
+//            context.addMessage(null, new FacesMessage("The message to display in client"));
+//        }
+//        return Collections.EMPTY_SET;
+//    }
 }
