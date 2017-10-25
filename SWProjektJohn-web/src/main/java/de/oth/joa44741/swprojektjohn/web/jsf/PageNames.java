@@ -13,6 +13,7 @@ public final class PageNames {
 
     public static final String INDEX = "index.xhtml";
     public static final String FESTIVAL_DETAIL = "festivaldetails.xhtml";
+    public static final String INSERT_DATA = "insertdata.xhtml";
 
     private PageNames() {
 

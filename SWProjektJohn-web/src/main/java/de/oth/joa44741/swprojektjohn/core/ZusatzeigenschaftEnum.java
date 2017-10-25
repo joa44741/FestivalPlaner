@@ -15,7 +15,6 @@ public enum ZusatzeigenschaftEnum {
     ESSENSSTAENDE(true, "Essensstände"),
     SANITAERE_ANLAGEN(true, "Sanitäre Anlagen"),
     UNTER_18(false, "Unter 18"),
-    AUFSICHTSZETTEL(true, "Aufsichtszettel"),
     PARKMOEGLICHKEITEN(true, "Parkmöglichkeiten");
 
     private final boolean zusatzinfoErlaubt;

@@ -27,7 +27,11 @@ public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<Fes
 
     @Override
     public FestivalEntity retrieveFestivalByIdIncludingDetails(Long id) {
-        final String statement = "SELECT t FROM " + FestivalEntity.class.getSimpleName() + " t JOIN FETCH t.location l LEFT JOIN FETCH t.buehnen WHERE t.id = :id";
+        final String statement = "SELECT t FROM FestivalEntity t "
+                + "JOIN FETCH t.location l "
+                + "JOIN FETCH t.zusatzeigenschaften z "
+                + "LEFT JOIN FETCH t.buehnen "
+                + "WHERE t.id = :id";
         final TypedQuery<FestivalEntity> query = getEntityManager().createQuery(statement, FestivalEntity.class);
         query.setParameter("id", id);
         return query.getSingleResult();

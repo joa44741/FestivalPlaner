@@ -15,14 +15,18 @@
     <h:body>
         <div class="mainContainer">
             <ui:insert name="pageHeader">Page-Header</ui:insert>
-            <ui:insert name="navigation">Page-Header</ui:insert>
-            <article class="container">
+            <ui:insert name="navigation">Navigation</ui:insert>
+            <article class="container mainContent">
                 <ui:insert name="pageContent">Content</ui:insert>
             </article>
         </div>
         <h:outputScript library="js" name="jquery-3.2.1.slim.min.js"/>
         <h:outputScript library="js" name="popper.min.js"/>
         <h:outputScript library="js" name="bootstrap.min.js"/>
+        <script>$(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+        });
+        </script>
     </h:body>
 
 </html>

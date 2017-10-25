@@ -17,6 +17,27 @@
                     #{festivaldetailsBean.festival.location.strasse}<br/>
                     #{festivaldetailsBean.festival.location.plz}<br/>
                     #{festivaldetailsBean.festival.location.ort}<br/>
+                    <div id="zusatzeigenschaften" class="row">
+                        <ui:repeat value="#{festivaldetailsBean.festival.zusatzeigenschaften.toArray()}" var="zusatzeigenschaft">
+                            <div class="col-1">
+                                <h:outputLabel rendered="#{zusatzeigenschaft == 'SANITAERE_ANLAGEN'}">
+                                    <i class="fa fa-shower" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                </h:outputLabel>
+                                <h:outputLabel rendered="#{zusatzeigenschaft == 'ESSENSSTAENDE'}">
+                                    <i class="fa fa-cutlery" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                </h:outputLabel>
+                                <h:outputLabel rendered="#{zusatzeigenschaft == 'PARKMOEGLICHKEITEN'}">
+                                    <i class="fa fa-car" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                </h:outputLabel>
+                                <h:outputLabel rendered="#{zusatzeigenschaft == 'MUELLPFAND'}">
+                                    <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                </h:outputLabel>
+                                <h:outputLabel rendered="#{zusatzeigenschaft == 'UNTER_18'}">
+                                    <i class="fa fa-child" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                </h:outputLabel>
+                            </div>
+                        </ui:repeat>
+                    </div>
                 </div>
                 <div class="col-7">
                     <div class="embed-responsive embed-responsive-16by9">
@@ -38,7 +59,7 @@
             <hr/>
             <h3>B&uuml;hnen</h3>
         </div>
-        <ui:repeat value="#{festivaldetailsBean.festival.buehnen}" var="buehne">
+        <ui:repeat value="#{festivaldetailsBean.festival.buehnen.toArray()}" var="buehne">
             <div class="col-#{festivaldetailsBean.calculateBootstrapColSize()}">
                 <div class="card">
                     <div class="card-header">

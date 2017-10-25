@@ -20,7 +20,7 @@ import javax.inject.Named;
 
 @Named("festivaldetailsBean")
 @RequestScoped
-public class FestivalDetailBean implements Serializable {
+public class FestivalDetailsBean implements Serializable {
 
     @Inject
     private FestivalBusinessService festivalBusinessService;

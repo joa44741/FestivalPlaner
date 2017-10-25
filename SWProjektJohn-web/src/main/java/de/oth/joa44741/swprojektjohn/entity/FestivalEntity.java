@@ -7,15 +7,20 @@ package de.oth.joa44741.swprojektjohn.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.oth.joa44741.swprojektjohn.core.RegexPattern;
+import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -91,32 +96,27 @@ public class FestivalEntity extends AbstractLongEntity {
     @Temporal(TemporalType.DATE)
     private Date datumBis;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
-    private final List<FestivalZusatzeigenschaftEntity> zusatzeigenschaften = new ArrayList<>();
-
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
-    private final List<CampingVarianteEntity> campingVarianten = new ArrayList<>();
-
-//    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
-    private final List<BuehneEntity> buehnen = new ArrayList<>();
-
-    /*
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "FestivalsZusatzeigenschaften", joinColumns = @JoinColumn(
+            name = "festivalId"))
+    @Column(name = "zusatzeigenschaft", nullable = false)
     @Enumerated(EnumType.STRING)
-    @CollectionTable
-    private List<ZusatzeigenschaftEnum> zusatzeigenschaften;
-     */
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name = "festivals_zusatzeigenschaften", joinColumns = @JoinColumn(
-//            name = "ngaipbasisnetzmultidtypmitvarsubnetzgroesse_id"))
-//    @Column(name = "ngadiensttyp", nullable = false)
-//    @Enumerated(EnumType.STRING)
-//    private final List<ZusatzeigenschaftEnum> zusatzeigenschaften = new ArrayList();
+    private final Set<ZusatzeigenschaftEnum> zusatzeigenschaften = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    private final Set<CampingVarianteEntity> campingVarianten = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    private final Set<TicketArtenEntity> ticketArten = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    private final Set<BuehneEntity> buehnen = new HashSet<>();
+
     public String getName() {
         return name;
     }
@@ -205,15 +205,15 @@ public class FestivalEntity extends AbstractLongEntity {
         this.lageplan = lageplan;
     }
 
-    public List<FestivalZusatzeigenschaftEntity> getZusatzeigenschaften() {
-        return Collections.unmodifiableList(zusatzeigenschaften);
+    public Set<ZusatzeigenschaftEnum> getZusatzeigenschaften() {
+        return Collections.unmodifiableSet(zusatzeigenschaften);
     }
 
-    public void addZusatzeigenschaft(FestivalZusatzeigenschaftEntity zusatzeigenschaft) {
+    public void addZusatzeigenschaft(ZusatzeigenschaftEnum zusatzeigenschaft) {
         this.zusatzeigenschaften.add(zusatzeigenschaft);
     }
 
-    public boolean removeZusatzeigenschaft(FestivalZusatzeigenschaftEntity zusatzeigenschaft) {
+    public boolean removeZusatzeigenschaft(ZusatzeigenschaftEnum zusatzeigenschaft) {
         return this.zusatzeigenschaften.remove(zusatzeigenschaft);
     }
 
@@ -221,8 +221,8 @@ public class FestivalEntity extends AbstractLongEntity {
         this.zusatzeigenschaften.clear();
     }
 
-    public List<CampingVarianteEntity> getCampingVarianten() {
-        return Collections.unmodifiableList(campingVarianten);
+    public Set<CampingVarianteEntity> getCampingVarianten() {
+        return Collections.unmodifiableSet(campingVarianten);
     }
 
     public void addCampingVariante(CampingVarianteEntity campingVariante) {
@@ -237,8 +237,24 @@ public class FestivalEntity extends AbstractLongEntity {
         this.campingVarianten.clear();
     }
 
-    public List<BuehneEntity> getBuehnen() {
-        return Collections.unmodifiableList(buehnen);
+    public Set<TicketArtenEntity> getTicketArten() {
+        return Collections.unmodifiableSet(ticketArten);
+    }
+
+    public void addTicketArt(TicketArtenEntity ticketArt) {
+        this.ticketArten.add(ticketArt);
+    }
+
+    public boolean removeTicketArt(TicketArtenEntity ticketArt) {
+        return this.ticketArten.remove(ticketArt);
+    }
+
+    public void clearTicketArten() {
+        this.ticketArten.clear();
+    }
+
+    public Set<BuehneEntity> getBuehnen() {
+        return Collections.unmodifiableSet(buehnen);
     }
 
     public void addBuehne(BuehneEntity buehne) {
