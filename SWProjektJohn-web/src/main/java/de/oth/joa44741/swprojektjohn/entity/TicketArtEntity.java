@@ -5,7 +5,6 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import de.oth.joa44741.swprojektjohn.core.RegexPattern;
 import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -19,7 +18,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,10 +49,6 @@ public class TicketArtEntity extends AbstractLongEntity {
     @DecimalMin("0.00")
     private BigDecimal preis;
 
-    @Column
-    @Pattern(regexp = RegexPattern.REGEX_URL)
-    private String verkaufsLink;
-
     public TagArtEnum getTagArt() {
         return tagArt;
     }
@@ -78,13 +72,4 @@ public class TicketArtEntity extends AbstractLongEntity {
     public void setPreis(BigDecimal preis) {
         this.preis = preis;
     }
-
-    public String getVerkaufsLink() {
-        return verkaufsLink;
-    }
-
-    public void setVerkaufsLink(String verkaufsLink) {
-        this.verkaufsLink = verkaufsLink;
-    }
-
 }

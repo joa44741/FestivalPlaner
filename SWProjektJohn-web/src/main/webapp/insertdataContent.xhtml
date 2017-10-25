@@ -41,7 +41,7 @@
                     </li>
                 </ul>
 
-                <div class="tab-content">
+                <div id="festivalTabContent" class="tab-content">
                     <div id="festivalTab" class="tab-pane active" role="tabpanel">
                         <div class="row">
                             <div class="col-12">
@@ -109,27 +109,23 @@
                                 </h:selectManyCheckbox>
                             </div>
                         </div>
-                        <div class="row">
+                        <div id="ticketArtenDiv" class="row">
                             <div class="col-12">
                                 <h5>Ticketarten</h5>
                             </div>
-                            <div class="col-12">
+                            <div id="transientTicketsDiv" class="col-8">
                                 <h:dataTable id="transientTickets" var="ticket" class="table" value="#{festivalFormBean.transientFestival.ticketArten}">
                                     <h:column>    				
                                         <f:facet name = "header">Tagart</f:facet>    				
-                                        <h:inputText value="#{ticket.tagArt}"/>
+                                        <h:outputLabel value="#{ticket.tagArt}"/>
                                     </h:column>
                                     <h:column>    				
                                         <f:facet name = "header">Tag</f:facet>    				
-                                        <h:inputText value="#{ticket.tag}"/>
+                                        <h:outputLabel value="#{ticket.tag}"/>
                                     </h:column>
                                     <h:column>    				
                                         <f:facet name = "header">Preis</f:facet>    				
-                                        <h:inputText value="#{ticket.preis}"/>
-                                    </h:column>
-                                    <h:column>    				
-                                        <f:facet name = "header">Verkaufslink</f:facet>    				
-                                        <h:inputText value="#{ticket.verkaufsLink}"/>
+                                        <h:outputLabel value="#{ticket.preis}"/>
                                     </h:column>
                                 </h:dataTable>
                             </div>
@@ -158,13 +154,9 @@
                                     <f:convertNumber integerOnly="true" type="number" />
                                 </h:inputText>
                             </div>
-                            <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label control-label" for="verkaufslink">Verkaufslink (URL)</h:outputLabel> value funktioniert hier nicht...
-                                <h:inputText class="form-control" id="verkaufslink"/>
-                            </div>
                             <div class="col-2 form-group">
                                 <h:commandButton class="btn btn-primary" value="Ticket anlegen">
-                                    <f:ajax execute="selectedTagArt preis tag verkaufslink" listener="#{festivalFormBean.addTransientTicketToFestival()}" render="transientTickets"/>
+                                    <f:ajax execute="selectedTagArt preis tag" listener="#{festivalFormBean.addTransientTicketToFestival()}" render=":newFestival:transientTickets"/> 
                                 </h:commandButton>                                    
                             </div>
                         </div>

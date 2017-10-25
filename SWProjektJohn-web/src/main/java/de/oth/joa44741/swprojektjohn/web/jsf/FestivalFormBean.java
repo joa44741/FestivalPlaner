@@ -11,7 +11,9 @@ import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -43,6 +45,11 @@ public class FestivalFormBean implements Serializable {
     public void initFields() {
         transientFestival = new FestivalEntity();
         transientTicketArt = new TicketArtEntity();
+        TicketArtEntity ticketArtEntity = new TicketArtEntity();
+        ticketArtEntity.setTag(new Date());
+        ticketArtEntity.setPreis(BigDecimal.TEN);
+        ticketArtEntity.setTagArt(TagArtEnum.ZWEI_TAGE_TICKET);
+        transientFestival.addTicketArt(ticketArtEntity);
     }
 
     public FestivalEntity getTransientFestival() {
@@ -90,7 +97,6 @@ public class FestivalFormBean implements Serializable {
     public String addTransientTicketToFestival() {
         this.transientFestival.addTicketArt(transientTicketArt);
         System.out.println("added TicketArt: " + transientTicketArt);
-        transientFestival = null;
         return PageNames.CURRENT_PAGE;
     }
 }
