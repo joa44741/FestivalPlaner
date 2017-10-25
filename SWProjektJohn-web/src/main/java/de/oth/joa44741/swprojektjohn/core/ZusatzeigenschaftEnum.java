@@ -11,22 +11,16 @@ package de.oth.joa44741.swprojektjohn.core;
  */
 public enum ZusatzeigenschaftEnum {
 
-    MUELLPFAND(true, "Müllpfand"),
-    ESSENSSTAENDE(true, "Essensstände"),
-    SANITAERE_ANLAGEN(true, "Sanitäre Anlagen"),
-    UNTER_18(false, "Unter 18"),
-    PARKMOEGLICHKEITEN(true, "Parkmöglichkeiten");
+    MUELLPFAND("Müllpfand"),
+    ESSENSSTAENDE("Essensstände"),
+    SANITAERE_ANLAGEN("Sanitäre Anlagen"),
+    UNTER_18("Unter 18"),
+    PARKMOEGLICHKEITEN("Parkmöglichkeiten");
 
-    private final boolean zusatzinfoErlaubt;
     private final String text;
 
-    private ZusatzeigenschaftEnum(boolean zusatzinfoErlaubt, String text) {
-        this.zusatzinfoErlaubt = zusatzinfoErlaubt;
+    private ZusatzeigenschaftEnum(String text) {
         this.text = text;
-    }
-
-    public boolean getZusatzinfoErlaubt() {
-        return this.zusatzinfoErlaubt;
     }
 
     public String getText() {

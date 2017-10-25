@@ -8,9 +8,9 @@
     <div class="row">
         <div class="col-12">
             <h2>Festivaldaten eintragen</h2>
+            <hr/>
         </div>
         <div class="col-12">
-            <hr/>
             <h3>Neues Festival</h3>
             <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#newFestival" aria-expanded="false" aria-controls="newFestival">
                 Formular anzeigen
@@ -44,6 +44,9 @@
                 <div class="tab-content">
                     <div id="festivalTab" class="tab-pane active" role="tabpanel">
                         <div class="row">
+                            <div class="col-12">
+                                <h5>Allgemeine Daten</h5>
+                            </div>
                             <div class="col-3 form-group required">
                                 <h:outputLabel class="col-form-label control-label" for="name">Name</h:outputLabel>
                                 <h:inputText class="form-control" id="name" required="true" value="#{festivalFormBean.transientFestival.name}" requiredMessage="Name des Festivals muss angegeben werden" />
@@ -64,19 +67,19 @@
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="veranstalter">Veranstalter</h:outputLabel>
-                                <h:inputText class="form-control" id="veranstalter"/>
+                                <h:inputText class="form-control" id="veranstalter" value="#{festivalFormBean.transientFestival.veranstalter}"/>
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="webseite">Webseite</h:outputLabel>
-                                <h:inputText class="form-control" id="webseite"/>
+                                <h:inputText class="form-control" id="webseite" value="#{festivalFormBean.transientFestival.webseite}"/>
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="logo">Logo(URL)</h:outputLabel>
-                                <h:inputText class="form-control" id="logo"/>
+                                <h:inputText class="form-control" id="logo" value="#{festivalFormBean.transientFestival.logoUrl}"/>
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="ticketkontingent">Ticketkontingent</h:outputLabel>                           
-                                <h:inputText class="form-control" id="ticketkontingent" validatorMessage="Nur Zahlen gr&ouml;&szlig;er 0 als Ticketkontingent eingeben">
+                                <h:inputText class="form-control" id="ticketkontingent" validatorMessage="Nur Zahlen gr&ouml;&szlig;er 0 als Ticketkontingent eingeben" value="#{festivalFormBean.transientFestival.ticketKontingent}">
                                     <f:passThroughAttribute name="type" value="number"/>
                                     <f:convertNumber integerOnly="true" type="number" />
                                     <f:validateLongRange minimum="1" />
@@ -85,27 +88,86 @@
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="verkaufteTickets">Verkaufte Tickets</h:outputLabel>
-                                <h:inputText class="form-control" id="verkaufteTickets" validatorMessage="Nur Zahlen gr&ouml;&szlig;er gleich 0 als Verkaufte Tickets eingeben">
+                                <h:inputText class="form-control" id="verkaufteTickets" validatorMessage="Nur Zahlen gr&ouml;&szlig;er gleich 0 als Verkaufte Tickets eingeben" value="#{festivalFormBean.transientFestival.verkaufteTickets}">
                                     <f:passThroughAttribute name="type" value="number"/>
                                     <f:convertNumber integerOnly="true" type="number" />
                                     <f:validateLongRange minimum="0" />
                                 </h:inputText>
                             </div>
+                            <div class="col-3 form-group">
+                                <h:outputLabel class="col-form-label control-label" for="lageplan">Lageplan(URL)</h:outputLabel>
+                                <h:inputText class="form-control" id="lageplan" value="#{festivalFormBean.transientFestival.lageplan}"/>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <div class="form-check">
-                                    <h:selectManyCheckbox class="table" value="#{festivalFormBean.selectedZusatzeigenschaften}">
-                                        <f:selectItems value="#{festivalFormBean.zusatzeigenschaftenAsMap}" />
-                                    </h:selectManyCheckbox>
-                                </div> 
+                                <h5>Zusatzeigenschaften</h5>
+                            </div>
+                            <div class="col-12">
+                                <h:selectManyCheckbox class="table" value="#{festivalFormBean.selectedZusatzeigenschaftenList}">
+                                    <f:selectItems value="#{festivalFormBean.zusatzeigenschaftenAsMap}" />
+                                </h:selectManyCheckbox>
                             </div>
                         </div>
-
-                        <!--div class="col-3 form-group">
-                            <h:outputLabel class="col-form-label control-label" for="logo">Sanit&auml;re Anlagen</h:outputLabel>
-                            <h:selectManyCheckbox class="form-control" id="cb"/>
-                        </div-->
+                        <div class="row">
+                            <div class="col-12">
+                                <h5>Ticketarten</h5>
+                            </div>
+                            <div class="col-12">
+                                <h:dataTable id="transientTickets" var="ticket" class="table" value="#{festivalFormBean.transientFestival.ticketArten}">
+                                    <h:column>    				
+                                        <f:facet name = "header">Tagart</f:facet>    				
+                                        <h:inputText value="#{ticket.tagArt}"/>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Tag</f:facet>    				
+                                        <h:inputText value="#{ticket.tag}"/>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Preis</f:facet>    				
+                                        <h:inputText value="#{ticket.preis}"/>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Verkaufslink</f:facet>    				
+                                        <h:inputText value="#{ticket.verkaufsLink}"/>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                            <div class="col-12">
+                                <h6>Tickets anlegen</h6>
+                            </div>
+                            <div class="col-2 form-group">
+                                <h:selectOneMenu id="selectedTagArt" styleClass="form-control" value="#{festivalFormBean.transientTicketArt.tagArt}">
+                                    <h:outputLabel class="col-form-label" for="tagArt">Tagart</h:outputLabel>
+                                    <f:selectItems id="tagArt" value="#{festivalFormBean.tagArtenAsList}" var="tagArt"
+                                                   itemLabel="#{tagArt.text}" itemValue="#{tagArt}" />
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="col-2 form-group">
+                                <h:outputLabel class="col-form-label control-label" for="tag">Tag</h:outputLabel>
+                                <h:inputText class="form-control" id="tag" value="#{festivalFormBean.transientTicketArt.tag}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                    <f:passThroughAttribute name="type" value="date" />
+                                </h:inputText>
+                            </div>
+                            <div class="col-2 form-group">
+                                <h:outputLabel class="col-form-label control-label" for="preis">Preis</h:outputLabel>
+                                <h:inputText class="form-control" id="preis" value="#{festivalFormBean.transientTicketArt.preis}">
+                                    <f:passThroughAttribute name="type" value="number"/>
+                                    <f:passThroughAttribute name="step" value="0.01"/>
+                                    <f:convertNumber integerOnly="true" type="number" />
+                                </h:inputText>
+                            </div>
+                            <div class="col-3 form-group">
+                                <h:outputLabel class="col-form-label control-label" for="verkaufslink">Verkaufslink (URL)</h:outputLabel> value funktioniert hier nicht...
+                                <h:inputText class="form-control" id="verkaufslink"/>
+                            </div>
+                            <div class="col-2 form-group">
+                                <h:commandButton class="btn btn-primary" value="Ticket anlegen">
+                                    <f:ajax execute="selectedTagArt preis tag verkaufslink" listener="#{festivalFormBean.addTransientTicketToFestival()}" render="transientTickets"/>
+                                </h:commandButton>                                    
+                            </div>
+                        </div>
                     </div>
                     <div id="locationTab" class="tab-pane" role="tabpanel">
                         <div class="row">
@@ -118,7 +180,7 @@
                         </div>
                     </div>
                 </div>
-                <h:commandButton class="btn btn-primary" action="#{festivalFormBean.persist()}" value="anlegen"/>
+                <h:commandButton class="btn btn-primary" action="#{festivalFormBean.persist()}" value="Festival anlegen"/>
             </h:form>
         </div>
         <div class="col-12">

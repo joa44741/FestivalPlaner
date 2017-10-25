@@ -6,10 +6,13 @@
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
+import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
+import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -30,12 +33,16 @@ public class FestivalFormBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private FestivalEntity transientFestival;
+    private List<ZusatzeigenschaftEnum> selectedZusatzeigenschaftenList;
 
-    private ZusatzeigenschaftEnum selectedZusatzeigenschaften[];
+    private TagArtEnum selectedTagArt;
+
+    private TicketArtEntity transientTicketArt;
 
     @PostConstruct
     public void initFields() {
         transientFestival = new FestivalEntity();
+        transientTicketArt = new TicketArtEntity();
     }
 
     public FestivalEntity getTransientFestival() {
@@ -43,24 +50,47 @@ public class FestivalFormBean implements Serializable {
     }
 
     public void persist() {
-        Arrays.stream(selectedZusatzeigenschaften).forEach(z -> transientFestival.addZusatzeigenschaft(z));
+        selectedZusatzeigenschaftenList.stream().forEach(z -> transientFestival.addZusatzeigenschaft(z));
         System.out.println(transientFestival);
         final FacesMessage msg = new FacesMessage("Festival " + transientFestival.getName() + " erfolgreich angelegt");
         FacesContext.getCurrentInstance().addMessage("newFormular", msg);
-        transientFestival = new FestivalEntity();
+        initFields();
+    }
+
+    public List<ZusatzeigenschaftEnum> getSelectedZusatzeigenschaftenList() {
+        return selectedZusatzeigenschaftenList;
+    }
+
+    public void setSelectedZusatzeigenschaftenList(List<ZusatzeigenschaftEnum> selectedZusatzeigenschaftenList) {
+        this.selectedZusatzeigenschaftenList = selectedZusatzeigenschaftenList;
     }
 
     public Map<String, ZusatzeigenschaftEnum> getZusatzeigenschaftenAsMap() {
-        final Map<String, ZusatzeigenschaftEnum> zusatzeigenschaftenMap = Arrays.stream(ZusatzeigenschaftEnum.values())
+        final Map<String, ZusatzeigenschaftEnum> map = Arrays.stream(ZusatzeigenschaftEnum.values())
                 .collect(Collectors.toMap(ZusatzeigenschaftEnum::getText, Function.identity()));
-        return zusatzeigenschaftenMap;
+        return map;
     }
 
-    public void setSelectedZusatzeigenschaften(ZusatzeigenschaftEnum[] selectedZusatzeigenschaften) {
-        this.selectedZusatzeigenschaften = selectedZusatzeigenschaften;
+    public List<TagArtEnum> getTagArtenAsList() {
+        return Arrays.asList(TagArtEnum.values());
     }
 
-    public ZusatzeigenschaftEnum[] getSelectedZusatzeigenschaften() {
-        return selectedZusatzeigenschaften;
+    public TagArtEnum getSelectedTagArt() {
+        return selectedTagArt;
+    }
+
+    public void setSelectedTagArt(TagArtEnum selectedTagArt) {
+        this.selectedTagArt = selectedTagArt;
+    }
+
+    public TicketArtEntity getTransientTicketArt() {
+        return transientTicketArt;
+    }
+
+    public String addTransientTicketToFestival() {
+        this.transientFestival.addTicketArt(transientTicketArt);
+        System.out.println("added TicketArt: " + transientTicketArt);
+        transientFestival = null;
+        return PageNames.CURRENT_PAGE;
     }
 }

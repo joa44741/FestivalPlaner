@@ -111,7 +111,7 @@ public class FestivalEntity extends AbstractLongEntity {
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
-    private final Set<TicketArtenEntity> ticketArten = new HashSet<>();
+    private final Set<TicketArtEntity> ticketArten = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
@@ -237,15 +237,15 @@ public class FestivalEntity extends AbstractLongEntity {
         this.campingVarianten.clear();
     }
 
-    public Set<TicketArtenEntity> getTicketArten() {
+    public Set<TicketArtEntity> getTicketArten() {
         return Collections.unmodifiableSet(ticketArten);
     }
 
-    public void addTicketArt(TicketArtenEntity ticketArt) {
+    public void addTicketArt(TicketArtEntity ticketArt) {
         this.ticketArten.add(ticketArt);
     }
 
-    public boolean removeTicketArt(TicketArtenEntity ticketArt) {
+    public boolean removeTicketArt(TicketArtEntity ticketArt) {
         return this.ticketArten.remove(ticketArt);
     }
 

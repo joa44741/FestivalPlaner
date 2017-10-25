@@ -57,7 +57,7 @@ h3{
     box-shadow: none;
 }
 
-a, #zusatzeigenschaften{
+a, #zusatzeigenschaften, h2{
     color: #D68910;
 }
 
@@ -89,10 +89,18 @@ body{
     background-color: #DDDDDD;
 }
 
+/*h5{
+    margin-top: 16px;
+}*/
+
 .mainContent{
     padding-bottom: 20px;
     padding-top: 20px;
     background-color: white;
+}
+
+.nav.nav-tabs{
+    margin-bottom: 20px;
 }
 
 td label{

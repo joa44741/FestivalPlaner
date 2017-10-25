@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "TicketArten")
-public class TicketArtenEntity extends AbstractLongEntity {
+public class TicketArtEntity extends AbstractLongEntity {
 
     @Basic(optional = false)
     @Column(nullable = false)
