@@ -114,18 +114,22 @@
                                 <h5>Ticketarten</h5>
                             </div>
                             <div id="transientTicketsDiv" class="col-8">
-                                <h:dataTable id="transientTickets" var="ticket" class="table" value="#{festivalFormBean.transientFestival.ticketArten}">
+                                <h:dataTable id="transientTickets" var="ticket" class="table" value="#{festivalFormBean.transientTicketArten}">
                                     <h:column>    				
                                         <f:facet name = "header">Tagart</f:facet>    				
-                                        <h:outputLabel value="#{ticket.tagArt}"/>
+                                        <h:outputLabel value="#{ticket.tagArt.text}"/>
                                     </h:column>
                                     <h:column>    				
                                         <f:facet name = "header">Tag</f:facet>    				
-                                        <h:outputLabel value="#{ticket.tag}"/>
+                                        <h:outputLabel value="#{ticket.tag}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputLabel>
                                     </h:column>
                                     <h:column>    				
-                                        <f:facet name = "header">Preis</f:facet>    				
-                                        <h:outputLabel value="#{ticket.preis}"/>
+                                        <f:facet name = "header">Preis in Euro</f:facet>    				
+                                        <h:outputLabel value="#{ticket.preis}">
+                                            <f:convertNumber maxFractionDigits="2" minFractionDigits="2" groupingUsed="false" />
+                                        </h:outputLabel>
                                     </h:column>
                                 </h:dataTable>
                             </div>
@@ -147,7 +151,7 @@
                                 </h:inputText>
                             </div>
                             <div class="col-2 form-group">
-                                <h:outputLabel class="col-form-label control-label" for="preis">Preis</h:outputLabel>
+                                <h:outputLabel class="col-form-label control-label" for="preis">Preis in Euro</h:outputLabel>
                                 <h:inputText class="form-control" id="preis" value="#{festivalFormBean.transientTicketArt.preis}">
                                     <f:passThroughAttribute name="type" value="number"/>
                                     <f:passThroughAttribute name="step" value="0.01"/>

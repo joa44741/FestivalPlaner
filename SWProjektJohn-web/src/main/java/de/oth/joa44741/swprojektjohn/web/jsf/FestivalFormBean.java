@@ -11,22 +11,21 @@ import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("festivalFormBean")
-@RequestScoped
+@ViewScoped
 public class FestivalFormBean implements Serializable {
 
     @Inject
@@ -37,6 +36,8 @@ public class FestivalFormBean implements Serializable {
     private FestivalEntity transientFestival;
     private List<ZusatzeigenschaftEnum> selectedZusatzeigenschaftenList;
 
+    private List<TicketArtEntity> transientTicketArten;
+
     private TagArtEnum selectedTagArt;
 
     private TicketArtEntity transientTicketArt;
@@ -44,11 +45,9 @@ public class FestivalFormBean implements Serializable {
     @PostConstruct
     public void initFields() {
         transientFestival = new FestivalEntity();
+        transientTicketArten = new ArrayList<>();
         transientTicketArt = new TicketArtEntity();
         TicketArtEntity ticketArtEntity = new TicketArtEntity();
-        ticketArtEntity.setTag(new Date());
-        ticketArtEntity.setPreis(BigDecimal.TEN);
-        ticketArtEntity.setTagArt(TagArtEnum.ZWEI_TAGE_TICKET);
         transientFestival.addTicketArt(ticketArtEntity);
     }
 
@@ -95,8 +94,13 @@ public class FestivalFormBean implements Serializable {
     }
 
     public String addTransientTicketToFestival() {
-        this.transientFestival.addTicketArt(transientTicketArt);
+        this.transientTicketArten.add(transientTicketArt);
         System.out.println("added TicketArt: " + transientTicketArt);
+        transientTicketArt = new TicketArtEntity();
         return PageNames.CURRENT_PAGE;
+    }
+
+    public List<TicketArtEntity> getTransientTicketArten() {
+        return transientTicketArten;
     }
 }
