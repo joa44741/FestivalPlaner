@@ -94,6 +94,7 @@ public class FestivalFormBean implements Serializable {
     }
 
     public String addTransientTicketToFestival() {
+        festivalBusinessService.test();
         this.transientTicketArten.add(transientTicketArt);
         System.out.println("added TicketArt: " + transientTicketArt);
         transientTicketArt = new TicketArtEntity();

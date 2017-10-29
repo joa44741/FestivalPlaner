@@ -21,4 +21,6 @@ public interface FestivalBusinessService {
     FestivalEntity persistFestival(FestivalEntity entity);
 
     List<FestivalEntity> findAllFestivals();
+
+    void test();
 }

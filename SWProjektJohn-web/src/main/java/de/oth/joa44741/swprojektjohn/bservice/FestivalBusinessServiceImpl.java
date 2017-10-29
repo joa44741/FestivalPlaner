@@ -7,6 +7,8 @@ package de.oth.joa44741.swprojektjohn.bservice;
 
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import java.util.List;
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 import org.jboss.logging.Logger;
@@ -17,6 +19,9 @@ import org.jboss.logging.Logger;
  */
 @Stateless
 public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<FestivalEntity> implements FestivalBusinessService {
+
+    @Resource
+    private SessionContext ctx;
 
     private static final Logger LOG = Logger.getLogger(FestivalBusinessServiceImpl.class);
 
@@ -46,4 +51,10 @@ public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<Fes
     public List<FestivalEntity> findAllFestivals() {
         return findAll();
     }
+
+    @Override
+    public void test() {
+        System.out.println(ctx.getCallerPrincipal().getName());
+    }
+
 }
