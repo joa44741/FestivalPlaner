@@ -6,9 +6,12 @@
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
+import de.oth.joa44741.swprojektjohn.bservice.LocationBusinessService;
+import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
 import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
+import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +34,9 @@ public class FestivalFormBean implements Serializable {
     @Inject
     private FestivalBusinessService festivalBusinessService;
 
+    @Inject
+    private LocationBusinessService locationBusinessService;
+
     private static final long serialVersionUID = 1L;
 
     private FestivalEntity transientFestival;
@@ -42,13 +48,15 @@ public class FestivalFormBean implements Serializable {
 
     private TicketArtEntity transientTicketArt;
 
+    private List<LocationEntity> availableLocations;
+
     @PostConstruct
     public void initFields() {
         transientFestival = new FestivalEntity();
         transientTicketArten = new ArrayList<>();
         transientTicketArt = new TicketArtEntity();
-        TicketArtEntity ticketArtEntity = new TicketArtEntity();
-        transientFestival.addTicketArt(ticketArtEntity);
+        availableLocations = locationBusinessService.findAllLocations();
+        transientFestival.setLocation(new LocationEntity());
     }
 
     public FestivalEntity getTransientFestival() {
@@ -58,6 +66,8 @@ public class FestivalFormBean implements Serializable {
     public void persist() {
         selectedZusatzeigenschaftenList.stream().forEach(z -> transientFestival.addZusatzeigenschaft(z));
         System.out.println(transientFestival);
+        transientTicketArten.forEach(ticket -> transientFestival.addTicketArt(ticket));
+        festivalBusinessService.persistFestival(transientFestival);
         final FacesMessage msg = new FacesMessage("Festival " + transientFestival.getName() + " erfolgreich angelegt");
         FacesContext.getCurrentInstance().addMessage("newFormular", msg);
         initFields();
@@ -81,6 +91,10 @@ public class FestivalFormBean implements Serializable {
         return Arrays.asList(TagArtEnum.values());
     }
 
+    public List<BundeslandEnum> getBundeslaenderAsList() {
+        return Arrays.asList(BundeslandEnum.values());
+    }
+
     public TagArtEnum getSelectedTagArt() {
         return selectedTagArt;
     }
@@ -95,13 +109,22 @@ public class FestivalFormBean implements Serializable {
 
     public String addTransientTicketToFestival() {
         festivalBusinessService.test();
-        this.transientTicketArten.add(transientTicketArt);
-        System.out.println("added TicketArt: " + transientTicketArt);
-        transientTicketArt = new TicketArtEntity();
+        final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ticket Art konnte nicht angelegt werden", "test");
+        FacesContext.getCurrentInstance().addMessage("newFestival", msg);
+        if (transientTicketArt.getPreis() != null) {
+            this.transientTicketArten.add(transientTicketArt);
+            System.out.println("added TicketArt: " + transientTicketArt);
+            transientTicketArt = new TicketArtEntity();
+        }
         return PageNames.CURRENT_PAGE;
     }
 
     public List<TicketArtEntity> getTransientTicketArten() {
         return transientTicketArten;
     }
+
+    public List<LocationEntity> getAvailableLocations() {
+        return availableLocations;
+    }
+
 }

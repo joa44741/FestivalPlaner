@@ -46,7 +46,7 @@ public class LocationEntity extends AbstractLongEntity {
     private String plz;
 
     // only german?
-    @Column(nullable = true)
+    @Column
     @Enumerated(EnumType.STRING)
     private BundeslandEnum bundesland;
 

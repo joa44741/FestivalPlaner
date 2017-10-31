@@ -88,11 +88,15 @@ public class FestivalEntity extends AbstractLongEntity {
     @Column
     private String lageplan;
 
-    @Column
+    @Column(nullable = false)
+    @Basic(optional = false)
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date datumVon;
 
-    @Column
+    @Column(nullable = false)
+    @Basic(optional = false)
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date datumBis;
 
@@ -270,6 +274,9 @@ public class FestivalEntity extends AbstractLongEntity {
     }
 
     public Integer getProzentAusverkauft() {
+        if (verkaufteTickets == null || ticketKontingent == null) {
+            return 0;
+        }
         final BigDecimal verkaufteTicketsAsBigDecimal = BigDecimal.valueOf(verkaufteTickets);
         final BigDecimal ticketKontingentAsBigDecimal = BigDecimal.valueOf(ticketKontingent);
         return verkaufteTicketsAsBigDecimal.

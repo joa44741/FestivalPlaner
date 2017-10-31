@@ -20,7 +20,7 @@
             <h:form id="newFestival" class="#{facesContext.messageList.size() == 0 ? 'collapse' : ''}">
 
                 <c:if test="#{facesContext.messageList.size() > 0}">
-                    <div class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
+                    <div id="newFestivalMessages" class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
                         <h:messages layout="table"/>
                     </div>
                 </c:if>
@@ -105,6 +105,7 @@
                             </div>
                             <div class="col-12">
                                 <h:selectManyCheckbox class="table" value="#{festivalFormBean.selectedZusatzeigenschaftenList}">
+                                    <f:converter converterId="genericEnumConverter" />
                                     <f:selectItems value="#{festivalFormBean.zusatzeigenschaftenAsMap}" />
                                 </h:selectManyCheckbox>
                             </div>
@@ -136,9 +137,9 @@
                             <div class="col-12">
                                 <h6>Tickets anlegen</h6>
                             </div>
-                            <div class="col-2 form-group">
+                            <div class="col-2 form-group required">
                                 <h:selectOneMenu id="selectedTagArt" styleClass="form-control" value="#{festivalFormBean.transientTicketArt.tagArt}">
-                                    <h:outputLabel class="col-form-label" for="tagArt">Tagart</h:outputLabel>
+                                    <h:outputLabel class="col-form-label control-label" for="tagArt">Tagart</h:outputLabel>
                                     <f:selectItems id="tagArt" value="#{festivalFormBean.tagArtenAsList}" var="tagArt"
                                                    itemLabel="#{tagArt.text}" itemValue="#{tagArt}" />
                                 </h:selectOneMenu>
@@ -150,15 +151,18 @@
                                     <f:passThroughAttribute name="type" value="date" />
                                 </h:inputText>
                             </div>
-                            <div class="col-2 form-group">
+                            <div class="col-2 form-group required">
                                 <h:outputLabel class="col-form-label control-label" for="preis">Preis in Euro</h:outputLabel>
-                                <h:inputText class="form-control" id="preis" value="#{festivalFormBean.transientTicketArt.preis}">
+                                <h:inputText class="form-control" id="preis" value="#{festivalFormBean.transientTicketArt.preis}" required="true">
                                     <f:passThroughAttribute name="type" value="number"/>
                                     <f:passThroughAttribute name="step" value="0.01"/>
-                                    <f:convertNumber integerOnly="true" type="number" />
+                                    <f:validateBean disabled="true"/>
                                 </h:inputText>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-2 form-group">
+                                <br/>
                                 <h:commandButton class="btn btn-primary" value="Ticket anlegen">
                                     <f:ajax execute="selectedTagArt preis tag" listener="#{festivalFormBean.addTransientTicketToFestival()}" render=":newFestival:transientTickets"/> 
                                 </h:commandButton>                                    
@@ -167,12 +171,36 @@
                     </div>
                     <div id="locationTab" class="tab-pane" role="tabpanel">
                         <div class="row">
-
+                            <div class="col-12">
+                                <h5>Location</h5>
+                            </div>
+                            <div class="col-3 form-group">
+                                <h:outputLabel class="col-form-label control-label" for="locationName">Location Name</h:outputLabel>
+                                <h:inputText class="form-control" id="locationName" value="#{festivalFormBean.transientFestival.location.name}"/>
+                            </div>
+                            <div class="col-3 form-group">
+                                <h:outputLabel class="col-form-label control-label" for="strasse">Stra&szlig;e</h:outputLabel>
+                                <h:inputText class="form-control" id="strasse" value="#{festivalFormBean.transientFestival.location.strasse}"/>
+                            </div>
+                            <div class="col-3 form-group required">
+                                <h:outputLabel class="col-form-label control-label" for="ort">Ort</h:outputLabel>
+                                <h:inputText class="form-control" id="ort" required="true" value="#{festivalFormBean.transientFestival.location.ort}" requiredMessage="Ort der Location muss angegeben werden" />
+                            </div>
+                            <div class="col-3 form-group required">
+                                <h:outputLabel class="col-form-label control-label" for="ort">Postleitzahl</h:outputLabel>
+                                <h:inputText class="form-control" id="plz" required="true" value="#{festivalFormBean.transientFestival.location.plz}" requiredMessage="Postleitzahl der Location muss angegeben werden" />
+                            </div>
+                            <div class="col-2 form-group">
+                                <h:selectOneMenu id="selectedBundesland" styleClass="form-control" value="#{festivalFormBean.transientFestival.location.bundesland}">
+                                    <h:outputLabel class="col-form-label" for="tagArt">Tagart</h:outputLabel>
+                                    <f:selectItems id="bundesland" value="#{festivalFormBean.bundeslaenderAsList}" var="bundesland"
+                                                   itemLabel="#{bundesland}" itemValue="#{bundesland}" />
+                                </h:selectOneMenu>
+                            </div>
                         </div>
                     </div>
                     <div id="lineupTab" class="tab-pane" role="tabpanel">
                         <div class="row">
-
                         </div>
                     </div>
                 </div>

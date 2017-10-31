@@ -44,7 +44,7 @@
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: #{festival.prozentAusverkauft}%;" aria-valuenow="#{festival.prozentAusverkauft}" aria-valuemin="0" aria-valuemax="100">#{festival.prozentAusverkauft}%</div>
                                 </div>
-                                <h:outputLabel style="color: red" class="font-weight-bold" rendered="#{festival.ticketKontingent == festival.verkaufteTickets}">ausverkauft!</h:outputLabel>
+                                <h:outputLabel style="color: red" class="font-weight-bold" rendered="#{(festival.ticketKontingent != null) &amp;&amp; (festival.verkaufteTickets != null) &amp;&amp; (festival.ticketKontingent == festival.verkaufteTickets)}">ausverkauft!</h:outputLabel>
                             </div>
                         </div>
                     </div>

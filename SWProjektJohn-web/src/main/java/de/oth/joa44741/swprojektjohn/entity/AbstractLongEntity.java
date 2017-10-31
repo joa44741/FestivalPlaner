@@ -31,7 +31,6 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 @XmlAccessorType(XmlAccessType.FIELD)
 @MappedSuperclass
 public class AbstractLongEntity {
-    //TODO: equals, compareTo, hashCode
 
     // TODO: jede relation art manyToMany
     @Id
@@ -82,7 +81,11 @@ public class AbstractLongEntity {
             return false;
         }
         final AbstractLongEntity other = (AbstractLongEntity) obj;
-        return Objects.equals(this.id, other.id);
+        if (this.id == null && other.id == null) {
+            return super.equals(obj);
+        } else {
+            return Objects.equals(this.id, other.id);
+        }
     }
 
 }
