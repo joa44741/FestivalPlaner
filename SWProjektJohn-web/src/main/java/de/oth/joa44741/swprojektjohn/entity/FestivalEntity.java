@@ -117,8 +117,7 @@ public class FestivalEntity extends AbstractLongEntity {
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
     private final Set<TicketArtEntity> ticketArten = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    @OneToMany(mappedBy = "festival", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private final Set<BuehneEntity> buehnen = new HashSet<>();
 
     public String getName() {

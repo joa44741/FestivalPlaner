@@ -41,7 +41,7 @@
                                     <h:column>    				
                                         <f:facet name = "header">Preis in Euro</f:facet>    				
                                         <h:outputLabel value="#{ticket.preis}">
-                                            <f:convertNumber maxFractionDigits="2" minFractionDigits="2" groupingUsed="false" />
+                                            <f:convertNumber type="currency" currencySymbol="&euro;"/>
                                         </h:outputLabel>
                                     </h:column>
                                     <h:column>
@@ -98,7 +98,7 @@
                                     <h:column>    				
                                         <f:facet name = "header">Extrakosten in Euro</f:facet>    				
                                         <h:outputLabel value="#{camping.extrakosten}">
-                                            <f:convertNumber maxFractionDigits="2" minFractionDigits="2" groupingUsed="false" />
+                                            <f:convertNumber type="currency" currencySymbol="&euro;"/>
                                         </h:outputLabel>
                                     </h:column>
                                     <h:column>    				
@@ -160,7 +160,7 @@
             </div>
         </div>
         <div class="col-2">
-            <h:commandButton class="btn btn-primary" value="Weiter zum Lineup"/>
+            <h:outputLink class="btn btn-primary" value="insertOptionalFestivalDataLineup.xhtml">Weiter zum Lineup</h:outputLink>
         </div>
         <div class="col-2">
             <h:outputLink class="btn btn-primary" value="index.xhtml">Fertig bearbeitet</h:outputLink>

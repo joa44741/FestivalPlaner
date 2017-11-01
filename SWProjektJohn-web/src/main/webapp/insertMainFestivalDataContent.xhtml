@@ -112,7 +112,7 @@
                                 <h6>Bestehende Location</h6>
                             </div>
                             <div class="col-3 form-group">
-                                <h:selectOneMenu id="selectedLocation" styleClass="form-control" value="#{festivalFormBean.existingLocationId}">
+                                <h:selectOneMenu styleClass="form-control" value="#{festivalFormBean.existingLocationId}">
                                     <h:outputLabel class="col-form-label" for="existingLocation">Location</h:outputLabel>
                                     <f:selectItem itemValue="#{null}" itemLabel="--select--" />
                                     <f:selectItems id="existingLocation" value="#{festivalFormBean.availableLocations}" var="existingLocation"

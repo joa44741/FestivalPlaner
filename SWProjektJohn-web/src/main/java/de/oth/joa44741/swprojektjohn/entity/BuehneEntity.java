@@ -14,6 +14,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -40,6 +41,11 @@ public class BuehneEntity extends AbstractLongEntity {
     @JoinColumn(name = "buehneId", referencedColumnName = "id", nullable = false)
     private final List<LineupDateEntity> lineupDates = new ArrayList<>();
 
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    private FestivalEntity festival;
+
     @Column
     private Boolean ueberdacht;
 
@@ -51,7 +57,7 @@ public class BuehneEntity extends AbstractLongEntity {
         this.name = name;
     }
 
-    public Boolean isUeberdacht() {
+    public Boolean getUeberdacht() {
         return ueberdacht;
     }
 
@@ -74,4 +80,13 @@ public class BuehneEntity extends AbstractLongEntity {
     public void clearLineupDates() {
         this.lineupDates.clear();
     }
+
+    public FestivalEntity getFestival() {
+        return festival;
+    }
+
+    public void setFestival(FestivalEntity festival) {
+        this.festival = festival;
+    }
+
 }

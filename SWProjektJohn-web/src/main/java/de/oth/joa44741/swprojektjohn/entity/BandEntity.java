@@ -5,17 +5,21 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
+import de.oth.joa44741.swprojektjohn.core.GenreEnum;
 import de.oth.joa44741.swprojektjohn.core.RegexPattern;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -47,9 +51,12 @@ public class BandEntity extends AbstractLongEntity {
     private String facebookseite;
 
     // test eager
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "genreId", referencedColumnName = "id", nullable = true)
-    private final List<GenreEntity> genres = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "BandsGenres", joinColumns = @JoinColumn(
+            name = "bandId"))
+    @Column(name = "genre", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private final List<GenreEnum> genres = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -75,19 +82,26 @@ public class BandEntity extends AbstractLongEntity {
         this.facebookseite = facebookseite;
     }
 
-    public List<GenreEntity> getGenres() {
+    public List<GenreEnum> getGenres() {
         return Collections.unmodifiableList(genres);
     }
 
-    public void addGenre(GenreEntity genre) {
+    public void addGenre(GenreEnum genre) {
         this.genres.add(genre);
     }
 
-    public boolean removeGenre(GenreEntity genre) {
+    public boolean removeGenre(GenreEnum genre) {
         return this.genres.remove(genre);
     }
 
     public void clearGenres() {
         this.genres.clear();
+    }
+
+    public String getGenresAsString() {
+        final String resultString = this.genres.stream()
+                .map(genre -> genre.getText())
+                .collect(Collectors.joining(", "));
+        return resultString;
     }
 }

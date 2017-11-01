@@ -5,8 +5,11 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
+import de.oth.joa44741.swprojektjohn.entity.BandEntity;
+import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
+import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.util.List;
@@ -94,6 +97,42 @@ public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<Fes
         final FestivalEntity festival = retrieveById(festivalId);
         Optional<CampingVarianteEntity> optionalTicket = festival.getCampingVarianten().stream().filter(ticket -> ticket.getId() == campingId).findFirst();
         festival.removeCampingVariante(optionalTicket.get());
+        return festival;
+    }
+
+    @Override
+    public FestivalEntity addLineupDate(Long buehnenId, LineupDateEntity lineupDate) {
+        final BuehneEntity buehne = getEntityManager().find(BuehneEntity.class, buehnenId);
+        if (lineupDate.getBand().getId() != null) {
+            final BandEntity mergedBandEntity = getEntityManager().merge(lineupDate.getBand());
+            lineupDate.setBand(mergedBandEntity);
+        }
+        buehne.addLineupDate(lineupDate);
+        return buehne.getFestival();
+    }
+
+    @Override
+    public FestivalEntity removeLineupDate(Long buehnenId, Long lineupDateId) {
+        final BuehneEntity buehne = getEntityManager().find(BuehneEntity.class, buehnenId);
+        Optional<LineupDateEntity> optLineupDate = buehne.getLineupDates().stream().filter(lineup -> lineup.getId() == lineupDateId).findFirst();
+        buehne.removeLineupDate(optLineupDate.get());
+        return buehne.getFestival();
+    }
+
+    @Override
+    public FestivalEntity addBuehne(Long festivalId, BuehneEntity buehne) {
+        final FestivalEntity festival = retrieveById(festivalId);
+        // bidirectional
+        buehne.setFestival(festival);
+        festival.addBuehne(buehne);
+        return festival;
+    }
+
+    @Override
+    public FestivalEntity removeBuehne(Long festivalId, Long buehnenId) {
+        final FestivalEntity festival = retrieveById(festivalId);
+        Optional<BuehneEntity> optionalBuehne = festival.getBuehnen().stream().filter(buehne -> buehne.getId() == buehnenId).findFirst();
+        festival.removeBuehne(optionalBuehne.get());
         return festival;
     }
 

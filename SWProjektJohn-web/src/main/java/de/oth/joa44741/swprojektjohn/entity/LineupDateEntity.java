@@ -45,7 +45,7 @@ public class LineupDateEntity extends AbstractLongEntity {
     private Date uhrzeitBis;
 
     @NotNull
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "bandId", referencedColumnName = "id", nullable = false)
     private BandEntity band;
 

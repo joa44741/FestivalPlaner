@@ -8,7 +8,6 @@ package de.oth.joa44741.swprojektjohn.web.jsf;
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
 import de.oth.joa44741.swprojektjohn.bservice.LocationBusinessService;
 import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
-import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
@@ -49,8 +48,6 @@ public class FestivalFormBean implements Serializable {
 
     private FestivalEntity transientFestival;
     private List<ZusatzeigenschaftEnum> selectedZusatzeigenschaftenList;
-
-    private TagArtEnum selectedTagArt;
 
     private TicketArtEntity transientTicketArt;
 
@@ -98,14 +95,6 @@ public class FestivalFormBean implements Serializable {
 
     public List<BundeslandEnum> getBundeslaenderAsList() {
         return Arrays.asList(BundeslandEnum.values());
-    }
-
-    public TagArtEnum getSelectedTagArt() {
-        return selectedTagArt;
-    }
-
-    public void setSelectedTagArt(TagArtEnum selectedTagArt) {
-        this.selectedTagArt = selectedTagArt;
     }
 
     public TicketArtEntity getTransientTicketArt() {

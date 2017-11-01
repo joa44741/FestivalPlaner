@@ -14,7 +14,7 @@ public final class PageNames {
     public static final String INDEX = "index.xhtml";
     public static final String FESTIVAL_DETAIL = "festivaldetails.xhtml";
     public static final String INSERT_MAIN_FESTIVAL_DATA = "insertMainFestivalData.xhtml";
-    public static final String INSERT_OPTIONAL_FESTIVAL_DATA = "insertOptionalFestivalData.xhtml";
+    public static final String INSERT_OPTIONAL_FESTIVAL_DATA_TICKETS_AND_CAMPING = "insertOptionalFestivalDataTicketsAndCamping.xhtml";
     public static final String CURRENT_PAGE = null;
 
     private PageNames() {
