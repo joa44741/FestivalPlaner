@@ -99,4 +99,13 @@ public class LocationEntity extends AbstractLongEntity {
         address += ort;
         return address;
     }
+
+    public String getLocationAsString() {
+        String result = "";
+        if (StringUtils.isNotEmpty(name)) {
+            result += name + " ";
+        }
+        result += getAddressAsString();
+        return result;
+    }
 }

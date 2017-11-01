@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <div class="row">
         <div class="col-12">
             <h2>Home</h2>
@@ -23,13 +24,17 @@
                                 von: 
                             </div>
                             <div class="col-8">
-                                #{festival.datumVon}
+                                <h:outputText value="#{festival.datumVon}">
+                                    <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                </h:outputText>
                             </div>
                             <div class="col-4">
                                 bis: 
                             </div>
                             <div class="col-8">
-                                #{festival.datumBis}
+                                <h:outputText value="#{festival.datumBis}">
+                                    <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                </h:outputText>
                             </div>
                             <div class="col-12">
                                 <h:form>

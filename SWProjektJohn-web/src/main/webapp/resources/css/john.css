@@ -8,6 +8,14 @@ and open the template in the editor.
     Author     : Johnny
 */
 
+.img-fluid{
+    max-height: 100px;
+}
+
+.tableWithoutBorder td{
+    border-style:none;
+}
+
 .form-group.required .control-label:after { 
    content:"*";
    color:#D68910;
@@ -131,4 +139,6 @@ nav div a{
     font-size: 20px;
 }
 
-
+.card{
+    margin-bottom: 15px;
+}

@@ -45,6 +45,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
         <div class="col-6">
             <h3>Wetter</h3>
@@ -54,6 +55,63 @@
             14&#x2103;<br/>
             wolkig<br/>
             Niederschlagswahrscheinlichkeit: 35%
+        </div>
+        <div class="col-12">
+            <hr/>
+        </div>
+        <div class="col-6">
+            <h3>Campingvarianten</h3>
+            <div class="row">
+                <div class="col-12">
+                    <h:dataTable value="#{festivaldetailsBean.festival.campingVarianten}" var="camping" class="table">
+                        <h:column>  
+                            <f:facet name = "header">Art</f:facet>    				
+                            <h:outputText value="#{camping.campingArt.text}"/>
+                        </h:column>
+                        <h:column>  
+                            <f:facet name = "header">Extrakosten</f:facet>    	
+                            <h:outputText value="#{camping.extrakosten}">
+                                <f:convertNumber type="currency" currencySymbol="&euro;"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>    				
+                            <f:facet name = "header">Grillen erlaubt</f:facet>    				
+                            <h:outputLabel rendered="#{camping.grillenErlaubt}"><i class="fa fa-check-square-o" aria-hidden="true"></i></h:outputLabel>
+                            <h:outputLabel rendered="#{camping.grillenErlaubt != null &amp;&amp; !camping.grillenErlaubt}"><i class="fa fa-square-o" aria-hidden="true"></i></h:outputLabel>
+                        </h:column>
+                        <h:column>    				
+                            <f:facet name = "header">Glasflaschen erlaubt</f:facet>    				
+                            <h:outputLabel rendered="#{camping.glasflaschenErlaubt}"><i class="fa fa-check-square-o" aria-hidden="true"></i></h:outputLabel>
+                            <h:outputLabel rendered="#{camping.glasflaschenErlaubt != null &amp;&amp; !camping.glasflaschenErlaubt}"><i class="fa fa-square-o" aria-hidden="true"></i></h:outputLabel>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <h3>Ticketarten</h3>
+            <div class="row">
+                <div class="col-12">
+                    <h:dataTable value="#{festivaldetailsBean.festival.ticketArten}" var="ticket" class="table">
+                        <h:column>  
+                            <f:facet name = "header">Art</f:facet>    				
+                            <h:outputText value="#{ticket.tagArt.text}"/>
+                        </h:column>
+                        <h:column>  
+                            <f:facet name = "header">Preis</f:facet>    	
+                            <h:outputText value="#{ticket.preis}">
+                                <f:convertNumber type="currency" currencySymbol="&euro;"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>    				
+                            <f:facet name = "header">Tag</f:facet>    
+                            <h:outputLabel value="#{ticket.tag}">
+                                <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                            </h:outputLabel>
+                        </h:column>
+                    </h:dataTable>
+                </div>
+            </div>
         </div>
         <div class="col-12">
             <hr/>

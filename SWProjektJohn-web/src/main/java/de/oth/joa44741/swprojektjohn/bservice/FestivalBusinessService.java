@@ -5,7 +5,9 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
+import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
+import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.util.List;
 
 /**
@@ -21,6 +23,14 @@ public interface FestivalBusinessService {
     FestivalEntity persistFestival(FestivalEntity entity);
 
     List<FestivalEntity> findAllFestivals();
+
+    FestivalEntity addTicketArt(Long festivalId, TicketArtEntity ticketArt);
+
+    FestivalEntity addCampingVariante(Long festivalId, CampingVarianteEntity campingVariante);
+
+    FestivalEntity removeTicketArt(Long festivalId, Long ticketId);
+
+    FestivalEntity removeCampingVariante(Long festivalId, Long campingId);
 
     void test();
 }

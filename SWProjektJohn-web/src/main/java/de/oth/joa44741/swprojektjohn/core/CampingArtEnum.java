@@ -10,8 +10,19 @@ package de.oth.joa44741.swprojektjohn.core;
  * @author Johnny
  */
 public enum CampingArtEnum {
-    NORMAL,
-    PREMIUM,
-    GREENCAMPING,
-    WOHNMOBIL;
+    NORMAL("Normal"),
+    PREMIUM("Premium"),
+    GREENCAMPING("Greencamping"),
+    WOHNMOBIL("Wohnmobil");
+
+    private final String text;
+
+    private CampingArtEnum(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
+    }
+
 }

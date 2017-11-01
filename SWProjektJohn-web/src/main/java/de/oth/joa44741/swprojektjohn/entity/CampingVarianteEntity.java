@@ -63,7 +63,7 @@ public class CampingVarianteEntity extends AbstractLongEntity {
         this.extrakosten = extrakosten;
     }
 
-    public boolean isGrillenErlaubt() {
+    public Boolean getGrillenErlaubt() {
         return grillenErlaubt;
     }
 
@@ -71,7 +71,7 @@ public class CampingVarianteEntity extends AbstractLongEntity {
         this.grillenErlaubt = grillenErlaubt;
     }
 
-    public Boolean areGlasflaschenErlaubt() {
+    public Boolean getGlasflaschenErlaubt() {
         return glasflaschenErlaubt;
     }
 
