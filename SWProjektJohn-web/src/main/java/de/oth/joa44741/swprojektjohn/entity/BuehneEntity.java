@@ -42,7 +42,7 @@ public class BuehneEntity extends AbstractLongEntity {
     private final List<LineupDateEntity> lineupDates = new ArrayList<>();
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
     private FestivalEntity festival;
 

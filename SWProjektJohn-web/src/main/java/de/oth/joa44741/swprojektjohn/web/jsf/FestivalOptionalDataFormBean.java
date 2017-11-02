@@ -51,7 +51,7 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     private Long selectedBuehnenId;
 
-    private BandEntity selectedBand;
+    private Long selectedBandId;
 
     private List<BandEntity> transientAddedBands;
 
@@ -69,6 +69,8 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         transientCampingVariante = new CampingVarianteEntity();
         transientBuehne = new BuehneEntity();
         selectedGenres = new ArrayList<>();
+        transientBand = new BandEntity();
+        transientLineupDate = new LineupDateEntity();
     }
 
     public TicketArtEntity getTransientTicketArt() {
@@ -86,6 +88,8 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
     }
 
     public String persistLineupDate() {
+        final BandEntity band = bandBusinessService.retrieveBandById(selectedBandId);
+        transientLineupDate.setBand(band);
         festival = festivalBusinessService.addLineupDate(selectedBuehnenId, transientLineupDate);
         initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
@@ -114,6 +118,14 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
     public String deleteCampingVariante(Long campingId) {
         festival = festivalBusinessService.removeCampingVariante(festival.getId(), campingId);
         final FacesMessage msg = new FacesMessage("Die Campingvariante wurde gelöscht");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        initFields(festival.getId());
+        return PageNames.CURRENT_PAGE;
+    }
+
+    public String deleteLineupDate(Long buehnenId, Long lineupId) {
+        festival = festivalBusinessService.removeLineupDate(buehnenId, lineupId);
+        final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
@@ -190,11 +202,11 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         return PageNames.CURRENT_PAGE;
     }
 
-    public BandEntity getSelectedBand() {
-        return selectedBand;
+    public Long getSelectedBandId() {
+        return selectedBandId;
     }
 
-    public void setSelectedBand(BandEntity selectedBand) {
-        this.selectedBand = selectedBand;
+    public void setSelectedBandId(Long selectedBandId) {
+        this.selectedBandId = selectedBandId;
     }
 }
