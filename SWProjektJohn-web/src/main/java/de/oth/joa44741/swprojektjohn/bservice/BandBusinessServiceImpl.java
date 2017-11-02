@@ -7,15 +7,17 @@ package de.oth.joa44741.swprojektjohn.bservice;
 
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import java.util.List;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
+import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 /**
  *
  * @author Andi
  */
-@Stateless
-public class BandBusinessServiceImpl extends AbstractBusinessServiceBase<BandEntity> implements BandBusinessService {
+@RequestScoped
+@Transactional
+public class BandBusinessServiceImpl extends BusinessServiceBaseImpl<BandEntity> implements BandBusinessService {
 
     private static final Logger LOG = Logger.getLogger(BandBusinessServiceImpl.class);
 
@@ -31,7 +33,7 @@ public class BandBusinessServiceImpl extends AbstractBusinessServiceBase<BandEnt
 
     @Override
     public BandEntity persistBand(BandEntity entity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return persistEntity(entity);
     }
 
     @Override

@@ -25,10 +25,14 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+// TODO: refactor!
 @Named("festivalOptionalDataFormBean")
 @SessionScoped
 public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
+    public void test() {
+        System.out.println("TEST");
+    }
     @Inject
     private FestivalBusinessService festivalBusinessService;
 
@@ -53,7 +57,7 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     private Long selectedBandId;
 
-    private List<BandEntity> transientAddedBands;
+    private final List<BandEntity> transientAddedBands = new ArrayList<>();
 
     private List<GenreEnum> selectedGenres;
 
@@ -71,6 +75,8 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         selectedGenres = new ArrayList<>();
         transientBand = new BandEntity();
         transientLineupDate = new LineupDateEntity();
+        selectedBandId = null;
+        selectedBuehnenId = null;
     }
 
     public TicketArtEntity getTransientTicketArt() {
@@ -96,7 +102,9 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
     }
 
     public String persistBand() {
-        transientAddedBands.add(bandBusinessService.persistBand(transientBand));
+        selectedGenres.forEach(genre -> transientBand.addGenre(genre));
+        final BandEntity persistedBand = bandBusinessService.persistBand(transientBand);
+        transientAddedBands.add(persistedBand);
         initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
@@ -197,8 +205,12 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         this.selectedGenres = selectedGenres;
     }
 
+    // TODO: delete or remove... not both
     public String deleteBand(Long bandId) {
+        BandEntity bandToDelete = availableBands.stream().filter(band -> band.getId() == bandId).findFirst().get();
+        transientAddedBands.remove(bandToDelete);
         bandBusinessService.removeBand(bandId);
+        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
@@ -208,5 +220,10 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     public void setSelectedBandId(Long selectedBandId) {
         this.selectedBandId = selectedBandId;
+    }
+
+    public String insertionFinished() {
+        this.transientAddedBands.clear();
+        return PageNames.INDEX;
     }
 }

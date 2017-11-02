@@ -8,7 +8,6 @@ package de.oth.joa44741.swprojektjohn.entity;
 import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -32,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "TicketArten")
 public class TicketArtEntity extends AbstractLongEntity {
 
-    @Basic(optional = false)
     @Column(nullable = false)
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -45,7 +43,6 @@ public class TicketArtEntity extends AbstractLongEntity {
 
     @NotNull
     @Column(nullable = false)
-    @Basic(optional = false)
     @DecimalMin("0.00")
     private BigDecimal preis;
 

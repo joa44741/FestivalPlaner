@@ -11,29 +11,6 @@
         </session-timeout>
     </session-config-->
     
-    <listener>
-        <listener-class>
-            org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
-        </listener-class>
-    </listener>
-    <servlet>
-        <servlet-name>resteasy-servlet</servlet-name>
-        <servlet-class>
-            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
-        </servlet-class>
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>de.oth.joa44741.swprojektjohn.web.webservice.WebserviceInitializer</param-value>
-        </init-param>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>resteasy-servlet</servlet-name>
-        <url-pattern>/webresources/*</url-pattern>
-    </servlet-mapping>
-    <context-param>
-        <param-name>resteasy.servlet.mapping.prefix</param-name>
-        <param-value>/webresources</param-value>
-    </context-param>
     <context-param>
         <param-name>javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL</param-name>
         <param-value>true</param-value>

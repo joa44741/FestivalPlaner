@@ -7,15 +7,17 @@ package de.oth.joa44741.swprojektjohn.bservice;
 
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import java.util.List;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
+import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 /**
  *
  * @author Andi
  */
-@Stateless
-public class LocationBusinessServiceImpl extends AbstractBusinessServiceBase<LocationEntity> implements LocationBusinessService {
+@RequestScoped
+@Transactional
+public class LocationBusinessServiceImpl extends BusinessServiceBaseImpl<LocationEntity> implements LocationBusinessService {
 
     private static final Logger LOG = Logger.getLogger(LocationBusinessServiceImpl.class);
 

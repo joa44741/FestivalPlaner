@@ -5,7 +5,6 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.oth.joa44741.swprojektjohn.core.RegexPattern;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import java.math.BigDecimal;
@@ -13,7 +12,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -34,6 +32,7 @@ import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,7 +45,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class FestivalEntity extends AbstractLongEntity {
 
     @Column(nullable = false, unique = true)
-    @Basic(optional = false)
     @NotNull
     private String name;
 
@@ -66,10 +64,6 @@ public class FestivalEntity extends AbstractLongEntity {
     @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = false)
     private LocationEntity location;
 
-//    @NotNull
-//    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "festivalDefinitionId", referencedColumnName = "id", nullable = false)
-//    private FestivalDefinitionEntity festivalDefinition;
     @Column
     @Min(1)
     private Integer ticketKontingent;
@@ -89,13 +83,11 @@ public class FestivalEntity extends AbstractLongEntity {
     private String lageplan;
 
     @Column(nullable = false)
-    @Basic(optional = false)
     @NotNull
     @Temporal(TemporalType.DATE)
     private Date datumVon;
 
     @Column(nullable = false)
-    @Basic(optional = false)
     @NotNull
     @Temporal(TemporalType.DATE)
     private Date datumBis;
@@ -107,17 +99,18 @@ public class FestivalEntity extends AbstractLongEntity {
     @Enumerated(EnumType.STRING)
     private final Set<ZusatzeigenschaftEnum> zusatzeigenschaften = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    @XmlTransient
     private final Set<CampingVarianteEntity> campingVarianten = new HashSet<>();
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    @XmlTransient
     private final Set<TicketArtEntity> ticketArten = new HashSet<>();
 
     @OneToMany(mappedBy = "festival", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @XmlTransient
     private final Set<BuehneEntity> buehnen = new HashSet<>();
 
     public String getName() {

@@ -14,21 +14,18 @@ import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.util.List;
 import java.util.Optional;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
-import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 /**
  *
  * @author Andi
  */
-@Stateless
-public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<FestivalEntity> implements FestivalBusinessService {
-
-    @Resource
-    private SessionContext ctx;
+@RequestScoped
+@Transactional
+public class FestivalBusinessServiceImpl extends BusinessServiceBaseImpl<FestivalEntity> implements FestivalBusinessService {
 
     private static final Logger LOG = Logger.getLogger(FestivalBusinessServiceImpl.class);
 
@@ -63,11 +60,6 @@ public class FestivalBusinessServiceImpl extends AbstractBusinessServiceBase<Fes
     @Override
     public List<FestivalEntity> findAllFestivals() {
         return findAll();
-    }
-
-    @Override
-    public void test() {
-        System.out.println(ctx.getCallerPrincipal().getName());
     }
 
     @Override

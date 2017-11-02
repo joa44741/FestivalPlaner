@@ -10,6 +10,7 @@ package de.oth.joa44741.swprojektjohn.core;
  * @author Johnny
  */
 public enum TagArtEnum {
+    KOMPLETT_TICKET("Komplett-Ticket"),
     TAGESTICKET("Tagesticket"),
     ZWEI_TAGE_TICKET("2-Tage-Ticket"),
     DREI_TAGE_TICKET("3-Tage-Ticket"),

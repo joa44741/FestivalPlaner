@@ -7,7 +7,6 @@ package de.oth.joa44741.swprojektjohn.entity;
 
 import de.oth.joa44741.swprojektjohn.core.CampingArtEnum;
 import java.math.BigDecimal;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -31,13 +30,11 @@ public class CampingVarianteEntity extends AbstractLongEntity {
 
     @NotNull
     @Column(nullable = false)
-    @Basic(optional = false)
     @Enumerated(EnumType.STRING)
     private CampingArtEnum campingArt;
 
     @NotNull
     @Column(nullable = false)
-    @Basic(optional = false)
     @DecimalMin("0.00")
     private BigDecimal extrakosten;
 

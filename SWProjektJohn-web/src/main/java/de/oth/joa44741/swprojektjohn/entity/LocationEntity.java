@@ -6,7 +6,6 @@
 package de.oth.joa44741.swprojektjohn.entity;
 
 import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,13 +33,11 @@ public class LocationEntity extends AbstractLongEntity {
     @Column
     private String strasse;
 
-    @Basic(optional = false)// --> runtime
     @Column(nullable = false) // --> database
     @NotNull
     private String ort;
 
     // regular expression
-    @Basic(optional = false)
     @Column(nullable = false)
     @NotNull
     private String plz;

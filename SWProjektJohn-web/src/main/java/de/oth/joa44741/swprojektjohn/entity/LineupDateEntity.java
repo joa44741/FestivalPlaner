@@ -5,7 +5,6 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,12 +35,10 @@ public class LineupDateEntity extends AbstractLongEntity {
 
     @Column
     @Temporal(TemporalType.TIME)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm", timezone = "Europe/Berlin")
     private Date uhrzeitVon;
 
     @Column
     @Temporal(TemporalType.TIME)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm", timezone = "Europe/Berlin")
     private Date uhrzeitBis;
 
     @NotNull

@@ -122,7 +122,7 @@
                                     <f:selectItem itemValue="#{null}" itemLabel="--select--" />
                                     <f:selectItems id="existingLocation" value="#{festivalFormBean.availableLocations}" var="existingLocation"
                                                    itemLabel="#{existingLocation.locationAsString}" itemValue="#{existingLocation.id}" />
-                                    <f:ajax execute="selectedLocation" render="locationName strasse ort plz selectedBundeslandMenu" listener="#{festivalFormBean.updateLocationFields()}"/>
+                                    <f:ajax render="locationName strasse ort plz selectedBundeslandMenu" listener="#{festivalFormBean.updateLocationFields()}"/>
                                 </h:selectOneMenu>
                             </div>
                             <div class="col-12">

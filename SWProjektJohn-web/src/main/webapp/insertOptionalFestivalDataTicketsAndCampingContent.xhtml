@@ -61,15 +61,16 @@
                                 <h6>Ticketart anlegen</h6>
                             </div>
                             <div class="col-3 form-group required">
+                                <h:outputLabel class="col-form-label control-label" for="selectedTagArt">Tagart</h:outputLabel>
                                 <h:selectOneMenu id="selectedTagArt" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientTicketArt.tagArt}">
-                                    <h:outputLabel class="col-form-label control-label" for="tagArt">Tagart</h:outputLabel>
                                     <f:selectItems id="tagArt" value="#{festivalOptionalDataFormBean.tagArtenAsList}" var="tagArt"
                                                    itemLabel="#{tagArt.text}" itemValue="#{tagArt}" />
+                                    <f:ajax execute="selectedTagArt" listener="#{festivalOptionalDataFormBean.test()}" event="change" render="tag"/> 
                                 </h:selectOneMenu>
-                            </div>
+                            </div>  
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="tag">Tag</h:outputLabel>
-                                <h:inputText class="form-control" id="tag" value="#{festivalOptionalDataFormBean.transientTicketArt.tag}">
+                                <h:inputText class="form-control" id="tag" value="#{festivalOptionalDataFormBean.transientTicketArt.tag}" disabled="#{festivalOptionalDataFormBean.transientTicketArt.tagArt != 'TAGESTICKET'}">
                                     <f:convertDateTime pattern="yyyy-MM-dd" />
                                     <f:passThroughAttribute name="type" value="date" />
                                 </h:inputText>

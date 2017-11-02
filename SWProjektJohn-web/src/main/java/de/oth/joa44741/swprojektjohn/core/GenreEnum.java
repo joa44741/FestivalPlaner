@@ -14,6 +14,7 @@ public enum GenreEnum {
     BLUES("Blues"),
     KLASSIK("Klassik"),
     COUNTRY("Country"),
+    DIVERSE("Diverse"),
     ELECTRONIC("Electronic (Techno, House,...)"),
     HIPHOP_RAP("Hip-Hop/Rap"),
     INDIE_POP("Indie Pop"),
@@ -24,6 +25,7 @@ public enum GenreEnum {
     R_AND_B("R&B/Soul"),
     REGGAE("Reggae"),
     ROCK("Rock"),
+    SCHLAGER("Schlager"),
     SINGER_SONGWRITER("Singer/Songwriter");
 
     private final String text;

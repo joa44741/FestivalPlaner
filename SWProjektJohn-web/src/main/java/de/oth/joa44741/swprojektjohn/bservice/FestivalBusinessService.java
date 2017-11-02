@@ -43,5 +43,4 @@ public interface FestivalBusinessService {
 
     FestivalEntity removeLineupDate(Long buehnenId, Long lineupDateId);
 
-    void test();
 }

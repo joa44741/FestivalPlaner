@@ -7,8 +7,6 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <jta-data-source>java:jboss/andreas_john</jta-data-source>
 
-        <!--class>de.oth.joa44741.swprojektjohn.entity.CustomerEntity</class-->
-
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="update"/>

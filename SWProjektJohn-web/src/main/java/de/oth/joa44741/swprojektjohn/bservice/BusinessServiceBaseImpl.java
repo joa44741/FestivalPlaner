@@ -18,8 +18,9 @@ import javax.persistence.Query;
  * @author Andi
  * @param <T>
  */
-public abstract class AbstractBusinessServiceBase<T extends AbstractLongEntity> {
+public class BusinessServiceBaseImpl<T extends AbstractLongEntity> implements BusinessServiceBase<T> {
 
+    //TODO: Exceptions definieren!
     @PersistenceContext(unitName = "sw_projekt_john_pu")
     private EntityManager entityManager;
 
@@ -29,11 +30,12 @@ public abstract class AbstractBusinessServiceBase<T extends AbstractLongEntity> 
         return this.entityManager;
     }
 
-    protected AbstractBusinessServiceBase() {
-        ParameterizedType genericSuperClass = (ParameterizedType) getClass().getGenericSuperclass();
+    protected BusinessServiceBaseImpl() {
+        ParameterizedType genericSuperClass = (ParameterizedType) getClass().getSuperclass().getGenericSuperclass();
         this.clazz = (Class<AbstractLongEntity>) genericSuperClass.getActualTypeArguments()[0];
     }
 
+    @Override
     public T retrieveById(Long id) {
         T entity = (T) getEntityManager().find(this.clazz, id);
         if (entity == null) {
@@ -43,11 +45,13 @@ public abstract class AbstractBusinessServiceBase<T extends AbstractLongEntity> 
         return entity;
     }
 
+    @Override
     public T persistEntity(T entity) {
         getEntityManager().persist(entity);
         return entity;
     }
 
+    @Override
     public List<T> findAll() {
         final String statement = "SELECT t FROM " + clazz.getSimpleName() + " t";
         final Query query = getEntityManager().createQuery(statement);

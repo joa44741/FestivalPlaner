@@ -8,7 +8,6 @@ package de.oth.joa44741.swprojektjohn.entity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BuehneEntity extends AbstractLongEntity {
 
     @NotNull
-    @Basic(optional = false)
     @Column(nullable = false)
     private String name;
 

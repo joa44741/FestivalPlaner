@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.persistence.Basic;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -37,7 +36,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Bands")
 public class BandEntity extends AbstractLongEntity {
 
-    @Basic(optional = false)
     @Column(nullable = false)
     @NotNull
     private String name;

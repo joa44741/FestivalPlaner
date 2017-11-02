@@ -103,14 +103,14 @@
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="von">Von</h:outputLabel>
                                 <h:inputText class="form-control" id="von" value="#{festivalOptionalDataFormBean.transientLineupDate.uhrzeitVon}">
-                                    <f:convertDateTime pattern="HH:mm" />
+                                    <f:convertDateTime pattern="HH:mm" timeZone="Europe/Berlin"/>
                                     <f:passThroughAttribute name="type" value="time" />
                                 </h:inputText>
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="bis">Bis</h:outputLabel>
                                 <h:inputText class="form-control" id="bis" value="#{festivalOptionalDataFormBean.transientLineupDate.uhrzeitBis}">
-                                    <f:convertDateTime pattern="HH:mm" />
+                                    <f:convertDateTime pattern="HH:mm" timeZone="Europe/Berlin"/>
                                     <f:passThroughAttribute name="type" value="time" />
                                 </h:inputText>
                             </div>
@@ -219,6 +219,7 @@
                                     <f:selectItems id="existingBuehne" value="#{festivalOptionalDataFormBean.availableGenres}" var="genre"
                                                    itemLabel="#{genre.text}" itemValue="#{genre}" />
                                     <f:passThroughAttribute name="size" value="10"/>
+                                    <f:converter converterId="genericEnumConverter" />
                                 </h:selectManyMenu>
                             </div>
                         </div>

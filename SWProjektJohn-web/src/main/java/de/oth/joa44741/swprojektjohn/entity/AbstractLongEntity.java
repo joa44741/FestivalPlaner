@@ -5,10 +5,8 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import java.util.Objects;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,8 +38,6 @@ public class AbstractLongEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     @Column(updatable = false, nullable = false)
-    @Basic(optional = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS", locale = "de_DE", timezone = "Europe/Berlin")
     private Date creationDate;
 
     @PrePersist
@@ -64,6 +60,9 @@ public class AbstractLongEntity {
 
     @Override
     public int hashCode() {
+        if (this.id == null) {
+            return super.hashCode();
+        }
         int hash = 7;
         hash = 89 * hash + Objects.hashCode(this.id);
         return hash;
