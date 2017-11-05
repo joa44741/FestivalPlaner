@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
+import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -29,6 +30,13 @@ public class LocationBusinessServiceImpl extends BusinessServiceBaseImpl<Locatio
     @Override
     public List<LocationEntity> findAllLocations() {
         return findAll();
+    }
+
+    @Override
+    public LocationEntity retrieveLocationByFestival(FestivalEntity festival) {
+        final FestivalEntity mergedFestival = getEntityManager().merge(festival);
+        final LocationEntity location = mergedFestival.getLocation();
+        return location;
     }
 
 }
