@@ -113,6 +113,7 @@ public class FestivalEntity extends AbstractLongEntity {
     @XmlTransient
     private final Set<BuehneEntity> buehnen = new HashSet<>();
 
+    // TODO: Relation zu LineUp? Sonst kann kein LineupEintrag ohne Bühne existieren.
     public String getName() {
         return name;
     }

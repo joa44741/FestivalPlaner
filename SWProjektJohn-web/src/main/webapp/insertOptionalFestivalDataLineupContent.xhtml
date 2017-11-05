@@ -39,9 +39,14 @@
                                                 <div class="card-body">
                                                     <h5>#{buehne.name}</h5>
                                                     <ui:repeat var="tag" value="#{festivalOptionalDataFormBean.getTageOfLineupDatesByBuehne(buehne.id)}">
-                                                        <h6><h:outputText value="#{tag}">
+                                                        <h6>
+                                                            <h:outputText value="#{tag}" rendered="#{tag != null}">
                                                                 <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
-                                                            </h:outputText></h6>
+                                                            </h:outputText>
+                                                        </h6>
+                                                        <h6>
+                                                            <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
+                                                        </h6>
                                                         <h:dataTable value = "#{festivalOptionalDataFormBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
                                                                      class = "table">
                                                             <h:column>    				
@@ -78,7 +83,7 @@
                                 <h6>Lineup anlegen</h6>
                             </div>
                             <div class="col-3 form-group required">
-                                <h:selectOneMenu required="true" styleClass="form-control" value="#{festivalOptionalDataFormBean.selectedBandId}">
+                                <h:selectOneMenu required="true" styleClass="form-control" value="#{festivalOptionalDataFormBean.selectedBandId}" requiredMessage="Die Band muss angegeben werden">
                                     <h:outputLabel class="col-form-label control-label" for="existingBand">Band</h:outputLabel>
                                     <f:selectItem itemValue="#{null}" itemLabel="--select--" />
                                     <f:selectItems id="existingBand" value="#{festivalOptionalDataFormBean.availableBands}" var="band"
@@ -86,7 +91,7 @@
                                 </h:selectOneMenu>
                             </div>
                             <div class="col-3 form-group required">
-                                <h:selectOneMenu required="true" styleClass="form-control" value="#{festivalOptionalDataFormBean.selectedBuehnenId}">
+                                <h:selectOneMenu required="true" styleClass="form-control" value="#{festivalOptionalDataFormBean.selectedBuehnenId}" requiredMessage="Die B&uuml;hne muss angegeben werden (ggfs. B&uuml;hne UNBEKANNT anlegen)">
                                     <h:outputLabel class="col-form-label control-label" for="existingBuehne">B&uuml;hne</h:outputLabel>
                                     <f:selectItem itemValue="#{null}" itemLabel="--select--" />
                                     <f:selectItems id="existingBuehne" value="#{festivalOptionalDataFormBean.persistedFestival.buehnen}" var="buehne"
@@ -95,10 +100,12 @@
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="tag">Tag</h:outputLabel>
-                                <h:inputText class="form-control" id="tag" value="#{festivalOptionalDataFormBean.transientLineupDate.tag}">
-                                    <f:convertDateTime pattern="yyyy-MM-dd" />
-                                    <f:passThroughAttribute name="type" value="date" />
-                                </h:inputText>
+                                <h:selectOneMenu id="selectedTag" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientLineupDate.tag}">
+                                    <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                                    <f:selectItems value="#{festivalOptionalDataFormBean.possibleTagesticketDates}" var="tag"
+                                                   itemLabel="#{festivalOptionalDataFormBean.getDateAsString(tag)}" itemValue="#{tag}" />
+                                    <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                </h:selectOneMenu>
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="von">Von</h:outputLabel>

@@ -16,8 +16,11 @@ import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -226,4 +229,23 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         this.transientAddedBands.clear();
         return PageNames.INDEX;
     }
+
+    public List<Date> getPossibleTagesticketDates() {
+        final List<Date> possibleDates = new ArrayList<>();
+        Date datumVon = this.festival.getDatumVon();
+        Date datumBis = this.festival.getDatumBis();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(datumVon);
+        while (!cal.getTime().equals(datumBis)) {
+            possibleDates.add(cal.getTime());
+            cal.add(Calendar.DATE, 1);
+        }
+        possibleDates.add(cal.getTime());
+        return possibleDates;
+    }
+
+    public String getDateAsString(Date date) {
+        return new SimpleDateFormat("dd.MM.yyyy").format(date);
+    }
+
 }

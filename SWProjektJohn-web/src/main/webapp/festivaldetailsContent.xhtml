@@ -125,9 +125,14 @@
                     </div>
                     <div class="card-body">
                         <ui:repeat var="tag" value="#{festivaldetailsBean.getTageOfLineupDatesByBuehne(buehne.id)}">
-                            <h4><h:outputText value="#{tag}">
+                            <h4>
+                                <h:outputText value="#{tag}" rendered="#{tag != null}">
                                     <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
-                                </h:outputText></h4>
+                                </h:outputText>
+                            </h4>
+                            <h4>
+                            <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
+                            </h4>
                             <h:dataTable value = "#{festivaldetailsBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
                                          class = "table">
                                 <h:column>    				
@@ -152,8 +157,5 @@
                 </div>
             </div>
         </ui:repeat>
-        <div class="col-12">
-            <h:messages layout="table" globalOnly="true" />
-        </div>
     </div>
 </html>

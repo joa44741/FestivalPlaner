@@ -55,6 +55,8 @@ public class FestivalFormBean implements Serializable {
 
     private Long existingLocationId;
 
+    private Long selectedFestivalId;
+
     @PostConstruct
     public void initFields() {
         transientFestival = new FestivalEntity();
@@ -191,6 +193,18 @@ public class FestivalFormBean implements Serializable {
             return Optional.of(errorMessage);
         }
         return Optional.empty();
+    }
+
+    public List<FestivalEntity> findAllFestivals() {
+        return festivalBusinessService.findAllFestivals();
+    }
+
+    public Long getSelectedFestivalId() {
+        return selectedFestivalId;
+    }
+
+    public void setSelectedFestivalId(Long selectedFestivalId) {
+        this.selectedFestivalId = selectedFestivalId;
     }
 
 }
