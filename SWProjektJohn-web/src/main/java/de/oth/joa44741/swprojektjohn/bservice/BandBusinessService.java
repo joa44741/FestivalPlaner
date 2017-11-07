@@ -16,6 +16,8 @@ public interface BandBusinessService {
 
     BandEntity retrieveBandById(Long id);
 
+    BandEntity retrieveBandByIdIncludingDetails(Long id);
+
     List<BandEntity> findAllBands();
 
     BandEntity persistBand(BandEntity entity);

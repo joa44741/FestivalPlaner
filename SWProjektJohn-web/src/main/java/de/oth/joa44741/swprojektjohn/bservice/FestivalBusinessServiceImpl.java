@@ -35,6 +35,14 @@ public class FestivalBusinessServiceImpl extends BusinessServiceBaseImpl<Festiva
     }
 
     @Override
+    public Optional<FestivalEntity> findFestivalByName(String name) {
+        final TypedQuery query = getEntityManager().createNamedQuery(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME, FestivalEntity.class);
+        query.setParameter("name", name);
+        return getOptionalSingleResult(query);
+    }
+
+    //TODO: Named Query
+    @Override
     public FestivalEntity retrieveFestivalByIdIncludingDetails(Long id) {
         final String statement = "SELECT t FROM FestivalEntity t "
                 + "JOIN FETCH t.location l "
@@ -58,8 +66,20 @@ public class FestivalBusinessServiceImpl extends BusinessServiceBaseImpl<Festiva
     }
 
     @Override
+    public FestivalEntity updateFestival(FestivalEntity entity) {
+        FestivalEntity updatedEntity = getEntityManager().merge(entity);
+        return persistEntity(updatedEntity);
+    }
+
+    @Override
     public List<FestivalEntity> findAllFestivals() {
         return findAll();
+    }
+
+    @Override
+    public List<FestivalEntity> findAllFestivalsWithStatusFreigegeben() {
+        final TypedQuery query = getEntityManager().createNamedQuery(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_WITH_STATUS_FREIGEGEBEN, FestivalEntity.class);
+        return query.getResultList();
     }
 
     @Override
@@ -126,6 +146,13 @@ public class FestivalBusinessServiceImpl extends BusinessServiceBaseImpl<Festiva
         Optional<BuehneEntity> optionalBuehne = festival.getBuehnen().stream().filter(buehne -> buehne.getId() == buehnenId).findFirst();
         festival.removeBuehne(optionalBuehne.get());
         return festival;
+    }
+
+    @Override
+    public FestivalEntity retrieveFestivalByLineupDateId(Long lineupDateId) {
+        final TypedQuery<FestivalEntity> query = getEntityManager().createNamedQuery(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_LINEUP_DATE_ID, FestivalEntity.class);
+        query.setParameter("lineupDateId", lineupDateId);
+        return query.getSingleResult();
     }
 
 }

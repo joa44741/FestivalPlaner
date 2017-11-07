@@ -8,6 +8,7 @@ package de.oth.joa44741.swprojektjohn.bservice;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
@@ -24,6 +25,16 @@ public class BandBusinessServiceImpl extends BusinessServiceBaseImpl<BandEntity>
     @Override
     public BandEntity retrieveBandById(Long id) {
         return retrieveById(id);
+    }
+
+    @Override
+    public BandEntity retrieveBandByIdIncludingDetails(Long id) {
+        final String statement = "SELECT t FROM BandEntity t "
+                + "LEFT JOIN FETCH t.lineupDates l "
+                + "WHERE t.id = :id";
+        final TypedQuery<BandEntity> query = getEntityManager().createQuery(statement, BandEntity.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override

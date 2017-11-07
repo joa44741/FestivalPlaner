@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="row">
+        <div class="col-12">
+            <h2>#{bandDetailsBean.band.name}</h2>
+            <hr/>
+        </div>
+        <div class="col-12">
+            <h:outputText value="#{bandDetailsBean.band.beschreibung}"/>
+        </div>
+        <div class="col-12">
+            <h:outputLabel rendered="#{bandDetailsBean.band.facebookseite != null}" class="bandLinkIcon">
+                <i class="fa fa-facebook-official" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Facebookseite">:</i>
+            </h:outputLabel>
+            <h:outputLink  rendered="#{bandDetailsBean.band.facebookseite != null}" value="#{bandDetailsBean.band.facebookseite}">Link</h:outputLink>
+        </div>
+        <div class="col-12">
+            <h:outputLabel rendered="#{bandDetailsBean.band.webseite != null}" class="bandLinkIcon">
+                <i class="fa fa-globe" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Webseite">:</i>
+            </h:outputLabel>
+            <h:outputLink  rendered="#{bandDetailsBean.band.webseite != null}" value="#{bandDetailsBean.band.webseite}">Link</h:outputLink>
+        </div>
+        <div class="col-12">
+            <hr/>
+            <h3>Auftritte</h3>
+        </div>
+        <h:dataTable value = "#{bandDetailsBean.band.lineupDates}" var = "lineup" class = "table">
+            <h:column>    				
+                <f:facet name = "header">Festival</f:facet>    				
+                <h:form>
+                    <h:commandLink class="font-weight-bold" action="#{festivaldetailsBean.showFestivalDetails(bandDetailsBean.getFestivalByLineupDateId(lineup.id).id)}">#{bandDetailsBean.getFestivalByLineupDateId(lineup.id).name}</h:commandLink>
+                </h:form>
+            </h:column>
+            <h:column>    				
+                <f:facet name = "header">Tag</f:facet>    				
+                <h:outputText value="#{lineup.tag}">
+                    <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                </h:outputText>
+            </h:column>
+            <h:column>    				
+                <f:facet name = "header">Von</f:facet>    				
+                <h:outputText value="#{lineup.uhrzeitVon}">
+                    <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                </h:outputText>
+            </h:column>
+            <h:column>    				
+                <f:facet name = "header">Bis</f:facet>    				
+                <h:outputText value="#{lineup.uhrzeitBis}">
+                    <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                </h:outputText>
+            </h:column>
+        </h:dataTable>
+    </div>
+</html>

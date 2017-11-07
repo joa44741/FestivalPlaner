@@ -8,10 +8,12 @@ package de.oth.joa44741.swprojektjohn.bservice;
 import de.oth.joa44741.swprojektjohn.entity.AbstractLongEntity;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -20,6 +22,7 @@ import javax.persistence.Query;
  */
 public class BusinessServiceBaseImpl<T extends AbstractLongEntity> implements BusinessServiceBase<T> {
 
+    // TODO: kommentar schreiben, da Code aus stackoverflow verwendet
     //TODO: Exceptions definieren!
     @PersistenceContext(unitName = "sw_projekt_john_pu")
     private EntityManager entityManager;
@@ -56,6 +59,16 @@ public class BusinessServiceBaseImpl<T extends AbstractLongEntity> implements Bu
         final String statement = "SELECT t FROM " + clazz.getSimpleName() + " t";
         final Query query = getEntityManager().createQuery(statement);
         return query.getResultList();
+    }
+
+    protected Optional<T> getOptionalSingleResult(TypedQuery<T> query) {
+        query.setMaxResults(1);
+        final List<T> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return Optional.empty();
+        } else {
+            return Optional.of(resultList.get(0));
+        }
     }
 
 }

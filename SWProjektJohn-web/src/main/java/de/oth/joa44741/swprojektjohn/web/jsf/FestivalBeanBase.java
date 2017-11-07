@@ -21,32 +21,46 @@ public class FestivalBeanBase implements Serializable {
 
     protected FestivalEntity festival;
 
-    private static Comparator<? super LineupDateEntity> lineupDateComparator = (l1, l2) -> {
-        final Date l1Von = l1.getUhrzeitVon();
-        final Date l2Von = l2.getUhrzeitVon();
+    protected FestivalBeanBase() {
 
-        if (l1Von == null && l2Von == null) {
-            return 0;
-        } else if (l1Von == null) {
-            return 1;
-        } else if (l2Von == null) {
-            return -1;
+    }
+
+    private static Comparator<? super LineupDateEntity> lineupDateTimeComparator = (l1, l2) -> {
+        final int tagCompareResult = getDateCompareResult(l1.getTag(), l2.getTag());
+        if (tagCompareResult == 0) {
+            return getDateCompareResult(l1.getTag(), l2.getTag());
         } else {
-            return l1Von.compareTo(l2Von);
+            return tagCompareResult;
         }
     };
 
+    private static Comparator<? super Date> dateComparator = (l1, l2) -> {
+        return getDateCompareResult(l1, l2);
+    };
+
+    public static int getDateCompareResult(Date tag1, Date tag2) {
+        if (tag1 == null && tag2 == null) {
+            return 0;
+        } else if (tag1 == null) {
+            return 1;
+        } else if (tag2 == null) {
+            return -1;
+        } else {
+            return tag1.compareTo(tag2);
+        }
+    }
+
     public List<Date> getTageOfLineupDatesByBuehne(Long buehnenId) {
-        final Optional<BuehneEntity> optBuehne = festival.getBuehnen().stream().filter(b -> b.getId() == buehnenId).findFirst();
-        final List<Date> tage = optBuehne.get().getLineupDates().stream().map(l -> l.getTag()).distinct().sorted(Date::compareTo).collect(Collectors.toList());
+        final Optional<BuehneEntity> optBuehne = festival.getBuehnen().stream().filter(b -> b.getId().equals(buehnenId)).findFirst();
+        final List<Date> tage = optBuehne.get().getLineupDates().stream().map(l -> l.getTag()).distinct().sorted(dateComparator).collect(Collectors.toList());
         return tage;
     }
 
     public List<LineupDateEntity> getLineupDatesByBuehneAndTag(Long buehnenId, Date tag) {
-        final Optional<BuehneEntity> optBuehne = this.festival.getBuehnen().stream().filter(b -> b.getId() == buehnenId).findFirst();
+        final Optional<BuehneEntity> optBuehne = this.festival.getBuehnen().stream().filter(b -> b.getId().equals(buehnenId)).findFirst();
         final List<LineupDateEntity> lineupDates = optBuehne.get().getLineupDates().stream()
-                .filter(l -> l.getTag() == null || l.getTag().equals(tag))
-                .sorted(lineupDateComparator)
+                .filter(l -> (l.getTag() == null && tag == null) || (l.getTag() != null) && l.getTag().equals(tag))
+                .sorted(lineupDateTimeComparator)
                 .collect(Collectors.toList());
         return lineupDates;
     }

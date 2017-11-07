@@ -6,6 +6,7 @@
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
 import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
+import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
@@ -56,12 +57,22 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
 
     public String persistMainFestivalData() {
         selectedZusatzeigenschaftenList.stream().forEach(z -> transientFestival.addZusatzeigenschaft(z));
-        System.out.println(transientFestival);
-        FestivalEntity persistedFestival = festivalBusinessService.persistFestival(transientFestival);
+        // TODO: if Admin --> FREIGEGEBEN
+        transientFestival.setStatus(StatusEnum.ERSTELLT);
+        final FestivalEntity persistedFestival = festivalBusinessService.persistFestival(transientFestival);
         final FacesMessage msg = new FacesMessage("Festival " + persistedFestival.getName() + " erfolgreich angelegt");
         FacesContext.getCurrentInstance().addMessage("newFormular", msg);
         initFields();
         return festivalOptionalDataFormBean.loadAndShowPage(persistedFestival.getId());
+    }
+
+    public void validateFestivalName(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        final String festivalName = (String) value;
+        festivalBusinessService.findFestivalByName(festivalName).ifPresent(festival -> {
+            final String errorMessage = "Das Festival mit dem Namen " + festivalName + " exisitiert bereits. Das Festival hat den Status " + festival.getStatus() + " und muss gegebenfalls erst vom Administrator gelöscht werden.";
+            final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, null);
+            throw new ValidatorException(msg);
+        });
     }
 
     public List<BundeslandEnum> getBundeslaenderAsList() {

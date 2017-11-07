@@ -28,7 +28,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @MappedSuperclass
-public class AbstractLongEntity {
+public abstract class AbstractLongEntity {
 
     // TODO: jede relation art manyToMany
     @Id
@@ -60,9 +60,6 @@ public class AbstractLongEntity {
 
     @Override
     public int hashCode() {
-        if (this.id == null) {
-            return super.hashCode();
-        }
         int hash = 7;
         hash = 89 * hash + Objects.hashCode(this.id);
         return hash;
@@ -80,11 +77,7 @@ public class AbstractLongEntity {
             return false;
         }
         final AbstractLongEntity other = (AbstractLongEntity) obj;
-        if (this.id == null && other.id == null) {
-            return super.equals(obj);
-        } else {
-            return Objects.equals(this.id, other.id);
-        }
+        return Objects.equals(this.id, other.id);
     }
 
 }

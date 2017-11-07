@@ -6,6 +6,7 @@
 package de.oth.joa44741.swprojektjohn.entity;
 
 import de.oth.joa44741.swprojektjohn.core.RegexPattern;
+import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -22,6 +23,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,7 +45,18 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "Festivals")
+@NamedQueries({
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_WITH_STATUS_FREIGEGEBEN, query = "SELECT f FROM FestivalEntity f where f.status = 'FREIGEGEBEN'")
+    ,
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME, query = "SELECT f FROM FestivalEntity f where f.name = :name")
+    ,
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_LINEUP_DATE_ID, query = "SELECT f FROM FestivalEntity f join f.buehnen b join b.lineupDates l where l.id = :lineupDateId")
+})
 public class FestivalEntity extends AbstractLongEntity {
+
+    public static final String QUERY_NAME_FIND_FESTIVAL_WITH_STATUS_FREIGEGEBEN = "findFestivalWithStatusFreigegeben";
+    public static final String QUERY_NAME_FIND_FESTIVAL_BY_NAME = "findFestivalByName";
+    public static final String QUERY_NAME_FIND_FESTIVAL_BY_LINEUP_DATE_ID = "findFestivalByLineupDateId";
 
     @Column(nullable = false, unique = true)
     @NotNull
@@ -112,6 +126,11 @@ public class FestivalEntity extends AbstractLongEntity {
     @OneToMany(mappedBy = "festival", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @XmlTransient
     private final Set<BuehneEntity> buehnen = new HashSet<>();
+
+    @Column(nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     // TODO: Relation zu LineUp? Sonst kann kein LineupEintrag ohne Bühne existieren.
     public String getName() {
@@ -276,5 +295,13 @@ public class FestivalEntity extends AbstractLongEntity {
                 divide(ticketKontingentAsBigDecimal).
                 multiply(BigDecimal.valueOf(100)).
                 intValue();
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 }

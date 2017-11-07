@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="row">
+        <div class="col-12">
+            <h2>Suche</h2>
+            <hr/>
+        </div>
+        <div class="col-12">
+            <h3>Suche nach Bands </h3>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h:form>
+                        <div class="row">
+                            <div class="col-3 form-group">
+                                <h:outputLabel class="col-form-label" for="name">Bandname</h:outputLabel>
+                                <h:inputText class="form-control" id="name" value="#{bandSearchingBean.filterName}">
+                                    <f:ajax event="keyup" execute="@form" delay="100" render="foundBands" listener="#{bandSearchingBean.updateMatchingBands()}"/>
+                                </h:inputText>
+                            </div>
+                            <div class="col-3 form-group">
+                                <h:outputLabel class="col-form-label" for="genres">Genres</h:outputLabel>
+                                <!-- use backing bean for general tasks: availableGenres --> 
+                                <h:selectManyMenu id="genres" styleClass="form-control" value="#{bandSearchingBean.selectedGenres}">
+                                    <f:selectItems value="#{festivalOptionalDataFormBean.availableGenres}" var="genre"
+                                                   itemLabel="#{genre.text}" itemValue="#{genre}" />
+                                    <f:passThroughAttribute name="size" value="10"/>
+                                    <f:converter converterId="genericEnumConverter" />
+                                    <f:ajax execute="@form" delay="100" render="foundBands" listener="#{bandSearchingBean.updateMatchingBands()}"/>
+                                </h:selectManyMenu>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <h:panelGroup id="foundBands" class="col-12">
+            <div id="testDiv" class="row">
+                <ui:repeat var="band" value="#{bandSearchingBean.matchingBands}">
+                    <div class="col-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>#{band.name}</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h:outputText value="#{band.beschreibung}"/>
+                                    </div>
+                                    <div class="col-12" style="margin-bottom: 10px">
+                                        <h:form>
+                                            <h:commandLink class="font-weight-bold" action="#{bandDetailsBean.showBandDetails(band.id)}">zeige Details</h:commandLink>
+                                        </h:form>
+                                    </div>
+                                    <div class="col-12">
+                                        <h:outputLabel rendered="#{band.facebookseite != null}" class="bandLinkIcon">
+                                            <i class="fa fa-facebook-official" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Facebookseite">:</i>
+                                        </h:outputLabel>
+                                        <h:outputLink  rendered="#{band.facebookseite != null}" value="#{band.facebookseite}">Link</h:outputLink>
+                                    </div>
+                                    <div class="col-12">
+                                        <h:outputLabel rendered="#{band.webseite != null}" class="bandLinkIcon">
+                                            <i class="fa fa-globe" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Webseite">:</i>
+                                        </h:outputLabel>
+                                        <h:outputLink rendered="#{band.webseite != null}" value="#{band.webseite}">Link</h:outputLink> 
+                                    </div>
+                                    <div class="col-3">
+                                        Genres:
+                                    </div>
+                                    <div class="col-9">
+                                        <ul>
+                                            <ui:repeat var="genre" value="#{band.genres}">
+                                                <li>#{genre.text}</li>
+                                            </ui:repeat>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+        </h:panelGroup>
+    </div>
+</html>

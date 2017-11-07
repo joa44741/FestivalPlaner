@@ -5,10 +5,10 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
-import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
@@ -33,9 +33,11 @@ public class LocationBusinessServiceImpl extends BusinessServiceBaseImpl<Locatio
     }
 
     @Override
-    public LocationEntity retrieveLocationByFestival(FestivalEntity festival) {
-        final FestivalEntity mergedFestival = getEntityManager().merge(festival);
-        final LocationEntity location = mergedFestival.getLocation();
+    public LocationEntity retrieveLocationByFestivalId(Long festivalId) {
+        final String sqlStatement = "SELECT l FROM FestivalEntity f join f.location l where f.id = :id";
+        TypedQuery<LocationEntity> query = getEntityManager().createQuery(sqlStatement, LocationEntity.class);
+        query.setParameter("id", festivalId);
+        final LocationEntity location = query.getSingleResult();
         return location;
     }
 

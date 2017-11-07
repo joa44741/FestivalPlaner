@@ -16,6 +16,7 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Andi
  */
+// TODO: stackoverflow comment
 @FacesConverter(value = "genericEnumConverter")
 public class GenericEnumConverter implements Converter {
 

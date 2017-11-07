@@ -11,6 +11,7 @@ import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -26,6 +27,8 @@ public interface FestivalBusinessService {
 
     List<FestivalEntity> findAllFestivals();
 
+    List<FestivalEntity> findAllFestivalsWithStatusFreigegeben();
+
     FestivalEntity addTicketArt(Long festivalId, TicketArtEntity ticketArt);
 
     FestivalEntity addCampingVariante(Long festivalId, CampingVarianteEntity campingVariante);
@@ -38,9 +41,15 @@ public interface FestivalBusinessService {
 
     FestivalEntity removeBuehne(Long festivalId, Long buehnenId);
 
+    FestivalEntity updateFestival(FestivalEntity entity);
+
     // buehnenId instead of festivalid required
     FestivalEntity addLineupDate(Long buehnenId, LineupDateEntity lineupDate);
 
     FestivalEntity removeLineupDate(Long buehnenId, Long lineupDateId);
+
+    Optional<FestivalEntity> findFestivalByName(String name);
+
+    FestivalEntity retrieveFestivalByLineupDateId(Long lineupDateId);
 
 }

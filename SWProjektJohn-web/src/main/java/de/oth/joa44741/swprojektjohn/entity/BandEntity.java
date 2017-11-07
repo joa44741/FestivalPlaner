@@ -9,8 +9,11 @@ import de.oth.joa44741.swprojektjohn.core.GenreEnum;
 import de.oth.joa44741.swprojektjohn.core.RegexPattern;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -19,12 +22,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +45,9 @@ public class BandEntity extends AbstractLongEntity {
     @NotNull
     private String name;
 
+    @Column(nullable = false)
+    private String beschreibung;
+
     @Column
     @Pattern(regexp = RegexPattern.REGEX_URL)
     private String webseite;
@@ -48,7 +56,6 @@ public class BandEntity extends AbstractLongEntity {
     @Pattern(regexp = RegexPattern.REGEX_URL)
     private String facebookseite;
 
-    // test eager
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "BandsGenres", joinColumns = @JoinColumn(
             name = "bandId"))
@@ -56,12 +63,24 @@ public class BandEntity extends AbstractLongEntity {
     @Enumerated(EnumType.STRING)
     private final List<GenreEnum> genres = new ArrayList<>();
 
+    @OneToMany(mappedBy = "band", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @XmlTransient
+    private final Set<LineupDateEntity> lineupDates = new HashSet<>();
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
     }
 
     public String getWebseite() {
@@ -101,5 +120,9 @@ public class BandEntity extends AbstractLongEntity {
                 .map(genre -> genre.getText())
                 .collect(Collectors.joining(", "));
         return resultString;
+    }
+
+    public Set<LineupDateEntity> getLineupDates() {
+        return Collections.unmodifiableSet(lineupDates);
     }
 }

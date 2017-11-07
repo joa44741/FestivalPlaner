@@ -27,7 +27,7 @@ public class FestivalsBean implements Serializable {
 
     @PostConstruct
     public void initFields() {
-        festivals = festivalBusinessService.findAllFestivals();
+        festivals = festivalBusinessService.findAllFestivalsWithStatusFreigegeben();
     }
 
     public List<FestivalEntity> getFestivals() {

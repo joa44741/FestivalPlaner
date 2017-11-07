@@ -65,7 +65,12 @@ h3{
     box-shadow: none;
 }
 
-a, #zusatzeigenschaften, h2{
+.btn-primary:disabled {
+    background-color: #D68910;
+    border-color: #D68910;
+}
+
+a, h2, i{
     color: #D68910;
 }
 
@@ -136,9 +141,13 @@ nav a{
 nav div a{
     padding-left: 15px;
     padding-right: 15px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .card{
     margin-bottom: 15px;
+}
+
+.bandLinkIcon{
+    margin-right: 20px;
 }
