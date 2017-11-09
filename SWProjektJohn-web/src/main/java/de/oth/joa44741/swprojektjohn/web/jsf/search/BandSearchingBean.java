@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.web.jsf;
+package de.oth.joa44741.swprojektjohn.web.jsf.search;
 
 import de.oth.joa44741.swprojektjohn.bservice.BandBusinessService;
 import de.oth.joa44741.swprojektjohn.core.GenreEnum;

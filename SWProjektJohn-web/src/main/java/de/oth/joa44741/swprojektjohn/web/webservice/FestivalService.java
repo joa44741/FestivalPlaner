@@ -6,6 +6,7 @@
 package de.oth.joa44741.swprojektjohn.web.webservice;
 
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
+import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -19,9 +20,9 @@ import org.jboss.logging.Logger;
  */
 @RequestScoped
 @WebService
-public class FestivalsService {
+public class FestivalService {
 
-    private static final Logger LOG = Logger.getLogger(FestivalsService.class);
+    private static final Logger LOG = Logger.getLogger(FestivalService.class);
 
     @Inject
     private FestivalBusinessService festivalBusinessService;
@@ -40,5 +41,11 @@ public class FestivalsService {
         LOG.log(Logger.Level.INFO, "createFestival() called");
         final FestivalEntity persistedEntity = festivalBusinessService.persistFestival(entityToPersist);
         return persistedEntity.getId();
+    }
+
+    public Long addBuehneToFestival(Long festivalId, BuehneEntity entityToPersist) {
+        LOG.log(Logger.Level.INFO, "addBuehneToFestival() called");
+        FestivalEntity persistedFestival = festivalBusinessService.addBuehne(festivalId, entityToPersist);
+        return persistedFestival.getId();
     }
 }

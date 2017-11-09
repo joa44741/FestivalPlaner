@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="row">
+        <div class="col-12">
+            <h2>Suche</h2>
+            <hr/>
+        </div>
+        <div class="col-12">
+            <h3>Suche nach Festivals </h3>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h:form>
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Suchfilter</h4>
+                            </div>
+                            <div class="col-12 form-group">
+                                <h:outputLabel class="col-form-label" for="name">Festivalname:</h:outputLabel> 
+                                <h:inputText class="form-control" id="name" value="#{festivalSearchingBean.filterName}">
+                                    <f:ajax event="keyup" execute="@form" delay="100" render="foundFestivals" listener="#{festivalSearchingBean.updateMatchingFestivals()}"/>
+                                </h:inputText>
+                            </div>
+                            <div class="col-12 form-group">
+                                <h:outputLabel class="col-form-label" for="datumAb">Datum ab:</h:outputLabel> 
+                                <h:inputText class="form-control" id="datumAb" value="#{festivalSearchingBean.datumAb}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
+                                    <f:passThroughAttribute name="type" value="date" />
+                                    <f:ajax execute="@form" delay="100" render="foundFestivals" listener="#{festivalSearchingBean.updateMatchingFestivals()}"/>
+                                    <!--timeZone="Europe/Berlin"-->
+                                </h:inputText>
+                            </div>
+                            <div class="col-12 form-group">
+                                <h:outputLabel class="col-form-label" for="datumBis">Datum bis:</h:outputLabel> 
+                                <h:inputText class="form-control" id="datumBis" value="#{festivalSearchingBean.datumBis}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
+                                    <f:passThroughAttribute name="type" value="date" />
+                                    <f:ajax execute="@form" delay="100" render="foundFestivals" listener="#{festivalSearchingBean.updateMatchingFestivals()}"/>
+                                    <!--timeZone="Europe/Berlin"-->
+                                </h:inputText>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <h:panelGroup id="foundFestivals" class="col-8">
+            <div class="row">
+                <ui:repeat var="festival" value="#{festivalSearchingBean.matchingFestivals}">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>#{festival.name}</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h:outputText value="Location:"/>
+                                    </div>
+                                    <div class="col-8">
+                                        <h:outputText value="#{festival.location.locationAsString}"/>
+                                    </div>
+                                    <div class="col-4">
+                                        von: 
+                                    </div>
+                                    <div class="col-8">
+                                        <h:outputText value="#{festival.datumVon}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputText>
+                                    </div>
+                                    <div class="col-4">
+                                        bis: 
+                                    </div>
+                                    <div class="col-8">
+                                        <h:outputText value="#{festival.datumBis}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputText>
+                                    </div>
+                                    <div class="col-12" style="margin-bottom: 10px">
+                                        <h:form>
+                                            <h:commandLink class="font-weight-bold" action="#{festivaldetailsBean.showFestivalDetails(festival.id)}">zeige Details</h:commandLink>
+                                        </h:form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+        </h:panelGroup>
+    </div>
+</html>

@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
+import de.oth.joa44741.swprojektjohn.web.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.bservice.BandBusinessService;
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;

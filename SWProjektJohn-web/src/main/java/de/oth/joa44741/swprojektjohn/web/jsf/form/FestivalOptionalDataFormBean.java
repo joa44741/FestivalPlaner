@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.web.jsf;
+package de.oth.joa44741.swprojektjohn.web.jsf.form;
 
 import de.oth.joa44741.swprojektjohn.bservice.BandBusinessService;
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
@@ -16,6 +16,8 @@ import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
+import de.oth.joa44741.swprojektjohn.web.jsf.FestivalBeanBase;
+import de.oth.joa44741.swprojektjohn.web.jsf.util.PageNames;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -17,9 +17,9 @@ and open the template in the editor.
 }
 
 .form-group.required .control-label:after { 
-   content:"*";
-   color:#D68910;
-   font-weight: bold;
+    content:"*";
+    color:#D68910;
+    font-weight: bold;
 }
 
 header.container, nav.container {
@@ -44,9 +44,9 @@ h3{
 }
 
 .form-control:focus {
-  border-color: #D68910;
-  outline: none;
-  box-shadow: 0 0 0 0.2rem rgba(214, 137, 16, 0.25);
+    border-color: #D68910;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(214, 137, 16, 0.25);
 }
 
 .btn-primary:hover {
@@ -99,7 +99,7 @@ nav div{
 }
 
 body{
-    background-color: #DDDDDD;
+    background-color: #3E5151;
 }
 
 /*h5{

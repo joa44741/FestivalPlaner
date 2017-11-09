@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.web.jsf;
+package de.oth.joa44741.swprojektjohn.web.jsf.form;
 
 import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
+import de.oth.joa44741.swprojektjohn.web.jsf.util.PageNames;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;

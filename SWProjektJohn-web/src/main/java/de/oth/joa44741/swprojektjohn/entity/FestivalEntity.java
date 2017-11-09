@@ -74,7 +74,7 @@ public class FestivalEntity extends AbstractLongEntity {
     private String logoUrl;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.PERSIST)
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "locationId", referencedColumnName = "id", nullable = false)
     private LocationEntity location;
 

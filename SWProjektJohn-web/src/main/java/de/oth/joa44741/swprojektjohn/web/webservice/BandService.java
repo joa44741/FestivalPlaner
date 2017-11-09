@@ -9,6 +9,6 @@ package de.oth.joa44741.swprojektjohn.web.webservice;
  *
  * @author Johnny
  */
-public class BandsService {
+public class BandService {
 
 }

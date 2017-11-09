@@ -13,19 +13,22 @@
             <h3>Suche nach Bands </h3>
         </div>
 
-        <div class="col-12">
+        <div class="col-4">
             <div class="card">
                 <div class="card-body">
                     <h:form>
                         <div class="row">
-                            <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label" for="name">Bandname</h:outputLabel>
+                            <div class="col-12">
+                                <h4>Suchfilter</h4>
+                            </div>
+                            <div class="col-12 form-group">
+                                <h:outputLabel class="col-form-label" for="name">Bandname:</h:outputLabel>
                                 <h:inputText class="form-control" id="name" value="#{bandSearchingBean.filterName}">
                                     <f:ajax event="keyup" execute="@form" delay="100" render="foundBands" listener="#{bandSearchingBean.updateMatchingBands()}"/>
                                 </h:inputText>
                             </div>
-                            <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label" for="genres">Genres</h:outputLabel>
+                            <div class="col-12 form-group">
+                                <h:outputLabel class="col-form-label" for="genres">Genres:</h:outputLabel>
                                 <!-- use backing bean for general tasks: availableGenres --> 
                                 <h:selectManyMenu id="genres" styleClass="form-control" value="#{bandSearchingBean.selectedGenres}">
                                     <f:selectItems value="#{festivalOptionalDataFormBean.availableGenres}" var="genre"
@@ -40,10 +43,10 @@
                 </div>
             </div>
         </div>
-        <h:panelGroup id="foundBands" class="col-12">
-            <div id="testDiv" class="row">
+        <h:panelGroup id="foundBands" class="col-8">
+            <div class="row">
                 <ui:repeat var="band" value="#{bandSearchingBean.matchingBands}">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="card">
                             <div class="card-header">
                                 <h5>#{band.name}</h5>
