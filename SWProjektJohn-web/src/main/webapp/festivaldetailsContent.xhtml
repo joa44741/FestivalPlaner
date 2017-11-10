@@ -131,7 +131,7 @@
                                 </h:outputText>
                             </h4>
                             <h4>
-                            <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
+                                <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
                             </h4>
                             <h:dataTable value = "#{festivaldetailsBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
                                          class = "table">
@@ -157,5 +157,8 @@
                 </div>
             </div>
         </ui:repeat>
+        <h:form class="col-2">
+            <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{festivaldetailsBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
+        </h:form>
     </div>
 </html>

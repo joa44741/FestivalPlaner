@@ -9,6 +9,7 @@ import de.oth.joa44741.swprojektjohn.core.RegexPattern;
 import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -46,17 +47,30 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "Festivals")
 @NamedQueries({
-    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_WITH_STATUS_FREIGEGEBEN, query = "SELECT f FROM FestivalEntity f where f.status = 'FREIGEGEBEN'")
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVALS_BY_STATUS, query = "SELECT f FROM FestivalEntity f where f.status IN :status")
+    ,
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVALS_IN_FUTURE_BY_STATUS, query = "SELECT f FROM FestivalEntity f where f.status IN :status and f.datumVon >= CURRENT_DATE ORDER BY f.datumVon")
     ,
     @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME, query = "SELECT f FROM FestivalEntity f where f.name = :name")
     ,
-    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_LINEUP_DATE_ID, query = "SELECT f FROM FestivalEntity f join f.buehnen b join b.lineupDates l where l.id = :lineupDateId")
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_LINEUP_DATE_ID, query = "SELECT f FROM FestivalEntity f join f.buehnen b join b.lineupDates l where l.id = :lineupDateId")
+    ,
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_ID_INCLUDING_DETAILS, query = "SELECT t FROM FestivalEntity t "
+            + "JOIN FETCH t.location l "
+            + "LEFT JOIN FETCH t.zusatzeigenschaften z "
+            + "LEFT JOIN FETCH t.ticketArten ta "
+            + "LEFT JOIN FETCH t.buehnen "
+            + "LEFT JOIN FETCH t.campingVarianten c "
+            + "WHERE t.id = :id")
 })
 public class FestivalEntity extends AbstractLongEntity {
 
-    public static final String QUERY_NAME_FIND_FESTIVAL_WITH_STATUS_FREIGEGEBEN = "findFestivalWithStatusFreigegeben";
+    public static final String QUERY_NAME_FIND_FESTIVALS_BY_STATUS = "findFestivalsByStatus";
+    public static final String QUERY_NAME_FIND_FESTIVALS_IN_FUTURE_BY_STATUS = "findFestivalsInFutureByStatus";
+
     public static final String QUERY_NAME_FIND_FESTIVAL_BY_NAME = "findFestivalByName";
-    public static final String QUERY_NAME_FIND_FESTIVAL_BY_LINEUP_DATE_ID = "findFestivalByLineupDateId";
+    public static final String QUERY_NAME_RETRIEVE_FESTIVAL_BY_LINEUP_DATE_ID = "retrieveFestivalByLineupDateId";
+    public static final String QUERY_NAME_RETRIEVE_FESTIVAL_BY_ID_INCLUDING_DETAILS = "retrieveFestivalByIdIncludingDetails";
 
     @Column(nullable = false, unique = true)
     @NotNull
@@ -82,7 +96,6 @@ public class FestivalEntity extends AbstractLongEntity {
     @Min(1)
     private Integer ticketKontingent;
 
-    // evtl. von Eventim holen
     @Column
     @Min(0)
     private Integer verkaufteTickets;
@@ -92,8 +105,8 @@ public class FestivalEntity extends AbstractLongEntity {
     @Min(1)
     private Integer dauer;
 
-    // pdf... als file oder link
-    @Column
+    @Column(unique = true)
+    @Pattern(regexp = RegexPattern.REGEX_URL)
     private String lageplan;
 
     @Column(nullable = false)
@@ -132,7 +145,6 @@ public class FestivalEntity extends AbstractLongEntity {
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
 
-    // TODO: Relation zu LineUp? Sonst kann kein LineupEintrag ohne Bühne existieren.
     public String getName() {
         return name;
     }
@@ -292,7 +304,7 @@ public class FestivalEntity extends AbstractLongEntity {
         final BigDecimal verkaufteTicketsAsBigDecimal = BigDecimal.valueOf(verkaufteTickets);
         final BigDecimal ticketKontingentAsBigDecimal = BigDecimal.valueOf(ticketKontingent);
         return verkaufteTicketsAsBigDecimal.
-                divide(ticketKontingentAsBigDecimal).
+                divide(ticketKontingentAsBigDecimal, 3, RoundingMode.HALF_UP).
                 multiply(BigDecimal.valueOf(100)).
                 intValue();
     }

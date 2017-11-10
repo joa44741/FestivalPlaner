@@ -10,10 +10,10 @@
             <hr/>
         </div>
         <div class="col-12">
-            <h3>Zuf&auml;llige Festivals</h3>
+            <h3>Die n&auml;chsten Festivals</h3>
         </div>
-        <ui:repeat var="festival" value="#{festivalsBean.festivals}" varStatus="status">
-            <div class="col-3">
+        <ui:repeat var="festival" value="#{festivalsBean.getUpcomingFestivals(3)}" varStatus="status">
+            <div class="col-4">
                 <div class="card">
                     <div class="card-header">
                         <h5>#{festival.name}</h5>
@@ -46,10 +46,58 @@
                             </div>
 
                             <div class="col-12">
+                                verkaufte Tickets:
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: #{festival.prozentAusverkauft}%;" aria-valuenow="#{festival.prozentAusverkauft}" aria-valuemin="0" aria-valuemax="100">#{festival.prozentAusverkauft}%</div>
                                 </div>
                                 <h:outputLabel style="color: red" class="font-weight-bold" rendered="#{(festival.ticketKontingent != null) &amp;&amp; (festival.verkaufteTickets != null) &amp;&amp; (festival.ticketKontingent == festival.verkaufteTickets)}">ausverkauft!</h:outputLabel>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:repeat>
+                <div class="col-12">
+            <h3>Zuf&auml;llige Bands</h3>
+        </div>
+        <ui:repeat var="band" value="#{festivalsBean.getRandomBands(6)}">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>#{band.name}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <h:outputText value="#{band.beschreibung}"/>
+                            </div>
+                            <div class="col-12" style="margin-bottom: 10px">
+                                <h:form>
+                                    #{band.id} #{band.name}
+                                    <h:commandLink class="font-weight-bold" action="#{bandDetailsBean.showBandDetails(band.id)}">zeige Details</h:commandLink>
+                                </h:form>
+                            </div>
+                            <div class="col-12">
+                                <h:outputLabel rendered="#{band.facebookseite != null}" class="bandLinkIcon">
+                                    <i class="fa fa-facebook-official" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Facebookseite">:</i>
+                                </h:outputLabel>
+                                <h:outputLink  rendered="#{band.facebookseite != null}" value="#{band.facebookseite}">Link</h:outputLink>
+                            </div>
+                            <div class="col-12">
+                                <h:outputLabel rendered="#{band.webseite != null}" class="bandLinkIcon">
+                                    <i class="fa fa-globe" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Webseite">:</i>
+                                </h:outputLabel>
+                                <h:outputLink rendered="#{band.webseite != null}" value="#{band.webseite}">Link</h:outputLink> 
+                            </div>
+                            <div class="col-3">
+                                Genres:
+                            </div>
+                            <div class="col-9">
+                                <ul>
+                                    <ui:repeat var="genre" value="#{band.genres}">
+                                        <li>#{genre.text}</li>
+                                    </ui:repeat>
+                                </ul>
                             </div>
                         </div>
                     </div>

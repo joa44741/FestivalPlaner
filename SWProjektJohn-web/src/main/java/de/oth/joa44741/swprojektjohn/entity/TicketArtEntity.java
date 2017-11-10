@@ -36,7 +36,6 @@ public class TicketArtEntity extends AbstractLongEntity {
     @Enumerated(EnumType.STRING)
     private TagArtEnum tagArt;
 
-    // nur, wenn TagArt = Tagesticket
     @Column
     @Temporal(TemporalType.DATE)
     private Date tag;

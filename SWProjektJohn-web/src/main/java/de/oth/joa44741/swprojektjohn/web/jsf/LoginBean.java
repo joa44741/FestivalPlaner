@@ -49,7 +49,9 @@ public class LoginBean implements Serializable {
         boolean isAdmin = adminBusinessService.isAdmin(user, password);
         if (isAdmin) {
             HttpSession session = SessionUtils.getSession();
-            session.setAttribute("username", user);
+            session.setAttribute("adminLoggedIn", true);
+            this.user = null;
+            this.password = null;
             return PageNames.ADMIN_DATA;
         } else {
             FacesContext.getCurrentInstance().addMessage(
@@ -61,8 +63,8 @@ public class LoginBean implements Serializable {
         }
     }
 
-    public boolean isLoggedIn() {
-        return SessionUtils.getUserName().isPresent();
+    public boolean isAdminLoggedIn() {
+        return SessionUtils.isAdminLoggedIn();
     }
 
     public String logout() {

@@ -6,6 +6,7 @@
 package de.oth.joa44741.swprojektjohn.web.jsf.search;
 
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
+import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class FestivalSearchingBean implements Serializable {
 
     @PostConstruct
     public void initFields() {
-        allFestivals = festivalBusinessService.findAllFestivalsWithStatusFreigegeben();
+        allFestivals = festivalBusinessService.findAllFestivalsByStatus(StatusEnum.FREIGEGEBEN);
         matchingFestivals = new ArrayList<>(allFestivals);
     }
 

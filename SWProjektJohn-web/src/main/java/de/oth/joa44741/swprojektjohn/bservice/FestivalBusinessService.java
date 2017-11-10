@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
+import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
@@ -19,6 +20,7 @@ import java.util.Optional;
  */
 public interface FestivalBusinessService {
 
+    // TODO: try to minimize methods by only using update instead of addTicketArt and so on...
     FestivalEntity retrieveFestivalById(Long id);
 
     FestivalEntity retrieveFestivalByIdIncludingDetails(Long id);
@@ -27,7 +29,9 @@ public interface FestivalBusinessService {
 
     List<FestivalEntity> findAllFestivals();
 
-    List<FestivalEntity> findAllFestivalsWithStatusFreigegeben();
+    List<FestivalEntity> findAllFestivalsByStatus(StatusEnum... status);
+
+    List<FestivalEntity> findAllFestivalsInFutureByStatus(StatusEnum... status);
 
     FestivalEntity addTicketArt(Long festivalId, TicketArtEntity ticketArt);
 
@@ -51,5 +55,7 @@ public interface FestivalBusinessService {
     Optional<FestivalEntity> findFestivalByName(String name);
 
     FestivalEntity retrieveFestivalByLineupDateId(Long lineupDateId);
+
+    void removeFestival(Long id);
 
 }

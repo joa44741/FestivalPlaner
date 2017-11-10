@@ -5,7 +5,6 @@
  */
 package de.oth.joa44741.swprojektjohn.web.jsf.util;
 
-import java.util.Optional;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,14 +25,14 @@ public class SessionUtils {
                 .getExternalContext().getRequest();
     }
 
-    public static Optional<String> getUserName() {
+    public static boolean isAdminLoggedIn() {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
-        Optional<String> result = Optional.empty();
+        boolean result = false;
         if (session != null) {
-            Object username = session.getAttribute("username");
-            if (username != null) {
-                result = Optional.of(username.toString());
+            Object adminLoggedIn = session.getAttribute("adminLoggedIn");
+            if (adminLoggedIn != null) {
+                result = (boolean) adminLoggedIn;
             }
         }
         return result;

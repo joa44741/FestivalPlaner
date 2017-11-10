@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
+import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
@@ -12,6 +13,7 @@ import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
@@ -41,17 +43,10 @@ public class FestivalBusinessServiceImpl extends BusinessServiceBaseImpl<Festiva
         return getOptionalSingleResult(query);
     }
 
-    //TODO: Named Query
     @Override
     public FestivalEntity retrieveFestivalByIdIncludingDetails(Long id) {
-        final String statement = "SELECT t FROM FestivalEntity t "
-                + "JOIN FETCH t.location l "
-                + "LEFT JOIN FETCH t.zusatzeigenschaften z "
-                + "LEFT JOIN FETCH t.ticketArten ta "
-                + "LEFT JOIN FETCH t.buehnen "
-                + "LEFT JOIN FETCH t.campingVarianten c "
-                + "WHERE t.id = :id";
-        final TypedQuery<FestivalEntity> query = getEntityManager().createQuery(statement, FestivalEntity.class);
+        final TypedQuery<FestivalEntity> query = getEntityManager()
+                .createNamedQuery(FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_ID_INCLUDING_DETAILS, FestivalEntity.class);
         query.setParameter("id", id);
         return query.getSingleResult();
     }
@@ -77,8 +72,16 @@ public class FestivalBusinessServiceImpl extends BusinessServiceBaseImpl<Festiva
     }
 
     @Override
-    public List<FestivalEntity> findAllFestivalsWithStatusFreigegeben() {
-        final TypedQuery query = getEntityManager().createNamedQuery(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_WITH_STATUS_FREIGEGEBEN, FestivalEntity.class);
+    public List<FestivalEntity> findAllFestivalsByStatus(StatusEnum... status) {
+        final TypedQuery query = getEntityManager().createNamedQuery(FestivalEntity.QUERY_NAME_FIND_FESTIVALS_BY_STATUS, FestivalEntity.class);
+        query.setParameter("status", Arrays.asList(status));
+        return query.getResultList();
+    }
+
+    @Override
+    public List<FestivalEntity> findAllFestivalsInFutureByStatus(StatusEnum... status) {
+        final TypedQuery query = getEntityManager().createNamedQuery(FestivalEntity.QUERY_NAME_FIND_FESTIVALS_IN_FUTURE_BY_STATUS, FestivalEntity.class);
+        query.setParameter("status", Arrays.asList(status));
         return query.getResultList();
     }
 
@@ -150,9 +153,16 @@ public class FestivalBusinessServiceImpl extends BusinessServiceBaseImpl<Festiva
 
     @Override
     public FestivalEntity retrieveFestivalByLineupDateId(Long lineupDateId) {
-        final TypedQuery<FestivalEntity> query = getEntityManager().createNamedQuery(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_LINEUP_DATE_ID, FestivalEntity.class);
+        final TypedQuery<FestivalEntity> query = getEntityManager()
+                .createNamedQuery(FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_LINEUP_DATE_ID, FestivalEntity.class);
         query.setParameter("lineupDateId", lineupDateId);
         return query.getSingleResult();
+    }
+
+    @Override
+    public void removeFestival(Long id) {
+        final FestivalEntity festivalToDelete = retrieveById(id);
+        getEntityManager().remove(festivalToDelete);
     }
 
 }

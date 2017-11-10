@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,12 +38,11 @@ public class LocationEntity extends AbstractLongEntity {
     @NotNull
     private String ort;
 
-    // regular expression
     @Column(nullable = false)
     @NotNull
+    @Size(min = 5, max = 5)
     private String plz;
 
-    // only german?
     @Column
     @Enumerated(EnumType.STRING)
     private BundeslandEnum bundesland;

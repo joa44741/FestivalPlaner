@@ -10,6 +10,7 @@ import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
+import de.oth.joa44741.swprojektjohn.web.jsf.LoginBean;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -30,6 +31,12 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
 
     @Inject
     private FestivalOptionalDataFormBean festivalOptionalDataFormBean;
+
+    @Inject
+    private UpdateFestivalFormBean updateFestivalFormBean;
+
+    @Inject
+    private LoginBean loginBean;
 
     private static final long serialVersionUID = 1L;
 
@@ -57,12 +64,14 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
 
     public String persistMainFestivalData() {
         selectedZusatzeigenschaftenList.stream().forEach(z -> transientFestival.addZusatzeigenschaft(z));
-        // TODO: if Admin --> FREIGEGEBEN
-        transientFestival.setStatus(StatusEnum.ERSTELLT);
+        final StatusEnum newStatus = loginBean.isAdminLoggedIn() ? StatusEnum.FREIGEGEBEN : StatusEnum.ERSTELLT;
+        transientFestival.setStatus(newStatus);
         final FestivalEntity persistedFestival = festivalBusinessService.persistFestival(transientFestival);
         final FacesMessage msg = new FacesMessage("Festival " + persistedFestival.getName() + " erfolgreich angelegt");
         FacesContext.getCurrentInstance().addMessage("newFormular", msg);
         initFields();
+        // TODO good comment
+        updateFestivalFormBean.initFields();
         return festivalOptionalDataFormBean.loadAndShowPage(persistedFestival.getId());
     }
 

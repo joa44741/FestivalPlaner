@@ -45,7 +45,7 @@ public class BandEntity extends AbstractLongEntity {
     @NotNull
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String beschreibung;
 
     @Column

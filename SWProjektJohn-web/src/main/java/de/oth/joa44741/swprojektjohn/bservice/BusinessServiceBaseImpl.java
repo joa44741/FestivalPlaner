@@ -22,7 +22,6 @@ import javax.persistence.TypedQuery;
  */
 public class BusinessServiceBaseImpl<T extends AbstractLongEntity> implements BusinessServiceBase<T> {
 
-    // TODO: kommentar schreiben, da Code aus stackoverflow verwendet
     //TODO: Exceptions definieren!
     @PersistenceContext(unitName = "sw_projekt_john_pu")
     private EntityManager entityManager;
@@ -33,6 +32,10 @@ public class BusinessServiceBaseImpl<T extends AbstractLongEntity> implements Bu
         return this.entityManager;
     }
 
+    /**
+     * adapted from:
+     * https://stackoverflow.com/questions/3888575/single-dao-generic-crud-methods-jpa-hibernate-spring
+     */
     protected BusinessServiceBaseImpl() {
         ParameterizedType genericSuperClass = (ParameterizedType) getClass().getSuperclass().getGenericSuperclass();
         this.clazz = (Class<AbstractLongEntity>) genericSuperClass.getActualTypeArguments()[0];

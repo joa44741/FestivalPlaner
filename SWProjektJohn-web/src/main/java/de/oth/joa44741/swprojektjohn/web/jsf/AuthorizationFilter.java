@@ -22,7 +22,6 @@ import javax.servlet.http.HttpSession;
  *
  * @author Johnny
  *
- * https://www.journaldev.com/7252/jsf-authentication-login-logout-database-example
  */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"*.xhtml"})
 public class AuthorizationFilter implements Filter {
@@ -46,17 +45,17 @@ public class AuthorizationFilter implements Filter {
             String reqURI = reqt.getRequestURI();
 
             if (reqURI.endsWith(PageNames.ADMIN_DATA)) {
-                if (ses != null && ses.getAttribute("username") != null) {
+                if (ses != null && ses.getAttribute("adminLoggedIn") != null) {
                     chain.doFilter(request, response);
                 } else {
-                    resp.sendRedirect(reqt.getContextPath() + "/login.xhtml");
+                    resp.sendRedirect(reqt.getContextPath() + "/" + PageNames.LOGIN_DATA);
                 }
             } else {
                 chain.doFilter(request, response);
             }
 
         } catch (IOException | ServletException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

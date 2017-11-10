@@ -5,11 +5,11 @@
  */
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
-import de.oth.joa44741.swprojektjohn.web.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.bservice.BandBusinessService;
-import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
+import de.oth.joa44741.swprojektjohn.web.jsf.util.PageNames;
+import de.oth.joa44741.swprojektjohn.web.webservice.FestivalService;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ public class BandDetailsBean implements Serializable {
     private BandBusinessService bandBusinessService;
 
     @Inject
-    private FestivalBusinessService festivalBusinessService;
+    private FestivalService festivalService;
 
     private BandEntity band;
 
@@ -34,8 +34,9 @@ public class BandDetailsBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public String showBandDetails(Long id) {
+        System.out.println("BandId: " + id);
         this.band = bandBusinessService.retrieveBandByIdIncludingDetails(id);
-        this.band.getLineupDates().forEach(lineup -> lineupIdToFestivalMap.put(lineup.getId(), festivalBusinessService.retrieveFestivalByLineupDateId(lineup.getId())));
+        this.band.getLineupDates().forEach(lineup -> lineupIdToFestivalMap.put(lineup.getId(), festivalService.retrieveFestivalByLineupDateId(lineup.getId())));
         return PageNames.BAND_DETAILS;
     }
 

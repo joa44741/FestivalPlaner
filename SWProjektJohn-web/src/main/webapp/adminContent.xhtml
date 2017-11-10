@@ -12,6 +12,91 @@
         <div class="col-12">
             <h3>Administrator</h3>
         </div>
-
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h:form>
+                        <div  class="row">
+                            <div class="col-12">
+                                <h4>Festivals die gel&ouml;scht werden sollen</h4>
+                            </div>
+                            <div class="col-12">
+                                <h:dataTable var="festival" class="table" value="#{adminBean.festivalsWithStatusLoeschungAngefordert}">
+                                    <h:column>    				
+                                        <f:facet name = "header">Name</f:facet>    				
+                                        <h:outputLabel value="#{festival.name}"/>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Von</f:facet>    				
+                                        <h:outputLabel value="#{festival.datumVon}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputLabel>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Bis</f:facet>    				
+                                        <h:outputLabel value="#{festival.datumBis}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputLabel>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Location</f:facet>    				
+                                        <h:outputLabel value="#{festival.location.locationAsString}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Festival l&ouml;schen</f:facet>    				
+                                        <h:commandLink action="#{adminBean.removeFestival(festival.id)}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h:form>
+                        <div  class="row">
+                            <div class="col-12">
+                                <h4>Festivals die freigegeben werden sollen</h4>
+                            </div>
+                            <div class="col-12">
+                                <h:dataTable var="festival" class="table" value="#{adminBean.festivalsWaitingForStatusFreigegeben}">
+                                    <h:column>    				
+                                        <f:facet name = "header">Name</f:facet>    				
+                                        <h:outputLabel value="#{festival.name}"/>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Von</f:facet>    				
+                                        <h:outputLabel value="#{festival.datumVon}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputLabel>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Bis</f:facet>    				
+                                        <h:outputLabel value="#{festival.datumBis}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputLabel>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Location</f:facet>    				
+                                        <h:outputLabel value="#{festival.location.locationAsString}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Festival freigeben</f:facet>    				
+                                        <h:commandLink action="#{adminBean.setStatusFreigegebenOfFestival(festival.id)}">
+                                            <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </div>
     </div>
 </html>

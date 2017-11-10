@@ -82,6 +82,10 @@
                                             <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
                                         </h:outputText>
                                     </div>
+                                    <div class="col-12 text-center">
+                                        <img src="#{festival.logoUrl}" class="img-fluid"/>
+                                    </div>
+
                                     <div class="col-12" style="margin-bottom: 10px">
                                         <h:form>
                                             <h:commandLink class="font-weight-bold" action="#{festivaldetailsBean.showFestivalDetails(festival.id)}">zeige Details</h:commandLink>

@@ -30,7 +30,6 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 @MappedSuperclass
 public abstract class AbstractLongEntity {
 
-    // TODO: jede relation art manyToMany
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

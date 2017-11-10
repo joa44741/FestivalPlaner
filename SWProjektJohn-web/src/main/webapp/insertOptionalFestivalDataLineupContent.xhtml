@@ -26,10 +26,56 @@
             </div>
             <div class="card">
                 <div class="card-body">
+                    <h:form id="buehnenForm">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>B&uuml;hnen</h4>
+                            </div>
+                            <div class="col-12">
+                                <h:dataTable id="transientBuehnen" var="buehne" class="table" value="#{festivalOptionalDataFormBean.persistedFestival.buehnen}">
+                                    <h:column>    				
+                                        <f:facet name = "header">B&uuml;hnenname</f:facet>    				
+                                        <h:outputLabel value="#{buehne.name}"/>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">&Uuml;berdacht</f:facet>    				
+                                        <h:outputLabel rendered="#{buehne.ueberdacht}"><i class="fa fa-check-square-o" aria-hidden="true"></i></h:outputLabel>
+                                        <h:outputLabel rendered="#{buehne.ueberdacht != null &amp;&amp; !buehne.ueberdacht}"><i class="fa fa-square-o" aria-hidden="true"></i></h:outputLabel>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">B&uuml;hne l&ouml;schen</f:facet>    				
+                                        <h:commandLink action="#{festivalOptionalDataFormBean.deleteBuehne(buehne.id)}" immediate="true">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                            <div class="col-12">
+                                <h5>B&uuml;hne anlegen</h5>
+                            </div>
+                            <div class="col-3 form-group required">
+                                <h:outputLabel class="col-form-label control-label" for="buehne">B&uuml;hnenname  (z.B. Hauptb&uuml;hne)</h:outputLabel>
+                                <h:inputText class="form-control" id="buehne" required="true" value="#{festivalOptionalDataFormBean.transientBuehne.name}" requiredMessage="Name der B&uuml;hne muss angegeben werden" />
+                            </div>
+                            <div class="col-3 form-group">
+                                <h:outputLabel class="col-form-label control-label" for="ueberdacht">&Uuml;berdacht</h:outputLabel>
+                                <h:selectOneMenu id="ueberdacht" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientBuehne.ueberdacht}">
+                                    <f:selectItem itemValue="#{null}" itemLabel="keine Ahnung" />
+                                    <f:selectItem itemValue="#{true}" itemLabel="Ja" />
+                                    <f:selectItem itemValue="#{false}" itemLabel="Nein" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                        <h:commandButton class="btn btn-primary" action="#{festivalOptionalDataFormBean.persistBuehne()}" value="Buehne anlegen"/>
+                    </h:form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
                     <h:form id="lineupForm">
                         <div class="row">
                             <div class="col-12">
-                                <h5>Lineup</h5>
+                                <h4>Lineup</h4>
                             </div>
                             <div class="col-12">
                                 <div class="row">
@@ -80,7 +126,7 @@
                                 </div>
                             </div>
                             <div class="col-12">
-                                <h6>Lineup anlegen</h6>
+                                <h5>Lineup anlegen</h5>
                             </div>
                             <div class="col-3 form-group required">
                                 <h:selectOneMenu required="true" styleClass="form-control" value="#{festivalOptionalDataFormBean.selectedBandId}" requiredMessage="Die Band muss angegeben werden">
@@ -128,56 +174,10 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h:form id="buehnenForm">
-                        <div class="row">
-                            <div class="col-12">
-                                <h5>B&uuml;hnen</h5>
-                            </div>
-                            <div class="col-12">
-                                <h:dataTable id="transientBuehnen" var="buehne" class="table" value="#{festivalOptionalDataFormBean.persistedFestival.buehnen}">
-                                    <h:column>    				
-                                        <f:facet name = "header">B&uuml;hnenname</f:facet>    				
-                                        <h:outputLabel value="#{buehne.name}"/>
-                                    </h:column>
-                                    <h:column>    				
-                                        <f:facet name = "header">&Uuml;berdacht</f:facet>    				
-                                        <h:outputLabel rendered="#{buehne.ueberdacht}"><i class="fa fa-check-square-o" aria-hidden="true"></i></h:outputLabel>
-                                        <h:outputLabel rendered="#{buehne.ueberdacht != null &amp;&amp; !buehne.ueberdacht}"><i class="fa fa-square-o" aria-hidden="true"></i></h:outputLabel>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name = "header">B&uuml;hne l&ouml;schen</f:facet>    				
-                                        <h:commandLink action="#{festivalOptionalDataFormBean.deleteBuehne(buehne.id)}" immediate="true">
-                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                        </h:commandLink>
-                                    </h:column>
-                                </h:dataTable>
-                            </div>
-                            <div class="col-12">
-                                <h6>B&uuml;hne anlegen</h6>
-                            </div>
-                            <div class="col-3 form-group required">
-                                <h:outputLabel class="col-form-label control-label" for="buehne">B&uuml;hnenname  (z.B. Hauptb&uuml;hne)</h:outputLabel>
-                                <h:inputText class="form-control" id="buehne" required="true" value="#{festivalOptionalDataFormBean.transientBuehne.name}" requiredMessage="Name der B&uuml;hne muss angegeben werden" />
-                            </div>
-                            <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label control-label" for="ueberdacht">&Uuml;berdacht</h:outputLabel>
-                                <h:selectOneMenu id="ueberdacht" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientBuehne.ueberdacht}">
-                                    <f:selectItem itemValue="#{null}" itemLabel="keine Ahnung" />
-                                    <f:selectItem itemValue="#{true}" itemLabel="Ja" />
-                                    <f:selectItem itemValue="#{false}" itemLabel="Nein" />
-                                </h:selectOneMenu>
-                            </div>
-                        </div>
-                        <h:commandButton class="btn btn-primary" action="#{festivalOptionalDataFormBean.persistBuehne()}" value="Buehne anlegen"/>
-                    </h:form>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
                     <h:form id="bandForm">
                         <div class="row">
                             <div class="col-12">
-                                <h5>Neu angelegte Bands</h5>
+                                <h4>Neu angelegte Bands</h4>
                             </div>
                             <div class="col-12">
                                 <h:dataTable var="band" class="table" value="#{festivalOptionalDataFormBean.transientAddedBands}">
@@ -206,7 +206,7 @@
                                 </h:dataTable>
                             </div>
                             <div class="col-12">
-                                <h6>Band anlegen</h6>
+                                <h5>Band anlegen</h5>
                             </div>
                             <div class="col-3 form-group required">
                                 <h:outputLabel class="col-form-label control-label" for="bandname">Bandname</h:outputLabel>

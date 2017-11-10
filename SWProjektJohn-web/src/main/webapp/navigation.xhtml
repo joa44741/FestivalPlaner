@@ -9,8 +9,9 @@
             <h:outputLink value="searchFestivals.xhtml"><i class="fa fa-search" aria-hidden="true"></i> Festivals suchen</h:outputLink>
             <h:outputLink value="searchBands.xhtml"><i class="fa fa-search" aria-hidden="true"></i> Bands suchen</h:outputLink>
             <h:outputLink value="insertMainFestivalData.xhtml"><i class="fa fa-pencil" aria-hidden="true"></i> Daten eintragen</h:outputLink>
-            <h:outputLink rendered="#{!loginBean.loggedIn}" value="login.xhtml" class="pull-right"><i class="fa fa-sign-in" aria-hidden="true"></i> Adminbereich</h:outputLink>
-                <h:commandLink action="#{loginBean.logout()}" rendered="#{loginBean.loggedIn}" class="pull-right"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h:commandLink>
+            <h:outputLink rendered="#{!loginBean.adminLoggedIn}" value="login.xhtml" class="pull-right"><i class="fa fa-sign-in" aria-hidden="true"></i> Adminbereich</h:outputLink>
+            <h:commandLink action="#{loginBean.logout()}" rendered="#{loginBean.adminLoggedIn}" class="pull-right"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</h:commandLink>
+            <h:commandLink action="#{adminBean.loadAndShowPage()}" rendered="#{loginBean.adminLoggedIn}" class="pull-right"><i class="fa fa-cogs" aria-hidden="true"></i> Verwaltung</h:commandLink>
             </h:form>
         </div>
     </nav>
