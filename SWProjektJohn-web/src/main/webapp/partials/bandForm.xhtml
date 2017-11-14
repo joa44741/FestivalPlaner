@@ -20,6 +20,10 @@
                                         <h:outputLabel value="#{band.name}"/>
                                     </h:column>
                                     <h:column>    				
+                                        <f:facet name = "header">Beschreibung</f:facet>    				
+                                        <h:outputLabel value="#{band.beschreibung}"/>
+                                    </h:column>
+                                    <h:column>    				
                                         <f:facet name = "header">Facebookseite (URL)</f:facet>    				
                                         <h:outputLabel value="#{band.facebookseite}"/>
                                     </h:column>
@@ -42,26 +46,38 @@
                             <div class="col-12">
                                 <h5>Band anlegen</h5>
                             </div>
-                            <div class="col-3 form-group required">
-                                <h:outputLabel class="col-form-label control-label" for="bandname">Bandname</h:outputLabel>
-                                <h:inputText class="form-control" id="bandname" required="true" value="#{bandFormBean.transientBand.name}" requiredMessage="Name der Band muss angegeben werden" />
-                            </div>
-                            <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label control-label" for="facebook">Facebookseite(URL)</h:outputLabel>
-                                <h:inputText class="form-control" id="facebook" value="#{bandFormBean.transientBand.facebookseite}"/>
-                            </div>
-                            <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label control-label" for="webseite">Webseite(URL)</h:outputLabel>
-                                <h:inputText class="form-control" id="webseite" value="#{bandFormBean.transientBand.webseite}"/>
-                            </div>
-                            <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label control-label" for="genres">Genres</h:outputLabel>
-                                <h:selectManyMenu id="genres" styleClass="form-control" value="#{bandFormBean.selectedGenres}">
-                                    <f:selectItems id="existingBuehne" value="#{utilsBean.availableGenres}" var="genre"
-                                                   itemLabel="#{genre.text}" itemValue="#{genre}" />
-                                    <f:passThroughAttribute name="size" value="10"/>
-                                    <f:converter converterId="genericEnumConverter" />
-                                </h:selectManyMenu>
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-4 form-group required">
+                                        <h:outputLabel class="col-form-label control-label" for="bandname">Bandname</h:outputLabel>
+                                        <h:inputText class="form-control" id="bandname" required="true" value="#{bandFormBean.transientBand.name}" requiredMessage="Name der Band muss angegeben werden" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-9 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="beschreibung">Beschreibung</h:outputLabel>
+                                        <h:inputTextarea class="form-control" id="beschreibung" value="#{bandFormBean.transientBand.beschreibung}"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="genres">Genres</h:outputLabel>
+                                        <h:selectManyMenu id="genres" styleClass="form-control" value="#{bandFormBean.selectedGenres}">
+                                            <f:selectItems id="existingBuehne" value="#{utilsBean.availableGenres}" var="genre"
+                                                           itemLabel="#{genre.text}" itemValue="#{genre}" />
+                                            <f:passThroughAttribute name="size" value="10"/>
+                                            <f:converter converterId="genericEnumConverter" />
+                                        </h:selectManyMenu>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="facebook">Facebookseite(URL)</h:outputLabel>
+                                        <h:inputText class="form-control" id="facebook" value="#{bandFormBean.transientBand.facebookseite}"/>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="webseite">Webseite(URL)</h:outputLabel>
+                                        <h:inputText class="form-control" id="webseite" value="#{bandFormBean.transientBand.webseite}"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <h:commandButton class="btn btn-primary" action="#{bandFormBean.persistBand()}" value="Band anlegen"/>

@@ -5,9 +5,9 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,7 +37,7 @@ public class BuehneEntity extends AbstractLongEntity {
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "buehneId", referencedColumnName = "id", nullable = false)
-    private final List<LineupDateEntity> lineupDates = new ArrayList<>();
+    private final Set<LineupDateEntity> lineupDates = new HashSet();
 
     @NotNull
     @ManyToOne(optional = false)
@@ -63,8 +63,8 @@ public class BuehneEntity extends AbstractLongEntity {
         this.ueberdacht = ueberdacht;
     }
 
-    public List<LineupDateEntity> getLineupDates() {
-        return Collections.unmodifiableList(lineupDates);
+    public Set<LineupDateEntity> getLineupDates() {
+        return Collections.unmodifiableSet(lineupDates);
     }
 
     public void addLineupDate(LineupDateEntity lineupDate) {

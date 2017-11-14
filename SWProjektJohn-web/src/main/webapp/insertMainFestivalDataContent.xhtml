@@ -282,13 +282,13 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-8 buttonGroupWithMargin">
                         <h:commandButton id="btnUpdateData" class="btn btn-primary" action="#{updateFestivalFormBean.updateMainFestivalData()}" value="Festival updaten" disabled="#{updateFestivalFormBean.selectedFestivalId == null}"/>
                         <h:commandButton id="btnLinkToTicketAndCamping" class="btn btn-primary" action="#{updateFestivalFormBean.loadAndShowTicketAndCampingPage()}" value="weiter zu Camping &amp; Tickets" disabled="#{updateFestivalFormBean.selectedFestivalId == null}"/>
                         <h:commandButton id="btnLinkToLineup" class="btn btn-primary" action="#{updateFestivalFormBean.loadAndShowLineupPage()}" value="weiter zum Lineup" disabled="#{updateFestivalFormBean.selectedFestivalId == null}"/>
                     </div>
                     <div class="offset-2 col-2">
-                        <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{updateFestivalFormBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen" disabled="#{updateFestivalFormBean.selectedFestivalId == null}"/>
+                        <h:commandButton id="btnDeleteFestival" class="btn btn-primary pull-right" action="#{updateFestivalFormBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen" disabled="#{updateFestivalFormBean.selectedFestivalId == null}"/>
                     </div>
                 </div>
 
