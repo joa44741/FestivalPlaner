@@ -69,7 +69,7 @@
                                 </h:selectOneMenu>
                             </div>  
                             <div class="col-3 form-group">
-                                <h:outputLabel class="col-form-label control-label" for="tag">Tag</h:outputLabel>
+                                <h:outputLabel class="col-form-label control-label" for="selectedTag">Tag</h:outputLabel>
                                 <h:selectOneMenu id="selectedTag" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientTicketArt.tag}" disabled="#{festivalOptionalDataFormBean.transientTicketArt.tagArt != 'TAGESTICKET'}">
                                     <f:selectItems value="#{festivalOptionalDataFormBean.possibleTagesticketDates}" var="tag"
                                                    itemLabel="#{festivalOptionalDataFormBean.getDateAsString(tag)}" itemValue="#{tag}" />

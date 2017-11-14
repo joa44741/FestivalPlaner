@@ -41,6 +41,8 @@ h3{
 .btn-primary{
     border-color: #D68910;
     margin-bottom: 20px;
+    margin-left: 5px; 
+    margin-right: 5px;
 }
 
 .form-control:focus {

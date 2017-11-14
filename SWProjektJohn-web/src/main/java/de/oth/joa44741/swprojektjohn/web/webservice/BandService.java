@@ -7,6 +7,7 @@ package de.oth.joa44741.swprojektjohn.web.webservice;
 
 import de.oth.joa44741.swprojektjohn.bservice.BandBusinessService;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
+import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -29,6 +30,12 @@ public class BandService {
 
     public List<BandEntity> findAllBands() {
         return bandBusinessService.findAllBands();
+    }
+
+    public List<BandEntity> findRandomBands() {
+        final List<BandEntity> allBands = findAllBands();
+        Collections.shuffle(allBands);
+        return allBands;
     }
 
 }

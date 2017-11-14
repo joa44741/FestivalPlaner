@@ -133,6 +133,7 @@
                             <h4>
                                 <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
                             </h4>
+                            <!-- TODO: sortieren -->
                             <h:dataTable value = "#{festivaldetailsBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
                                          class = "table">
                                 <h:column>    				

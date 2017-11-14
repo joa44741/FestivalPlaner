@@ -3,9 +3,9 @@
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
         http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
               version="2.2">
-    <!--    <lifecycle>
+    <!--lifecycle>
         <phase-listener>de.oth.joa44741.swprojektjohn.web.jsf.MyPhaseListener</phase-listener>
-    </lifecycle>-->
+    </lifecycle-->
     <navigation-rule>
         <from-view-id>/login.xhtml</from-view-id>
         <navigation-case>
