@@ -7,11 +7,9 @@ package de.oth.joa44741.swprojektjohn.web.jsf.form;
 
 import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
 import de.oth.joa44741.swprojektjohn.core.StatusEnum;
-import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.web.jsf.LoginBean;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -41,7 +39,6 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
     private static final long serialVersionUID = 1L;
 
     private FestivalEntity transientFestival;
-    private List<ZusatzeigenschaftEnum> selectedZusatzeigenschaftenList;
 
     private List<LocationEntity> availableLocations;
 
@@ -55,7 +52,6 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
         selectedLocationId = null;
         availableLocations = locationBusinessService.findAllLocations();
         transientFestival.setLocation(new LocationEntity());
-        selectedZusatzeigenschaftenList = new ArrayList<>();
     }
 
     public FestivalEntity getTransientFestival() {
@@ -63,7 +59,7 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
     }
 
     public String persistMainFestivalData() {
-        selectedZusatzeigenschaftenList.stream().forEach(z -> transientFestival.addZusatzeigenschaft(z));
+        getSelectedZusatzeigenschaftenList().stream().forEach(z -> transientFestival.addZusatzeigenschaft(z));
         final StatusEnum newStatus = loginBean.isAdminLoggedIn() ? StatusEnum.FREIGEGEBEN : StatusEnum.ERSTELLT;
         transientFestival.setStatus(newStatus);
         final FestivalEntity persistedFestival = festivalBusinessService.persistFestival(transientFestival);
@@ -72,7 +68,7 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
         initFields();
         // TODO good comment
         updateFestivalFormBean.initFields();
-        return festivalOptionalDataFormBean.loadAndShowPage(persistedFestival.getId());
+        return festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(persistedFestival.getId());
     }
 
     public void validateFestivalName(FacesContext context, UIComponent component, Object value) throws ValidatorException {

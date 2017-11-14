@@ -14,12 +14,12 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("festivalsBean")
-@RequestScoped
+@SessionScoped
 // TODO: andere Benennung
 public class FestivalsBean implements Serializable {
 
@@ -32,12 +32,12 @@ public class FestivalsBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private List<FestivalEntity> festivalsInFuture;
-    private List<BandEntity> bands;
+    private List<BandEntity> randomBands;
 
     @PostConstruct
     public void initFields() {
         festivalsInFuture = festivalService.findAllFestivalsInFutureByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
-        bands = bandService.findAllBands();
+        randomBands = bandService.findRandomBands();
     }
 
     public List<FestivalEntity> getUpcomingFestivals(int numberOfFestivals) {
@@ -45,7 +45,6 @@ public class FestivalsBean implements Serializable {
     }
 
     public List<BandEntity> getRandomBands(int numberOfBands) {
-//        Collections.shuffle(bands);
-        return bands.stream().limit(numberOfBands).collect(Collectors.toList());
+        return randomBands.stream().limit(numberOfBands).collect(Collectors.toList());
     }
 }

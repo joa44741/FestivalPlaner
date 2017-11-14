@@ -39,7 +39,7 @@ public class FestivalSearchingBean implements Serializable {
 
     @PostConstruct
     public void initFields() {
-        allFestivals = festivalBusinessService.findAllFestivalsByStatus(StatusEnum.FREIGEGEBEN);
+        allFestivals = festivalBusinessService.findAllFestivalsByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
         matchingFestivals = new ArrayList<>(allFestivals);
     }
 

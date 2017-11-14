@@ -8,7 +8,6 @@ package de.oth.joa44741.swprojektjohn.web.jsf.form;
 import de.oth.joa44741.swprojektjohn.bservice.BandBusinessService;
 import de.oth.joa44741.swprojektjohn.bservice.FestivalBusinessService;
 import de.oth.joa44741.swprojektjohn.core.CampingArtEnum;
-import de.oth.joa44741.swprojektjohn.core.GenreEnum;
 import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
@@ -24,13 +23,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-// TODO: refactor!
+// TODO: refactor! own Bean for Band, Lineup, Ticket, Camping
 @Named("festivalOptionalDataFormBean")
 @SessionScoped
 public class FestivalOptionalDataFormBean extends FestivalBeanBase {
@@ -52,8 +52,6 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     private List<BandEntity> availableBands;
 
-    private BandEntity transientBand;
-
     private BuehneEntity transientBuehne;
 
     private LineupDateEntity transientLineupDate;
@@ -62,26 +60,30 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     private Long selectedBandId;
 
-    private final List<BandEntity> transientAddedBands = new ArrayList<>();
-
-    private List<GenreEnum> selectedGenres;
-
-    public String loadAndShowPage(Long id) {
+    public String loadAndShowTicketsAndCampingPage(Long id) {
         initFields(id);
         return PageNames.INSERT_OPTIONAL_FESTIVAL_DATA_TICKETS_AND_CAMPING;
+    }
+
+    public String loadAndShowLineupPage(Long id) {
+        initFields(id);
+        return PageNames.INSERT_OPTIONAL_FESTIVAL_DATA_LINEUP;
+    }
+
+    @PostConstruct
+    private void initTransientFields() {
+        transientTicketArt = new TicketArtEntity();
+        transientCampingVariante = new CampingVarianteEntity();
+        transientBuehne = new BuehneEntity();
+        transientLineupDate = new LineupDateEntity();
+        selectedBandId = null;
+        selectedBuehnenId = null;
     }
 
     private void initFields(Long id) {
         festival = festivalBusinessService.retrieveFestivalByIdIncludingDetails(id);
         availableBands = bandBusinessService.findAllBands();
-        transientTicketArt = new TicketArtEntity();
-        transientCampingVariante = new CampingVarianteEntity();
-        transientBuehne = new BuehneEntity();
-        selectedGenres = new ArrayList<>();
-        transientBand = new BandEntity();
-        transientLineupDate = new LineupDateEntity();
-        selectedBandId = null;
-        selectedBuehnenId = null;
+        initTransientFields();
     }
 
     public TicketArtEntity getTransientTicketArt() {
@@ -106,17 +108,11 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         return PageNames.CURRENT_PAGE;
     }
 
-    public String persistBand() {
-        selectedGenres.forEach(genre -> transientBand.addGenre(genre));
-        final BandEntity persistedBand = bandBusinessService.persistBand(transientBand);
-        transientAddedBands.add(persistedBand);
-        initFields(festival.getId());
-        return PageNames.CURRENT_PAGE;
-    }
-
     public String persistCampingVariante() {
         festival = festivalBusinessService.addCampingVariante(festival.getId(), transientCampingVariante);
         initFields(festival.getId());
+        final FacesMessage msg = new FacesMessage("Die Campingvariante wurde angelegt");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
     }
 
@@ -190,46 +186,12 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         return transientBuehne;
     }
 
-    public BandEntity getTransientBand() {
-        return transientBand;
-    }
-
-    public List<BandEntity> getTransientAddedBands() {
-        return transientAddedBands;
-    }
-
-    public List<GenreEnum> getAvailableGenres() {
-        return Arrays.asList(GenreEnum.values());
-    }
-
-    public List<GenreEnum> getSelectedGenres() {
-        return selectedGenres;
-    }
-
-    public void setSelectedGenres(List<GenreEnum> selectedGenres) {
-        this.selectedGenres = selectedGenres;
-    }
-
-    // TODO: delete or remove... not both
-    public String deleteBand(Long bandId) {
-        BandEntity bandToDelete = availableBands.stream().filter(band -> band.getId() == bandId).findFirst().get();
-        transientAddedBands.remove(bandToDelete);
-        bandBusinessService.removeBand(bandId);
-        initFields(festival.getId());
-        return PageNames.CURRENT_PAGE;
-    }
-
     public Long getSelectedBandId() {
         return selectedBandId;
     }
 
     public void setSelectedBandId(Long selectedBandId) {
         this.selectedBandId = selectedBandId;
-    }
-
-    public String insertionFinished() {
-        this.transientAddedBands.clear();
-        return PageNames.INDEX;
     }
 
     public List<Date> getPossibleTagesticketDates() {

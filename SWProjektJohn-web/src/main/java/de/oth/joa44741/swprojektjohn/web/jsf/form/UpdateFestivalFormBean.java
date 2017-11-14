@@ -83,11 +83,15 @@ public class UpdateFestivalFormBean extends FestivalFormBeanBase {
         FestivalEntity persistedFestival = festivalBusinessService.updateFestival(selectedFestival);
         final FacesMessage msg = new FacesMessage("Festival " + persistedFestival.getName() + " erfolgreich upgedated");
         FacesContext.getCurrentInstance().addMessage("updateFormular", msg);
-        return loadAndShowTicketAndCampingPage();
+        return PageNames.CURRENT_PAGE;
     }
 
     public String loadAndShowTicketAndCampingPage() {
-        return festivalOptionalDataFormBean.loadAndShowPage(selectedFestival.getId());
+        return festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(selectedFestival.getId());
+    }
+
+    public String loadAndShowLineupPage() {
+        return festivalOptionalDataFormBean.loadAndShowLineupPage(selectedFestival.getId());
     }
 
     public String setStatusOfFestivalToLoeschungAngefordert() {

@@ -5,16 +5,17 @@
  */
 package de.oth.joa44741.swprojektjohn.web.jsf;
 
+import de.oth.joa44741.swprojektjohn.core.util.LineupDateUtils;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+// TODO is it really a base??
 public class FestivalBeanBase implements Serializable {
 
     private static final int BOOTSTRAP_MAX_COL_SIZE = 12;
@@ -25,34 +26,9 @@ public class FestivalBeanBase implements Serializable {
 
     }
 
-    private static Comparator<? super LineupDateEntity> lineupDateTimeComparator = (l1, l2) -> {
-        final int tagCompareResult = getDateCompareResult(l1.getTag(), l2.getTag());
-        if (tagCompareResult == 0) {
-            return getDateCompareResult(l1.getTag(), l2.getTag());
-        } else {
-            return tagCompareResult;
-        }
-    };
-
-    private static Comparator<? super Date> dateComparator = (l1, l2) -> {
-        return getDateCompareResult(l1, l2);
-    };
-
-    public static int getDateCompareResult(Date tag1, Date tag2) {
-        if (tag1 == null && tag2 == null) {
-            return 0;
-        } else if (tag1 == null) {
-            return 1;
-        } else if (tag2 == null) {
-            return -1;
-        } else {
-            return tag1.compareTo(tag2);
-        }
-    }
-
     public List<Date> getTageOfLineupDatesByBuehne(Long buehnenId) {
         final Optional<BuehneEntity> optBuehne = festival.getBuehnen().stream().filter(b -> b.getId().equals(buehnenId)).findFirst();
-        final List<Date> tage = optBuehne.get().getLineupDates().stream().map(l -> l.getTag()).distinct().sorted(dateComparator).collect(Collectors.toList());
+        final List<Date> tage = optBuehne.get().getLineupDates().stream().map(l -> l.getTag()).distinct().sorted(LineupDateUtils.NULL_SAFE_DATE_COMPARATOR).collect(Collectors.toList());
         return tage;
     }
 
@@ -60,7 +36,7 @@ public class FestivalBeanBase implements Serializable {
         final Optional<BuehneEntity> optBuehne = this.festival.getBuehnen().stream().filter(b -> b.getId().equals(buehnenId)).findFirst();
         final List<LineupDateEntity> lineupDates = optBuehne.get().getLineupDates().stream()
                 .filter(l -> (l.getTag() == null && tag == null) || (l.getTag() != null) && l.getTag().equals(tag))
-                .sorted(lineupDateTimeComparator)
+                .sorted(LineupDateUtils.LINEUP_DATE_TIME_COMPARATOR)
                 .collect(Collectors.toList());
         return lineupDates;
     }
