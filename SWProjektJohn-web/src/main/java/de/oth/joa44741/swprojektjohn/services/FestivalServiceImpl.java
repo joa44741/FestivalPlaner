@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.services;
 
+import de.oth.joa44741.swprojektjohn.core.FestivalWithDetailsDto;
 import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
@@ -19,7 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 /**
@@ -41,47 +44,74 @@ public class FestivalServiceImpl implements FestivalService {
     @Inject
     private BandRepository bandRepository;
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity retrieveFestivalById(Long id) {
         final FestivalEntity festivalEntity = festivalRepository.retrieveFestivalById(id);
         return festivalEntity;
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity retrieveFestivalByIdIncludingDetails(Long festivalId) {
         return festivalRepository.retrieveFestivalByIdIncludingDetails(festivalId);
     }
 
     @Override
+    public FestivalWithDetailsDto retrieveFestivalDtoByIdIncludingDetails(Long festivalId) {
+        FestivalEntity entity = festivalRepository.retrieveFestivalByIdIncludingDetails(festivalId);
+        FestivalWithDetailsDto dto = new FestivalWithDetailsDto(entity);
+        return dto;
+    }
+
+    @WebMethod(exclude = true)
+    @Override
     public Optional<FestivalEntity> findFestivalByName(String name) {
         return festivalRepository.findFestivalByName(name);
     }
 
-    // TODO: not published
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity retrieveFestivalByLineupDateId(Long lineupDateId) {
         return festivalRepository.retrieveFestivalByLineupDateId(lineupDateId);
     }
 
+    @WebMethod(exclude = true)
     @Override
     public List<FestivalEntity> findFestivals() {
-        final List<FestivalEntity> festivalEntities = festivalRepository.findAllFestivals();
-        return festivalEntities;
+        return festivalRepository.findAllFestivals();
     }
 
-    // TODO: not published
+    @Override
+    @Transactional
+    public List<FestivalEntity> findFreigegebeneFestivals() {
+        final List<FestivalEntity> festivals = findFestivalsByStatus(StatusEnum.FREIGEGEBEN);
+//        festivals.forEach(f -> handleLazyLoadingFields(f));
+        return festivals;
+    }
+
+    private void handleLazyLoadingFields(FestivalEntity festival) {
+        festivalRepository.detachFestival(festival);
+        festival.clearBuehnen();
+        festival.clearCampingVarianten();
+        festival.clearTicketArten();
+    }
+
+    @WebMethod(exclude = true)
     @Override
     public List<FestivalEntity> findFestivalsByStatus(StatusEnum... status) {
         final List<FestivalEntity> festivalEntities = festivalRepository.findAllFestivalsByStatus(status);
         return festivalEntities;
     }
 
+    @WebMethod(exclude = true)
     @Override
     public List<FestivalEntity> findAllFestivalsInFutureByStatus(StatusEnum... status) {
         final List<FestivalEntity> festivalEntities = festivalRepository.findAllFestivalsInFutureByStatus(status);
         return festivalEntities;
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity createFestival(FestivalEntity entityToPersist) {
         LOG.log(Logger.Level.INFO, "createFestival() called");
@@ -89,18 +119,20 @@ public class FestivalServiceImpl implements FestivalService {
         return persistedEntity;
     }
 
-    // not published
+    @WebMethod(exclude = true)
     @Override
     public void removeFestival(Long id) {
         final FestivalEntity festivalToDelete = festivalRepository.retrieveFestivalById(id);
         festivalRepository.removeFestival(festivalToDelete);
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity updateFestival(FestivalEntity festival) {
         return festivalRepository.updateFestival(festival);
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity addTicketArt(Long festivalId, TicketArtEntity ticketArt) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
@@ -109,6 +141,7 @@ public class FestivalServiceImpl implements FestivalService {
         return festival;
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity removeTicketArt(Long festivalId, Long ticketId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
@@ -118,6 +151,7 @@ public class FestivalServiceImpl implements FestivalService {
         return festival;
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity addCampingVariante(Long festivalId, CampingVarianteEntity campingVariante) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
@@ -126,6 +160,7 @@ public class FestivalServiceImpl implements FestivalService {
         return festival;
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity removeCampingVariante(Long festivalId, Long campingId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
@@ -135,8 +170,9 @@ public class FestivalServiceImpl implements FestivalService {
         return festival;
     }
 
+    @WebMethod(exclude = true)
     @Override
-    public FestivalEntity addLineupDate(Long buehnenId, LineupDateEntity lineupDate) {
+    public FestivalEntity addLineupDateToBuehne(Long buehnenId, LineupDateEntity lineupDate) {
         BuehneEntity buehne = buehneRepository.retrieveBuehneById(buehnenId);
         if (lineupDate.getBand().getId() != null) {
             final BandEntity mergedBandEntity = bandRepository.retrieveBandById(lineupDate.getBand().getId());
@@ -147,8 +183,9 @@ public class FestivalServiceImpl implements FestivalService {
         return buehne.getFestival();
     }
 
+    @WebMethod(exclude = true)
     @Override
-    public FestivalEntity removeLineupDate(Long buehnenId, Long lineupDateId) {
+    public FestivalEntity removeLineupDateFromBuehne(Long buehnenId, Long lineupDateId) {
         final BuehneEntity buehne = buehneRepository.retrieveBuehneById(buehnenId);
         final Optional<LineupDateEntity> optLineupDate = buehne.getLineupDates().stream().filter(lineup -> lineup.getId().equals(lineupDateId)).findFirst();
         buehne.removeLineupDate(optLineupDate.get());
@@ -156,6 +193,7 @@ public class FestivalServiceImpl implements FestivalService {
         return updatedBuehne.getFestival();
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity addBuehne(Long festivalId, BuehneEntity buehne) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
@@ -166,6 +204,7 @@ public class FestivalServiceImpl implements FestivalService {
         return updatedFestival;
     }
 
+    @WebMethod(exclude = true)
     @Override
     public FestivalEntity removeBuehne(Long festivalId, Long buehnenId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);

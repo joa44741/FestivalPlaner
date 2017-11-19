@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  *
@@ -125,4 +126,10 @@ public class BandEntity extends AbstractLongEntity {
     public Set<LineupDateEntity> getLineupDates() {
         return Collections.unmodifiableSet(lineupDates);
     }
+
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toStringExclude(this, "lineupDates");
+    }
+
 }

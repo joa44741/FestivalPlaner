@@ -102,7 +102,7 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
     public String persistLineupDate() {
         final BandEntity band = bandService.retrieveBandById(selectedBandId);
         transientLineupDate.setBand(band);
-        festival = festivalService.addLineupDate(selectedBuehnenId, transientLineupDate);
+        festival = festivalService.addLineupDateToBuehne(selectedBuehnenId, transientLineupDate);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gespeichert");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         initFields(festival.getId());
@@ -134,7 +134,7 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
     }
 
     public String deleteLineupDate(Long buehnenId, Long lineupId) {
-        festival = festivalService.removeLineupDate(buehnenId, lineupId);
+        festival = festivalService.removeLineupDateFromBuehne(buehnenId, lineupId);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         initFields(festival.getId());

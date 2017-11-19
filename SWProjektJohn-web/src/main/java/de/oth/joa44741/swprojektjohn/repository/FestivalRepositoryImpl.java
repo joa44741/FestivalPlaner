@@ -93,4 +93,9 @@ public class FestivalRepositoryImpl extends RepositoryBaseImpl<FestivalEntity> i
         getEntityManager().remove(festival);
     }
 
+    @Override
+    public void detachFestival(FestivalEntity festival) {
+        getEntityManager().detach(festival);
+    }
+
 }

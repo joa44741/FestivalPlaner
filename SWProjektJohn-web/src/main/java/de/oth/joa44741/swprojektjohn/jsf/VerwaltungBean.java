@@ -16,9 +16,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("adminBean")
+@Named("verwaltungBean")
 @SessionScoped
-public class AdminBean implements Serializable {
+public class VerwaltungBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class AdminBean implements Serializable {
 
     public String loadAndShowPage() {
         initFields();
-        return PageNames.ADMIN_DATA;
+        return PageNames.VERWALTUNG;
     }
 
     public String removeFestival(Long id) {

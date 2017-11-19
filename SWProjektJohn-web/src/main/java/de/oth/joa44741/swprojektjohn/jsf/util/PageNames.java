@@ -18,8 +18,9 @@ public final class PageNames {
     public static final String INSERT_OPTIONAL_FESTIVAL_DATA_TICKETS_AND_CAMPING = "insertOptionalFestivalDataTicketsAndCamping.xhtml";
     public static final String INSERT_OPTIONAL_FESTIVAL_DATA_LINEUP = "insertOptionalFestivalDataLineup.xhtml";
 
-    public static final String ADMIN_DATA = "admin.xhtml";
+    public static final String VERWALTUNG = "verwaltung.xhtml";
     public static final String LOGIN_DATA = "login.xhtml";
+
     public static final String CURRENT_PAGE = null;
 
     private PageNames() {

@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
@@ -37,6 +38,7 @@ public abstract class AbstractLongEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     @Column(updatable = false, nullable = false)
+    @XmlTransient
     private Date creationDate;
 
     @PrePersist

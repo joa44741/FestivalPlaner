@@ -44,7 +44,7 @@ public class AuthorizationFilter implements Filter {
             HttpSession ses = reqt.getSession(false);
             String reqURI = reqt.getRequestURI();
 
-            if (reqURI.endsWith(PageNames.ADMIN_DATA)) {
+            if (reqURI.endsWith(PageNames.VERWALTUNG)) {
                 if (ses != null && ses.getAttribute("adminLoggedIn") != null) {
                     chain.doFilter(request, response);
                 } else {

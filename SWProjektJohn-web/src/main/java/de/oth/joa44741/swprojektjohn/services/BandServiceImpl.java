@@ -11,14 +11,12 @@ import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.jws.WebService;
 
 /**
  *
  * @author Johnny
  */
 @RequestScoped
-@WebService
 public class BandServiceImpl implements BandService {
 
     @Inject

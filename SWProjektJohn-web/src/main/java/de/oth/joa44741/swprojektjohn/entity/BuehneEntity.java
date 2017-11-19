@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,6 +43,7 @@ public class BuehneEntity extends AbstractLongEntity {
     @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    @XmlTransient
     private FestivalEntity festival;
 
     @Column

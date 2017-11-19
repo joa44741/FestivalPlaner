@@ -21,7 +21,7 @@
                                 <h4>Festivals die gel&ouml;scht werden sollen</h4>
                             </div>
                             <div class="col-12">
-                                <h:dataTable var="festival" class="table" value="#{adminBean.festivalsWithStatusLoeschungAngefordert}">
+                                <h:dataTable var="festival" class="table" value="#{verwaltungBean.festivalsWithStatusLoeschungAngefordert}">
                                     <h:column>    				
                                         <f:facet name = "header">Name</f:facet>    				
                                         <h:outputLabel value="#{festival.name}"/>
@@ -44,7 +44,7 @@
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Festival l&ouml;schen</f:facet>    				
-                                        <h:commandLink action="#{adminBean.removeFestival(festival.id)}">
+                                        <h:commandLink action="#{verwaltungBean.removeFestival(festival.id)}">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </h:commandLink>
                                     </h:column>
@@ -64,7 +64,7 @@
                                 <h4>Festivals die freigegeben werden sollen</h4>
                             </div>
                             <div class="col-12">
-                                <h:dataTable var="festival" class="table" value="#{adminBean.festivalsWaitingForStatusFreigegeben}">
+                                <h:dataTable var="festival" class="table" value="#{verwaltungBean.festivalsWaitingForStatusFreigegeben}">
                                     <h:column>    				
                                         <f:facet name = "header">Name</f:facet>    				
                                         <h:outputLabel value="#{festival.name}"/>
@@ -87,7 +87,7 @@
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Festival freigeben</f:facet>    				
-                                        <h:commandLink action="#{adminBean.setStatusFreigegebenOfFestival(festival.id)}">
+                                        <h:commandLink action="#{verwaltungBean.setStatusFreigegebenOfFestival(festival.id)}">
                                             <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                         </h:commandLink>
                                     </h:column>

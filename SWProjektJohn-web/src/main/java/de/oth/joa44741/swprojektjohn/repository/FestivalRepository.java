@@ -37,4 +37,6 @@ public interface FestivalRepository {
 
     void removeFestival(FestivalEntity festival);
 
+    void detachFestival(FestivalEntity festival);
+
 }

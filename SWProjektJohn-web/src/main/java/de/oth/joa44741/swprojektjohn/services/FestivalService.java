@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.services;
 
+import de.oth.joa44741.swprojektjohn.core.FestivalWithDetailsDto;
 import de.oth.joa44741.swprojektjohn.core.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
@@ -24,20 +25,22 @@ public interface FestivalService {
 
     FestivalEntity retrieveFestivalByIdIncludingDetails(Long festivalId);
 
+    FestivalWithDetailsDto retrieveFestivalDtoByIdIncludingDetails(Long festivalId);
+
     Optional<FestivalEntity> findFestivalByName(String name);
 
     FestivalEntity retrieveFestivalByLineupDateId(Long lineupDateId);
 
     List<FestivalEntity> findFestivals();
 
-    // TODO: not published
+    List<FestivalEntity> findFreigegebeneFestivals();
+
     List<FestivalEntity> findFestivalsByStatus(StatusEnum... status);
 
     List<FestivalEntity> findAllFestivalsInFutureByStatus(StatusEnum... status);
 
     FestivalEntity createFestival(FestivalEntity entityToPersist);
 
-    // not published
     void removeFestival(Long id);
 
     FestivalEntity updateFestival(FestivalEntity festival);
@@ -54,8 +57,7 @@ public interface FestivalService {
 
     FestivalEntity removeBuehne(Long festivalId, Long buehnenId);
 
-    // buehnenId instead of festivalid required
-    FestivalEntity addLineupDate(Long buehnenId, LineupDateEntity lineupDate);
+    FestivalEntity addLineupDateToBuehne(Long buehnenId, LineupDateEntity lineupDate);
 
-    FestivalEntity removeLineupDate(Long buehnenId, Long lineupDateId);
+    FestivalEntity removeLineupDateFromBuehne(Long buehnenId, Long lineupDateId);
 }
