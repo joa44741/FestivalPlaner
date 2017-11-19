@@ -5,8 +5,10 @@
  */
 package de.oth.joa44741.swprojektjohn.services;
 
+import de.oth.joa44741.swprojektjohn.core.qualifier.BandRepository;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
-import de.oth.joa44741.swprojektjohn.repository.BandRepository;
+import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
+import de.oth.joa44741.swprojektjohn.repository.Repository;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -20,21 +22,25 @@ import javax.inject.Inject;
 public class BandServiceImpl implements BandService {
 
     @Inject
-    private BandRepository bandRepository;
+    @BandRepository
+    private Repository<BandEntity> bandRepository;
 
     @Override
     public BandEntity retrieveBandById(Long id) {
-        return bandRepository.retrieveBandById(id);
+        return bandRepository.retrieveById(id);
     }
 
     @Override
     public BandEntity retrieveBandByIdIncludingDetails(Long id) {
-        return bandRepository.retrieveBandByIdIncludingDetails(id);
+        final List<BandEntity> bands = this.bandRepository
+                .query(BandEntity.QUERY_NAME_RETRIEVE_BAND_BY_ID_INCLUDING_DETAILS,
+                        with("id", id).parameters(), Repository.SINGLE_RESULT);
+        return bands.get(0);
     }
 
     @Override
     public List<BandEntity> findAllBands() {
-        return bandRepository.findAllBands();
+        return bandRepository.findAll();
     }
 
     @Override
@@ -46,12 +52,12 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public BandEntity persistBand(BandEntity band) {
-        return bandRepository.persistBand(band);
+        return bandRepository.persistEntity(band);
     }
 
     @Override
-    public void removeBand(BandEntity band) {
-        bandRepository.removeBand(band);
+    public void removeBand(Long id) {
+        bandRepository.remove(id);
     }
 
 }

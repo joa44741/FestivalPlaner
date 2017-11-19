@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.bservice;
 
-import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.BundeslandEnum;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import javax.validation.ConstraintViolationException;
 import org.junit.Test;

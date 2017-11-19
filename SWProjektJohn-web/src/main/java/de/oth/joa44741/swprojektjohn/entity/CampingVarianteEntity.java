@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import de.oth.joa44741.swprojektjohn.core.CampingArtEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.CampingArtEnum;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;

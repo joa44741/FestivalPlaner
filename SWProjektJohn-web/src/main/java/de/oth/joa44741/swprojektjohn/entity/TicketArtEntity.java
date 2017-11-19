@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.TagArtEnum;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;

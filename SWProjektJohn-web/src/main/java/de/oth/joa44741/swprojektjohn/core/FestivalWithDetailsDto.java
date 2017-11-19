@@ -5,6 +5,8 @@
  */
 package de.oth.joa44741.swprojektjohn.core;
 
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
@@ -32,7 +34,6 @@ public class FestivalWithDetailsDto {
     private final LocationEntity location;
     private final Integer ticketKontingent;
     private final Integer verkaufteTickets;
-    private final Integer dauer;
     private final String lageplan;
     private final Date datumVon;
     private final Date datumBis;
@@ -51,7 +52,6 @@ public class FestivalWithDetailsDto {
         this.location = null;
         this.ticketKontingent = null;
         this.verkaufteTickets = null;
-        this.dauer = null;
         this.lageplan = null;
         this.datumVon = null;
         this.datumBis = null;
@@ -71,7 +71,6 @@ public class FestivalWithDetailsDto {
         this.location = entity.getLocation();
         this.ticketKontingent = entity.getTicketKontingent();
         this.verkaufteTickets = entity.getVerkaufteTickets();
-        this.dauer = entity.getDauer();
         this.lageplan = entity.getLageplan();
         this.datumVon = entity.getDatumVon();
         this.datumBis = entity.getDatumBis();

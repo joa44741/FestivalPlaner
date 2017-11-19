@@ -73,6 +73,7 @@
             <div class="card">
                 <div class="card-body">
                     <h:form id="lineupForm">
+                        <f:event listener = "#{festivalOptionalDataFormBean.handleEvent}" type = "preRenderView" />
                         <div class="row">
                             <div class="col-12">
                                 <h4>Lineup</h4>
@@ -173,7 +174,6 @@
                 </div>
             </div>
             <ui:include src="/partials/bandForm.xhtml">
-                
             </ui:include>
         </div>
         <div class="col-2">

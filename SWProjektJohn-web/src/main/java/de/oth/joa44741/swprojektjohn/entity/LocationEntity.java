@@ -5,11 +5,13 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.BundeslandEnum;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,9 +26,16 @@ import org.apache.commons.lang3.StringUtils;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@NamedQueries({
+    @NamedQuery(name = LocationEntity.QUERY_NAME_RETRIEVE_LOCATION_BY_FESTIVAL_ID, query = "SELECT l FROM FestivalEntity f "
+            + "join f.location l "
+            + "where f.id = :id")
+})
 @Entity
 @Table(name = "Locations")
 public class LocationEntity extends AbstractLongEntity {
+
+    public static final String QUERY_NAME_RETRIEVE_LOCATION_BY_FESTIVAL_ID = "retrieveLocationByFestivalId";
 
     @Column
     private String name;

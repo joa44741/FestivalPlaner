@@ -20,6 +20,6 @@ public interface BandService {
 
     BandEntity persistBand(BandEntity band);
 
-    void removeBand(BandEntity band);
+    void removeBand(Long Id);
 
 }

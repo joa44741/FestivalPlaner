@@ -4,8 +4,14 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence 
                                  http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="sw_projekt_john_pu-test" transaction-type="RESOURCE_LOCAL">
-        <class> de.oth.joa44741.swprojektjohn.entity.CustomerEntity</class>
+        <class> de.oth.joa44741.swprojektjohn.entity.BandEntity</class>
+        <class> de.oth.joa44741.swprojektjohn.entity.BuehneEntity</class>
+        <class> de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity</class>
+        <class> de.oth.joa44741.swprojektjohn.entity.FestivalEntity</class>
+        <class> de.oth.joa44741.swprojektjohn.entity.LineupDateEntity</class>
         <class> de.oth.joa44741.swprojektjohn.entity.LocationEntity</class>
+        <class> de.oth.joa44741.swprojektjohn.entity.TicketArtEntity</class>
+        
         <!--<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
         <validation-mode>CALLBACK</validation-mode>
         <properties>

@@ -6,8 +6,8 @@
 package de.oth.joa44741.swprojektjohn.entity;
 
 import de.oth.joa44741.swprojektjohn.core.RegexPattern;
-import de.oth.joa44741.swprojektjohn.core.StatusEnum;
-import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.ZusatzeigenschaftEnum;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collections;
@@ -67,7 +67,6 @@ public class FestivalEntity extends AbstractLongEntity {
 
     public static final String QUERY_NAME_FIND_FESTIVALS_BY_STATUS = "findFestivalsByStatus";
     public static final String QUERY_NAME_FIND_FESTIVALS_IN_FUTURE_BY_STATUS = "findFestivalsInFutureByStatus";
-
     public static final String QUERY_NAME_FIND_FESTIVAL_BY_NAME = "findFestivalByName";
     public static final String QUERY_NAME_RETRIEVE_FESTIVAL_BY_LINEUP_DATE_ID = "retrieveFestivalByLineupDateId";
     public static final String QUERY_NAME_RETRIEVE_FESTIVAL_BY_ID_INCLUDING_DETAILS = "retrieveFestivalByIdIncludingDetails";
@@ -99,11 +98,6 @@ public class FestivalEntity extends AbstractLongEntity {
     @Column
     @Min(0)
     private Integer verkaufteTickets;
-
-    // in Tage
-    @Column
-    @Min(1)
-    private Integer dauer;
 
     @Column(unique = true)
     @Pattern(regexp = RegexPattern.REGEX_URL)
@@ -199,14 +193,6 @@ public class FestivalEntity extends AbstractLongEntity {
 
     public void setVerkaufteTickets(Integer verkaufteTickets) {
         this.verkaufteTickets = verkaufteTickets;
-    }
-
-    public Integer getDauer() {
-        return dauer;
-    }
-
-    public void setDauer(Integer dauer) {
-        this.dauer = dauer;
     }
 
     public Date getDatumVon() {

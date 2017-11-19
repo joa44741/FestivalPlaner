@@ -103,7 +103,13 @@ nav div{
 }
 
 body{
-    background-color: #3E5151;
+    background: #f7971e; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #f7971e, #ffd200); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #f7971e, #ffd200);
+}
+
+html{
+    min-height: 100%;
 }
 
 /*h5{

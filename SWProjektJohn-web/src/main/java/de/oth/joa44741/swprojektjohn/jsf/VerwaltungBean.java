@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf;
 
-import de.oth.joa44741.swprojektjohn.core.StatusEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;

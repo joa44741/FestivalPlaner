@@ -34,7 +34,6 @@
                                             <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
                                             <f:passThroughAttribute name="type" value="date" />
                                             <f:ajax execute="@form" delay="100" render="foundFestivals" listener="#{festivalSearchingBean.updateMatchingFestivals()}"/>
-                                            <!--timeZone="Europe/Berlin"-->
                                         </h:inputText>
                                     </div>
                                     <div class="col-12 form-group">
@@ -43,7 +42,6 @@
                                             <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Europe/Berlin"/>
                                             <f:passThroughAttribute name="type" value="date" />
                                             <f:ajax execute="@form" delay="100" render="foundFestivals" listener="#{festivalSearchingBean.updateMatchingFestivals()}"/>
-                                            <!--timeZone="Europe/Berlin"-->
                                         </h:inputText>
                                     </div>
                                 </div>
@@ -54,44 +52,9 @@
                         <div class="row">
                             <ui:repeat var="festival" value="#{festivalSearchingBean.matchingFestivals}">
                                 <div class="col-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>#{festival.name}</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <h:outputText value="Location:"/>
-                                                </div>
-                                                <div class="col-8">
-                                                    <h:outputText value="#{festival.location.locationAsString}"/>
-                                                </div>
-                                                <div class="col-4">
-                                                    von: 
-                                                </div>
-                                                <div class="col-8">
-                                                    <h:outputText value="#{festival.datumVon}">
-                                                        <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
-                                                    </h:outputText>
-                                                </div>
-                                                <div class="col-4">
-                                                    bis: 
-                                                </div>
-                                                <div class="col-8">
-                                                    <h:outputText value="#{festival.datumBis}">
-                                                        <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
-                                                    </h:outputText>
-                                                </div>
-                                                <div class="col-12 text-center">
-                                                    <img src="#{festival.logoUrl}" class="img-fluid"/>
-                                                </div>
-
-                                                <div class="col-12" style="margin-bottom: 10px">
-                                                    <h:commandLink class="font-weight-bold" action="#{festivaldetailsBean.showFestivalDetails(festival.id)}">zeige Details</h:commandLink>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <ui:include src="/partials/festivalCard.xhtml">
+                                        <ui:param name="festival" value="#{festival}" />
+                                    </ui:include>
                                 </div>
                             </ui:repeat>
                         </div>

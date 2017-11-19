@@ -5,8 +5,8 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
-import de.oth.joa44741.swprojektjohn.core.CampingArtEnum;
-import de.oth.joa44741.swprojektjohn.core.TagArtEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.CampingArtEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.TagArtEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
@@ -27,6 +27,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -93,7 +94,6 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     public String persistTicketArt() {
         festival = festivalService.addTicketArt(festival.getId(), transientTicketArt);
-        initFields(festival.getId());
         final FacesMessage msg = new FacesMessage("Die Ticketart wurde angelegt");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
@@ -105,13 +105,11 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         festival = festivalService.addLineupDateToBuehne(selectedBuehnenId, transientLineupDate);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gespeichert");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
     public String persistCampingVariante() {
         festival = festivalService.addCampingVariante(festival.getId(), transientCampingVariante);
-        initFields(festival.getId());
         final FacesMessage msg = new FacesMessage("Die Campingvariante wurde angelegt");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
@@ -121,7 +119,6 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         festival = festivalService.removeTicketArt(festival.getId(), ticketId);
         final FacesMessage msg = new FacesMessage("Die Ticketart wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
@@ -129,7 +126,6 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         festival = festivalService.removeCampingVariante(festival.getId(), campingId);
         final FacesMessage msg = new FacesMessage("Die Campingvariante wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
@@ -137,13 +133,11 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         festival = festivalService.removeLineupDateFromBuehne(buehnenId, lineupId);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
     public String persistBuehne() {
         festival = festivalService.addBuehne(festival.getId(), transientBuehne);
-        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
@@ -151,7 +145,6 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         festival = festivalService.removeBuehne(festival.getId(), buehneId);
         final FacesMessage msg = new FacesMessage("Die Bühne wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage("buehnenForm", msg);
-        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
@@ -213,4 +206,7 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         return new SimpleDateFormat("dd.MM.yyyy").format(date);
     }
 
+    public void handleEvent(ComponentSystemEvent event) {
+        initFields(festival.getId());
+    }
 }

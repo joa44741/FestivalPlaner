@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
-import de.oth.joa44741.swprojektjohn.core.GenreEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
@@ -73,7 +73,7 @@ public class BandFormBean implements Serializable {
     public String removeBand(Long bandId) {
         final BandEntity bandToDelete = transientAddedBands.stream().filter(band -> band.getId().equals(bandId)).findFirst().get();
         transientAddedBands.remove(bandToDelete);
-        bandService.removeBand(bandToDelete);
+        bandService.removeBand(bandId);
         return PageNames.CURRENT_PAGE;
     }
 

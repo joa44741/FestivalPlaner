@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.util;
 
-import de.oth.joa44741.swprojektjohn.core.GenreEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
 import java.util.Arrays;
 import java.util.List;
 import javax.inject.Named;

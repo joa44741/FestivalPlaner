@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
-import de.oth.joa44741.swprojektjohn.core.ZusatzeigenschaftEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import de.oth.joa44741.swprojektjohn.services.LocationService;
 import java.io.Serializable;

@@ -5,7 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.search;
 
-import de.oth.joa44741.swprojektjohn.core.GenreEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import java.io.Serializable;

@@ -5,8 +5,9 @@
  */
 package de.oth.joa44741.swprojektjohn.entity;
 
-import de.oth.joa44741.swprojektjohn.core.GenreEnum;
 import de.oth.joa44741.swprojektjohn.core.RegexPattern;
+import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,6 +23,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -30,7 +33,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
  *
@@ -38,9 +40,16 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
+@NamedQueries({
+    @NamedQuery(name = BandEntity.QUERY_NAME_RETRIEVE_BAND_BY_ID_INCLUDING_DETAILS, query = "SELECT t FROM BandEntity t "
+            + "LEFT JOIN FETCH t.lineupDates l "
+            + "WHERE t.id = :id")
+})
 @Entity
 @Table(name = "Bands")
 public class BandEntity extends AbstractLongEntity {
+
+    public static final String QUERY_NAME_RETRIEVE_BAND_BY_ID_INCLUDING_DETAILS = "retrieveBandByIdIncludingDetails";
 
     @Column(nullable = false)
     @NotNull
@@ -67,6 +76,11 @@ public class BandEntity extends AbstractLongEntity {
     @OneToMany(mappedBy = "band", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @XmlTransient
     private final Set<LineupDateEntity> lineupDates = new HashSet<>();
+
+    @Column(nullable = false)
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private StatusEnum status;
 
     public String getName() {
         return name;
@@ -127,9 +141,12 @@ public class BandEntity extends AbstractLongEntity {
         return Collections.unmodifiableSet(lineupDates);
     }
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toStringExclude(this, "lineupDates");
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusEnum status) {
+        this.status = status;
     }
 
 }

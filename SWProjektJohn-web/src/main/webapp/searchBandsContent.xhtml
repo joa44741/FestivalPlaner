@@ -31,7 +31,6 @@
                                     </div>
                                     <div class="col-12 form-group">
                                         <h:outputLabel class="col-form-label" for="genres">Genres:</h:outputLabel>
-                                        <!-- use backing bean for general tasks: availableGenres --> 
                                         <h:selectManyMenu id="genres" styleClass="form-control" value="#{bandSearchingBean.selectedGenres}">
                                             <f:selectItems value="#{utilsBean.availableGenres}" var="genre"
                                                            itemLabel="#{genre.text}" itemValue="#{genre}" />
@@ -48,43 +47,9 @@
                         <div class="row">
                             <ui:repeat var="band" value="#{bandSearchingBean.matchingBands}">
                                 <div class="col-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>#{band.name}</h5>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <h:outputText value="#{band.beschreibung}"/>
-                                                </div>
-                                                <div class="col-12" style="margin-bottom: 10px">
-                                                    <h:commandLink class="font-weight-bold" action="#{bandDetailsBean.showBandDetails(band.id)}">zeige Details</h:commandLink>
-                                                </div>
-                                                <div class="col-12">
-                                                    <h:outputLabel rendered="#{band.facebookseite != null}" class="bandLinkIcon">
-                                                        <i class="fa fa-facebook-official" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Facebookseite">:</i>
-                                                    </h:outputLabel>
-                                                    <h:outputLink  rendered="#{band.facebookseite != null}" value="#{band.facebookseite}">Link</h:outputLink>
-                                                </div>
-                                                <div class="col-12">
-                                                    <h:outputLabel rendered="#{band.webseite != null}" class="bandLinkIcon">
-                                                        <i class="fa fa-globe" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Webseite">:</i>
-                                                    </h:outputLabel>
-                                                    <h:outputLink rendered="#{band.webseite != null}" value="#{band.webseite}">Link</h:outputLink> 
-                                                </div>
-                                                <div class="col-3">
-                                                    Genres:
-                                                </div>
-                                                <div class="col-9">
-                                                    <ul>
-                                                        <ui:repeat var="genre" value="#{band.genres}">
-                                                            <li>#{genre.text}</li>
-                                                        </ui:repeat>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <ui:include src="/partials/bandCard.xhtml">
+                                        <ui:param name="band" value="#{band}" />
+                                    </ui:include>
                                 </div>
                             </ui:repeat>
                         </div>

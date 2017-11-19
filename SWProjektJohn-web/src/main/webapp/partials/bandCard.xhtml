@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>
+        <ui:composition>
+            <div class="card">
+                <div class="card-header">
+                    <h5>#{band.name}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <h:outputText value="#{band.beschreibung}"/>
+                        </div>
+                        <div class="col-12" style="margin-bottom: 10px">
+                            <h:commandLink class="font-weight-bold" action="#{bandDetailsBean.showBandDetails(band.id)}">zeige Details</h:commandLink>
+                        </div>
+                        <div class="col-12">
+                            <h:outputLabel rendered="#{band.facebookseite != null}" class="bandLinkIcon">
+                                <i class="fa fa-facebook-official" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Facebookseite">:</i>
+                            </h:outputLabel>
+                            <h:outputLink  rendered="#{band.facebookseite != null}" value="#{band.facebookseite}">Link</h:outputLink>
+                        </div>
+                        <div class="col-12">
+                            <h:outputLabel rendered="#{band.webseite != null}" class="bandLinkIcon">
+                                <i class="fa fa-globe" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Webseite">:</i>
+                            </h:outputLabel>
+                            <h:outputLink rendered="#{band.webseite != null}" value="#{band.webseite}">Link</h:outputLink> 
+                        </div>
+                        <div class="col-3">
+                            Genres:
+                        </div>
+                        <div class="col-9">
+                            <ul>
+                                <ui:repeat var="genre" value="#{band.genres}">
+                                    <li>#{genre.text}</li>
+                                </ui:repeat>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:composition>
+    </body>
+</html>

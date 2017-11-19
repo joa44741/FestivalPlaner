@@ -5,8 +5,8 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
-import de.oth.joa44741.swprojektjohn.core.BundeslandEnum;
-import de.oth.joa44741.swprojektjohn.core.StatusEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.BundeslandEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.jsf.LoginBean;

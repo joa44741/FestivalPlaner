@@ -6,7 +6,7 @@
 package de.oth.joa44741.swprojektjohn.services;
 
 import de.oth.joa44741.swprojektjohn.core.FestivalWithDetailsDto;
-import de.oth.joa44741.swprojektjohn.core.StatusEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
