@@ -19,6 +19,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("festivalsBean")
+
+//TODO: Prof. fragen, warum RequestScoped nicht funktioniert...
 @SessionScoped
 // TODO: andere Benennung
 public class FestivalsBean implements Serializable {
