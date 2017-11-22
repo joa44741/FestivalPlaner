@@ -236,7 +236,6 @@
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="verkaufteTickets">Verkaufte Tickets</h:outputLabel>
-                                <!-- validator anpassen -->
                                 <h:inputText class="form-control" id="verkaufteTickets" value="#{updateFestivalFormBean.selectedFestival.verkaufteTickets}" validator="#{updateFestivalFormBean.validateVerkaufteTicketsAndKontingent}">
                                     <f:passThroughAttribute name="type" value="number"/>
                                     <f:convertNumber integerOnly="true" type="number" />

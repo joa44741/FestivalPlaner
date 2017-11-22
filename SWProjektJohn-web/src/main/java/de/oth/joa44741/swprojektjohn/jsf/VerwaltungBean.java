@@ -6,8 +6,10 @@
 package de.oth.joa44741.swprojektjohn.jsf;
 
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
+import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
+import de.oth.joa44741.swprojektjohn.services.BandService;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
 import java.util.List;
@@ -24,14 +26,21 @@ public class VerwaltungBean implements Serializable {
 
     private List<FestivalEntity> festivalsWaitingForStatusFreigegeben;
     private List<FestivalEntity> festivalsWithStatusLoeschungAngefordert;
+    private List<BandEntity> bandsWaitingForStatusFreigegeben;
+    private List<BandEntity> bandsWithStatusLoeschungAngefordert;
 
     @Inject
     private FestivalService festivalService;
+
+    @Inject
+    private BandService bandService;
 
     @PostConstruct
     private void initFields() {
         festivalsWaitingForStatusFreigegeben = festivalService.findFestivalsByStatus(StatusEnum.ERSTELLT, StatusEnum.AENDERUNG_ANGEFORDERT);
         festivalsWithStatusLoeschungAngefordert = festivalService.findFestivalsByStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
+        bandsWaitingForStatusFreigegeben = bandService.findBandsByStatus(StatusEnum.ERSTELLT, StatusEnum.AENDERUNG_ANGEFORDERT);
+        bandsWithStatusLoeschungAngefordert = bandService.findBandsByStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
     }
 
     public String loadAndShowPage() {
@@ -53,6 +62,20 @@ public class VerwaltungBean implements Serializable {
         return PageNames.CURRENT_PAGE;
     }
 
+    public String setStatusFreigegebenOfBand(Long id) {
+        final BandEntity band = bandService.retrieveBandById(id);
+        band.setStatus(StatusEnum.FREIGEGEBEN);
+        bandService.updateBand(band);
+        initFields();
+        return PageNames.CURRENT_PAGE;
+    }
+
+    public String removeBand(Long id) {
+        bandService.removeBand(id);
+        initFields();
+        return PageNames.CURRENT_PAGE;
+    }
+
     public List<FestivalEntity> getFestivalsWithStatusLoeschungAngefordert() {
         return festivalsWithStatusLoeschungAngefordert;
     }
@@ -61,4 +84,11 @@ public class VerwaltungBean implements Serializable {
         return festivalsWaitingForStatusFreigegeben;
     }
 
+    public List<BandEntity> getBandsWaitingForStatusFreigegeben() {
+        return bandsWaitingForStatusFreigegeben;
+    }
+
+    public List<BandEntity> getBandsWithStatusLoeschungAngefordert() {
+        return bandsWithStatusLoeschungAngefordert;
+    }
 }

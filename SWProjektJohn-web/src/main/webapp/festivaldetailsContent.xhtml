@@ -52,9 +52,9 @@
             am <h:outputText value="#{festivaldetailsBean.festival.datumVon}">
                 <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
             </h:outputText>:<br/>
-            14&#x2103;<br/>
-            wolkig<br/>
-            Niederschlagswahrscheinlichkeit: 35%
+            #{festivaldetailsBean.weatherForecast.avgTemperatur}&#x2103;<br/>
+            #{festivaldetailsBean.weatherForecast.wolkenTyp}<br/>
+            Niederschlagswahrscheinlichkeit: #{festivaldetailsBean.weatherForecast.regenwahrscheinlichkeit}%
         </div>
         <div class="col-12">
             <hr/>
@@ -133,7 +133,6 @@
                             <h4>
                                 <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
                             </h4>
-                            <!-- TODO: sortieren -->
                             <h:dataTable value = "#{festivaldetailsBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
                                          class = "table">
                                 <h:column>    				
@@ -158,8 +157,13 @@
                 </div>
             </div>
         </ui:repeat>
-        <h:form class="col-2">
-            <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{festivaldetailsBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
+        <h:form class="col-12">
+            <div class="row">
+                <div class="col-12 buttonGroupWithMargin">
+                <h:commandButton id="btnEditFestival" class="btn btn-primary" action="#{festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(festivaldetailsBean.festival.id)}" value="Festivaldaten &auml;ndern"/>
+                <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{festivaldetailsBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
+                    </div>
+            </div>
         </h:form>
     </div>
 </html>

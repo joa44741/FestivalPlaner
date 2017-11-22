@@ -44,12 +44,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = BandEntity.QUERY_NAME_RETRIEVE_BAND_BY_ID_INCLUDING_DETAILS, query = "SELECT t FROM BandEntity t "
             + "LEFT JOIN FETCH t.lineupDates l "
             + "WHERE t.id = :id")
+    ,
+    @NamedQuery(name = BandEntity.QUERY_NAME_FIND_BANDS_BY_STATUS, query = "SELECT t FROM BandEntity t where t.status IN :status")
 })
 @Entity
 @Table(name = "Bands")
 public class BandEntity extends AbstractLongEntity {
 
     public static final String QUERY_NAME_RETRIEVE_BAND_BY_ID_INCLUDING_DETAILS = "retrieveBandByIdIncludingDetails";
+    public static final String QUERY_NAME_FIND_BANDS_BY_STATUS = "findBandsByStatus";
 
     @Column(nullable = false)
     @NotNull

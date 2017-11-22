@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -113,5 +114,12 @@ public class LocationEntity extends AbstractLongEntity {
         }
         result += getAddressAsString();
         return result;
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        System.out.println("\n\n\n");
+        System.out.println("Try to update " + this.toString());
+        System.out.println(new RuntimeException().getStackTrace());
     }
 }

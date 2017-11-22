@@ -54,5 +54,12 @@
                 </h:outputText>
             </h:column>
         </h:dataTable>
+        <h:form class="col-12">
+            <div class="row">
+                <div class="col-8 buttonGroupWithMargin">
+                    <h:commandButton id="btnDeleteBand" class="btn btn-primary" action="#{bandDetailsBean.setStatusOfBandToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
+                    </div>
+            </div>
+        </h:form>
     </div>
 </html>

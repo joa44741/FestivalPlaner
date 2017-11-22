@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf;
 
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.util.LineupDateUtils;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
@@ -18,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -64,5 +67,13 @@ public class BandDetailsBean implements Serializable {
     public String loadAndShowFestivalDetailsByLineupDateId(Long lineupId) {
         final FestivalEntity festival = getFestivalByLineupDateId(lineupId);
         return festivalDetailsBean.showFestivalDetails(festival.getId());
+    }
+
+    public String setStatusOfBandToLoeschungAngefordert() {
+        band.setStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
+        bandService.updateBand(band);
+        final FacesMessage msg = new FacesMessage("Löschung für Band " + band.getName() + " wurde beantragt");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        return PageNames.INDEX;
     }
 }

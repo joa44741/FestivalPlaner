@@ -39,7 +39,7 @@ public class FestivalsBean implements Serializable {
     @PostConstruct
     public void initFields() {
         festivalsInFuture = festivalService.findAllFestivalsInFutureByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
-        randomBands = bandService.findRandomBands();
+        randomBands = bandService.findRandomBandsByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
     }
 
     public List<FestivalEntity> getUpcomingFestivals(int numberOfFestivals) {

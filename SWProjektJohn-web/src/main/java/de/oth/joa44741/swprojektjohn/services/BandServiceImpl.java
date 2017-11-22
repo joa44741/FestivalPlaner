@@ -5,10 +5,12 @@
  */
 package de.oth.joa44741.swprojektjohn.services;
 
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.qualifier.BandRepository;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
 import de.oth.joa44741.swprojektjohn.repository.Repository;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
@@ -44,8 +46,16 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public List<BandEntity> findRandomBands() {
-        final List<BandEntity> allBands = findAllBands();
+    public List<BandEntity> findBandsByStatus(StatusEnum... status) {
+        final List<BandEntity> allBands = this.bandRepository
+                .query(BandEntity.QUERY_NAME_FIND_BANDS_BY_STATUS,
+                        with("status", Arrays.asList(status)).parameters(), Repository.NO_LIMIT);
+        return allBands;
+    }
+
+    @Override
+    public List<BandEntity> findRandomBandsByStatus(StatusEnum... status) {
+        final List<BandEntity> allBands = findBandsByStatus(status);
         Collections.shuffle(allBands);
         return allBands;
     }
@@ -58,6 +68,11 @@ public class BandServiceImpl implements BandService {
     @Override
     public void removeBand(Long id) {
         bandRepository.remove(id);
+    }
+
+    @Override
+    public BandEntity updateBand(BandEntity band) {
+        return bandRepository.update(band);
     }
 
 }

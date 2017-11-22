@@ -6,7 +6,9 @@
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
 import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
+import de.oth.joa44741.swprojektjohn.jsf.LoginBean;
 import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import java.io.Serializable;
@@ -30,6 +32,9 @@ public class BandFormBean implements Serializable {
     @Inject
     private BandService bandService;
 
+    @Inject
+    private LoginBean loginBean;
+
     private List<GenreEnum> selectedGenres;
 
     private BandEntity transientBand;
@@ -46,6 +51,8 @@ public class BandFormBean implements Serializable {
 
     public String persistBand() {
         selectedGenres.forEach(genre -> transientBand.addGenre(genre));
+        final StatusEnum newStatus = loginBean.isAdminLoggedIn() ? StatusEnum.FREIGEGEBEN : StatusEnum.ERSTELLT;
+        transientBand.setStatus(newStatus);
         final BandEntity persistedBand = bandService.persistBand(transientBand);
         transientAddedBands.add(persistedBand);
         final FacesMessage msg = new FacesMessage("Die Band " + transientBand.getName() + " wurde angelegt");
@@ -75,12 +82,6 @@ public class BandFormBean implements Serializable {
         transientAddedBands.remove(bandToDelete);
         bandService.removeBand(bandId);
         return PageNames.CURRENT_PAGE;
-    }
-
-    // call as listener
-    public String insertionFinished() {
-        this.transientAddedBands.clear();
-        return PageNames.INDEX;
     }
 
 }
