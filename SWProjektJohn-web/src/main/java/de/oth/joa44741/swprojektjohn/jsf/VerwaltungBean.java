@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -51,6 +53,8 @@ public class VerwaltungBean implements Serializable {
     public String removeFestival(Long id) {
         festivalService.removeFestival(id);
         initFields();
+        final FacesMessage msg = new FacesMessage("Festival wurde gelöscht");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
     }
 
@@ -59,6 +63,8 @@ public class VerwaltungBean implements Serializable {
         festival.setStatus(StatusEnum.FREIGEGEBEN);
         festivalService.updateFestival(festival);
         initFields();
+        final FacesMessage msg = new FacesMessage("Festival wurde freigegeben");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
     }
 
@@ -67,12 +73,16 @@ public class VerwaltungBean implements Serializable {
         band.setStatus(StatusEnum.FREIGEGEBEN);
         bandService.updateBand(band);
         initFields();
+        final FacesMessage msg = new FacesMessage("Band wurde freigegeben");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
     }
 
     public String removeBand(Long id) {
         bandService.removeBand(id);
         initFields();
+        final FacesMessage msg = new FacesMessage("Band wurde gelöscht");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
     }
 

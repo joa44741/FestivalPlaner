@@ -188,25 +188,19 @@ public class FestivalServiceImpl implements FestivalService {
 
     @WebMethod(exclude = true)
     @Override
-    public FestivalEntity addLineupDateToBuehne(Long buehnenId, LineupDateEntity lineupDate) {
-        BuehneEntity buehne = buehneRepository.retrieveById(buehnenId);
-        if (lineupDate.getBand().getId() != null) {
-            final BandEntity mergedBandEntity = bandRepository.retrieveById(lineupDate.getBand().getId());
-            lineupDate.setBand(mergedBandEntity);
-        }
-        buehne.addLineupDate(lineupDate);
-        buehne = buehneRepository.update(buehne);
-        return buehne.getFestival();
+    public FestivalEntity addLineupDate(Long festivalId, LineupDateEntity lineupDate) {
+        final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
+        festival.addLineupDate(lineupDate);
+        return updateFestival(festival);
     }
 
     @WebMethod(exclude = true)
     @Override
-    public FestivalEntity removeLineupDateFromBuehne(Long buehnenId, Long lineupDateId) {
-        final BuehneEntity buehne = buehneRepository.retrieveById(buehnenId);
-        final Optional<LineupDateEntity> optLineupDate = buehne.getLineupDates().stream().filter(lineup -> lineup.getId().equals(lineupDateId)).findFirst();
-        buehne.removeLineupDate(optLineupDate.get());
-        final BuehneEntity updatedBuehne = buehneRepository.update(buehne);
-        return updatedBuehne.getFestival();
+    public FestivalEntity removeLineupDate(Long festivalId, Long lineupDateId) {
+        final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
+        final Optional<LineupDateEntity> optLineupDate = festival.getLineupDates().stream().filter(lineup -> lineup.getId().equals(lineupDateId)).findFirst();
+        festival.removeLineupDate(optLineupDate.get());
+        return updateFestival(festival);
     }
 
     @WebMethod(exclude = true)

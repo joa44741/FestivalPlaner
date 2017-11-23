@@ -53,13 +53,14 @@ import javax.xml.bind.annotation.XmlTransient;
     ,
     @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME, query = "SELECT f FROM FestivalEntity f where f.name = :name")
     ,
-    @NamedQuery(name = FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_LINEUP_DATE_ID, query = "SELECT f FROM FestivalEntity f join f.buehnen b join b.lineupDates l where l.id = :lineupDateId")
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_LINEUP_DATE_ID, query = "SELECT f FROM FestivalEntity f join f.lineupDates l where l.id = :lineupDateId")
     ,
     @NamedQuery(name = FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_ID_INCLUDING_DETAILS, query = "SELECT t FROM FestivalEntity t "
             + "JOIN FETCH t.location l "
             + "LEFT JOIN FETCH t.zusatzeigenschaften z "
             + "LEFT JOIN FETCH t.ticketArten ta "
-            + "LEFT JOIN FETCH t.buehnen "
+            + "LEFT JOIN FETCH t.buehnen b "
+            + "LEFT JOIN FETCH t.lineupDates l "
             + "LEFT JOIN FETCH t.campingVarianten c "
             + "WHERE t.id = :id")
 })
@@ -133,6 +134,11 @@ public class FestivalEntity extends AbstractLongEntity {
     @OneToMany(mappedBy = "festival", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @XmlTransient
     private final Set<BuehneEntity> buehnen = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "festivalId", referencedColumnName = "id", nullable = false)
+    @XmlTransient
+    private final Set<LineupDateEntity> lineupDates = new HashSet<>();
 
     @Column(nullable = false)
     @NotNull
@@ -281,6 +287,22 @@ public class FestivalEntity extends AbstractLongEntity {
 
     public void clearBuehnen() {
         this.buehnen.clear();
+    }
+
+    public Set<LineupDateEntity> getLineupDates() {
+        return Collections.unmodifiableSet(lineupDates);
+    }
+
+    public void addLineupDate(LineupDateEntity lineupDate) {
+        this.lineupDates.add(lineupDate);
+    }
+
+    public boolean removeLineupDate(LineupDateEntity lineupDate) {
+        return this.lineupDates.remove(lineupDate);
+    }
+
+    public void clearLineupDates() {
+        this.lineupDates.clear();
     }
 
     public Integer getProzentAusverkauft() {

@@ -3,8 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <div class="row">
+        <div class="col-12">
+            <c:if test="#{facesContext.messageList.size() > 0}">
+                <div class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
+                    <h:messages layout="table"/>
+                </div>
+            </c:if>
+        </div>
         <div class="col-12">
             <h2>#{bandDetailsBean.band.name}</h2>
             <hr/>
@@ -32,7 +40,7 @@
             <h:column>    				
                 <f:facet name = "header">Festival</f:facet>    				
                 <h:form>
-                   <h:commandLink class="font-weight-bold" action="#{bandDetailsBean.loadAndShowFestivalDetailsByLineupDateId(lineup.id)}">#{bandDetailsBean.getFestivalByLineupDateId(lineup.id).name}</h:commandLink>
+                    <h:commandLink class="font-weight-bold" action="#{bandDetailsBean.loadAndShowFestivalDetailsByLineupDateId(lineup.id)}">#{bandDetailsBean.getFestivalByLineupDateId(lineup.id).name}</h:commandLink>
                 </h:form>
             </h:column>
             <h:column>    				
@@ -54,11 +62,11 @@
                 </h:outputText>
             </h:column>
         </h:dataTable>
-        <h:form class="col-12">
+        <h:form id="bandLoeschForm" class="col-12">
             <div class="row">
                 <div class="col-8 buttonGroupWithMargin">
-                    <h:commandButton id="btnDeleteBand" class="btn btn-primary" action="#{bandDetailsBean.setStatusOfBandToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
-                    </div>
+                    <h:commandButton id="btnDeleteBand" class="btn btn-primary" action="#{bandDetailsBean.setStatusOfBandToLoeschungAngefordert()}" value="Band l&ouml;schen"/>
+                </div>
             </div>
         </h:form>
     </div>

@@ -14,12 +14,14 @@ import de.oth.joa44741.swprojektjohn.services.BandService;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityNotFoundException;
 
 /**
  *
@@ -78,10 +80,31 @@ public class BandFormBean implements Serializable {
     }
 
     public String removeBand(Long bandId) {
-        final BandEntity bandToDelete = transientAddedBands.stream().filter(band -> band.getId().equals(bandId)).findFirst().get();
+        // remove band from database
+        tryToFindBandById(bandId).ifPresent(band -> {
+            bandService.removeBand(bandId);
+        });
+        BandEntity bandToDelete = transientAddedBands.stream().filter(band -> band.getId().equals(bandId)).findFirst().get();
+        final FacesMessage msg = new FacesMessage("Die Band " + bandToDelete.getName() + " wurde gelöscht.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
         transientAddedBands.remove(bandToDelete);
-        bandService.removeBand(bandId);
         return PageNames.CURRENT_PAGE;
+    }
+
+    /**
+     * Band could be deleted by administrator in the meantime
+     *
+     * @return
+     */
+    private Optional<BandEntity> tryToFindBandById(Long bandId) {
+        try {
+            final BandEntity band = bandService.retrieveBandById(bandId);
+            return Optional.of(band);
+
+        } catch (EntityNotFoundException ex) {
+            // TODO: logger
+            return Optional.empty();
+        }
     }
 
 }

@@ -46,6 +46,10 @@ public class LineupDateEntity extends AbstractLongEntity {
     @JoinColumn(name = "bandId", referencedColumnName = "id", nullable = false)
     private BandEntity band;
 
+    @ManyToOne(optional = false, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "buehneId", referencedColumnName = "id")
+    private BuehneEntity buehne;
+
     public Date getTag() {
         return tag;
     }
@@ -78,4 +82,11 @@ public class LineupDateEntity extends AbstractLongEntity {
         this.band = band;
     }
 
+    public BuehneEntity getBuehne() {
+        return buehne;
+    }
+
+    public void setBuehne(BuehneEntity buehne) {
+        this.buehne = buehne;
+    }
 }

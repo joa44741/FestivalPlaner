@@ -6,6 +6,7 @@
 package de.oth.joa44741.swprojektjohn.jsf.search;
 
 import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
+import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import java.io.Serializable;
@@ -37,7 +38,7 @@ public class BandSearchingBean implements Serializable {
 
     @PostConstruct
     public void initFields() {
-        allBands = bandService.findAllBands();
+        allBands = bandService.findBandsByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
         matchingBands = new ArrayList<>(allBands);
     }
 
