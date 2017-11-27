@@ -26,7 +26,7 @@ public class FestivalDetailsBean extends FestivalBeanBase {
     @Inject
     private WeatherSoapServiceClient weatherClient;
 
-    private WeatherSoapServiceClient.WeatherDto forecastWeather;
+    private WeatherSoapServiceClient.WetterDto forecastWeather;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,7 +48,7 @@ public class FestivalDetailsBean extends FestivalBeanBase {
         return PageNames.INDEX;
     }
 
-    public WeatherSoapServiceClient.WeatherDto getWeatherForecast() {
+    public WeatherSoapServiceClient.WetterDto getWeatherForecast() {
         return this.forecastWeather;
     }
 

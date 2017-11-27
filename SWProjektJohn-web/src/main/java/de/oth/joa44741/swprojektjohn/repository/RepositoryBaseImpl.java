@@ -15,13 +15,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- *
- * @author Andi
- */
 public class RepositoryBaseImpl<T extends AbstractLongEntity> implements Repository<T> {
 
-    //TODO: Exceptions definieren!
     @PersistenceContext(unitName = "sw_projekt_john_pu")
     private EntityManager entityManager;
 
@@ -36,13 +31,13 @@ public class RepositoryBaseImpl<T extends AbstractLongEntity> implements Reposit
      * https://stackoverflow.com/questions/3888575/single-dao-generic-crud-methods-jpa-hibernate-spring
      */
     protected RepositoryBaseImpl() {
-        ParameterizedType genericSuperClass = (ParameterizedType) getClass().getSuperclass().getGenericSuperclass();
+        final ParameterizedType genericSuperClass = (ParameterizedType) getClass().getSuperclass().getGenericSuperclass();
         this.clazz = (Class<AbstractLongEntity>) genericSuperClass.getActualTypeArguments()[0];
     }
 
     @Override
     public T retrieveById(Long id) {
-        T entity = (T) getEntityManager().find(this.clazz, id);
+        final T entity = (T) getEntityManager().find(this.clazz, id);
         if (entity == null) {
             throw new EntityNotFoundException(
                     "Keine Entity vom Typ " + this.clazz.getSimpleName() + " mit Id = " + id + " gefunden!");
@@ -72,11 +67,16 @@ public class RepositoryBaseImpl<T extends AbstractLongEntity> implements Reposit
     /**
      * adapted from:
      * http://www.adam-bien.com/roller/abien/entry/generic_crud_service_aka_dao
+     *
+     * @param namedQueryName - the name of the named query
+     * @param parameters - parameters for the query
+     * @param resultLimit - resultLimit
+     * @return matching entities
      */
     @Override
     public List<T> query(String namedQueryName, Map<String, Object> parameters, int resultLimit) {
-        Set<Map.Entry<String, Object>> rawParameters = parameters.entrySet();
-        Query query = this.entityManager.createNamedQuery(namedQueryName);
+        final Set<Map.Entry<String, Object>> rawParameters = parameters.entrySet();
+        final Query query = this.entityManager.createNamedQuery(namedQueryName);
         if (resultLimit > NO_LIMIT) {
             query.setMaxResults(resultLimit);
         }
@@ -88,7 +88,7 @@ public class RepositoryBaseImpl<T extends AbstractLongEntity> implements Reposit
 
     @Override
     public void remove(Long id) {
-        T entity = retrieveById(id);
+        final T entity = retrieveById(id);
         this.entityManager.remove(entity);
     }
 

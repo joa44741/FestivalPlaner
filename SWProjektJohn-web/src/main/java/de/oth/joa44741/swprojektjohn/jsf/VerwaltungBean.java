@@ -39,9 +39,9 @@ public class VerwaltungBean implements Serializable {
 
     @PostConstruct
     private void initFields() {
-        festivalsWaitingForStatusFreigegeben = festivalService.findFestivalsByStatus(StatusEnum.ERSTELLT, StatusEnum.AENDERUNG_ANGEFORDERT);
-        festivalsWithStatusLoeschungAngefordert = festivalService.findFestivalsByStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
-        bandsWaitingForStatusFreigegeben = bandService.findBandsByStatus(StatusEnum.ERSTELLT, StatusEnum.AENDERUNG_ANGEFORDERT);
+        festivalsWaitingForStatusFreigegeben = festivalService.findErstellteFestivals();
+        festivalsWithStatusLoeschungAngefordert = festivalService.findZuLoeschendeFestivals();
+        bandsWaitingForStatusFreigegeben = bandService.findBandsByStatus(StatusEnum.ERSTELLT);
         bandsWithStatusLoeschungAngefordert = bandService.findBandsByStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
     }
 

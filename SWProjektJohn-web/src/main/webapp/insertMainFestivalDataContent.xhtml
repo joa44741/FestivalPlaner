@@ -13,7 +13,7 @@
         <div class="col-12">
             <c:if test="#{facesContext.messageList.size() > 0}">
                 <div id="newFestivalMessages" class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
-                    <h:messages globalOnly="true" layout="table"/>
+                    <h:messages layout="table"/>
                 </div>
             </c:if>
         </div>

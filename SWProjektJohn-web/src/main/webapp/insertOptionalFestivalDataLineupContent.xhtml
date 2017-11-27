@@ -79,6 +79,31 @@
                                 <h4>Lineup</h4>
                             </div>
                             <div class="col-12">
+                                <h:dataTable id="lineupTable" class="table" value="#{festivalOptionalDataFormBean.persistedFestival.lineupDates}" var="lineup">
+                                    <h:column>    				
+                                        <f:facet name = "header">Band</f:facet>    				
+                                        <h:outputText value="#{lineup.band.name}"></h:outputText>
+                                    </h:column>
+                                    <h:column>    				
+                                        <f:facet name = "header">Lineup Eintrag l&ouml;schen</f:facet>    				
+                                        <h:commandLink action="#{festivalOptionalDataFormBean.deleteLineupDate(lineup.id)}" immediate="true">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h:form id="timetableForm">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Timetable</h4>
+                            </div>
+                            <div class="col-12">
                                 <div class="row">
                                     <ui:repeat value="#{festivalOptionalDataFormBean.persistedFestival.buehnen.toArray()}" var="buehne">
                                         <div class="col-#{festivalOptionalDataFormBean.calculateBootstrapColSize()}">
@@ -114,7 +139,7 @@
                                                             </h:column>
                                                             <h:column>    				
                                                                 <f:facet name = "header">Lineup Eintrag l&ouml;schen</f:facet>    				
-                                                                <h:commandLink action="#{festivalOptionalDataFormBean.deleteLineupDate(buehne.id, lineup.id)}" immediate="true">
+                                                                <h:commandLink action="#{festivalOptionalDataFormBean.deleteLineupDate(lineup.id)}" immediate="true">
                                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                                 </h:commandLink>
                                                             </h:column>
@@ -137,8 +162,8 @@
                                                    itemLabel="#{band.name}" itemValue="#{band.id}" />
                                 </h:selectOneMenu>
                             </div>
-                            <div class="col-3 form-group required">
-                                <h:selectOneMenu required="true" styleClass="form-control" value="#{festivalOptionalDataFormBean.selectedBuehnenId}" requiredMessage="Die B&uuml;hne muss angegeben werden (ggfs. B&uuml;hne UNBEKANNT anlegen)">
+                            <div class="col-3 form-group">
+                                <h:selectOneMenu styleClass="form-control" value="#{festivalOptionalDataFormBean.selectedBuehnenId}">
                                     <h:outputLabel class="col-form-label control-label" for="existingBuehne">B&uuml;hne</h:outputLabel>
                                     <f:selectItem itemValue="#{null}" itemLabel="--select--" />
                                     <f:selectItems id="existingBuehne" value="#{festivalOptionalDataFormBean.persistedFestival.buehnen}" var="buehne"
@@ -168,8 +193,8 @@
                                     <f:passThroughAttribute name="type" value="time" />
                                 </h:inputText>
                             </div>
+                            <h:commandButton class="btn btn-primary" action="#{festivalOptionalDataFormBean.persistLineupDate()}" value="Lineup Eintrag anlegen"/>
                         </div>
-                        <h:commandButton class="btn btn-primary" action="#{festivalOptionalDataFormBean.persistLineupDate()}" value="Lineup Eintrag anlegen"/>
                     </h:form>
                 </div>
             </div>

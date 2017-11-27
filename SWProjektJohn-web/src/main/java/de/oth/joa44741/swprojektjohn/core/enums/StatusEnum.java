@@ -12,6 +12,5 @@ package de.oth.joa44741.swprojektjohn.core.enums;
 public enum StatusEnum {
     ERSTELLT,
     FREIGEGEBEN,
-    LOESCHUNG_ANGEFORDERT,
-    AENDERUNG_ANGEFORDERT;
+    LOESCHUNG_ANGEFORDERT;
 }

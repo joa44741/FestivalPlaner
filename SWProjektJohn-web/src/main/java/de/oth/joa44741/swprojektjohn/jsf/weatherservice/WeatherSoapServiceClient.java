@@ -18,7 +18,7 @@ public class WeatherSoapServiceClient {
 
     private static final String GERMANY = "Deutschland";
 
-    public WeatherDto getWeather(LocationEntity location, Date date) {
+    public WetterDto getWeather(LocationEntity location, Date date) {
         final Ort ort = new Ort();
         ort.bundesland = location.getBundesland().getText();
         ort.land = GERMANY;
@@ -27,8 +27,8 @@ public class WeatherSoapServiceClient {
         return createMockDto(ort, date);
     }
 
-    private WeatherDto createMockDto(Ort ort, Date date) {
-        final WeatherDto weatherDto = new WeatherDto();
+    private WetterDto createMockDto(Ort ort, Date date) {
+        final WetterDto weatherDto = new WetterDto();
         weatherDto.ort = ort;
         weatherDto.datum = date;
         weatherDto.avgTemperatur = 14.6f;
@@ -37,24 +37,24 @@ public class WeatherSoapServiceClient {
         return weatherDto;
     }
 
-    public static class WeatherDto {
+    public static class WetterDto {
 
         private Ort ort;
         private Date datum;
-        private float avgTemperatur;
-        private float regenfall;
+        private Float avgTemperatur;
+        private Float regenfall;
         private boolean wetterWarnung;
-        private float minTemperatur;
-        private float maxTemperatur;
-        private float windgeschwindigkeit;
+        private Float minTemperatur;
+        private Float maxTemperatur;
+        private Float windgeschwindigkeit;
         private String wolkenTyp;
-        private float regenwahrscheinlichkeit;
+        private Float regenwahrscheinlichkeit;
 
         public Date getDatum() {
             return datum;
         }
 
-        public float getAvgTemperatur() {
+        public Float getAvgTemperatur() {
             return avgTemperatur;
         }
 
@@ -62,15 +62,15 @@ public class WeatherSoapServiceClient {
             return wolkenTyp;
         }
 
-        public float getRegenfall() {
+        public Float getRegenfall() {
             return regenfall;
         }
 
-        public float getMaxTemperatur() {
+        public Float getMaxTemperatur() {
             return maxTemperatur;
         }
 
-        public float getMinTemperatur() {
+        public Float getMinTemperatur() {
             return minTemperatur;
         }
 
@@ -78,7 +78,7 @@ public class WeatherSoapServiceClient {
             return (int) (regenwahrscheinlichkeit * 100);
         }
 
-        public float getWindgeschwindigkeit() {
+        public Float getWindgeschwindigkeit() {
             return windgeschwindigkeit;
         }
 

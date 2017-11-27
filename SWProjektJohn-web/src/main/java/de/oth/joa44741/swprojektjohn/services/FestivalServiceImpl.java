@@ -7,10 +7,8 @@ package de.oth.joa44741.swprojektjohn.services;
 
 import de.oth.joa44741.swprojektjohn.core.FestivalWithDetailsDto;
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
-import de.oth.joa44741.swprojektjohn.core.qualifier.BandRepository;
-import de.oth.joa44741.swprojektjohn.core.qualifier.BuehneRepository;
+import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
 import de.oth.joa44741.swprojektjohn.core.qualifier.FestivalRepository;
-import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
@@ -33,6 +31,7 @@ import org.jboss.logging.Logger;
  */
 @RequestScoped
 @WebService
+@DoLogging
 public class FestivalServiceImpl implements FestivalService {
 
     private static final Logger LOG = Logger.getLogger(FestivalServiceImpl.class);
@@ -41,18 +40,22 @@ public class FestivalServiceImpl implements FestivalService {
     @FestivalRepository
     private Repository<FestivalEntity> festivalRepository;
 
-    @Inject
-    @BuehneRepository
-    private Repository<BuehneEntity> buehneRepository;
+    @WebMethod(exclude = true)
+    @Override
+    public List<FestivalEntity> findErstellteFestivals() {
+        return findFestivalsByStatus(StatusEnum.ERSTELLT);
+    }
 
-    @Inject
-    @BandRepository
-    private Repository<BandEntity> bandRepository;
+    @WebMethod(exclude = true)
+    @Override
+    public List<FestivalEntity> findZuLoeschendeFestivals() {
+        return findFestivalsByStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
+    }
 
     @Override
     public List<FestivalEntity> findFreigegebeneFestivals() {
-        final List<FestivalEntity> festivals = findFestivalsByStatus(StatusEnum.FREIGEGEBEN);
-//        festivals.forEach(f -> handleLazyLoadingFields(f));
+        // festivals are also FREIGEGEBEN if a non-admin user set the status to LOESCHUNG_ANGEFORDERT
+        final List<FestivalEntity> festivals = findFestivalsByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
         return festivals;
     }
 
@@ -81,7 +84,7 @@ public class FestivalServiceImpl implements FestivalService {
     public FestivalEntity retrieveFestivalByIdIncludingDetails(Long festivalId) {
         final List<FestivalEntity> festival = this.festivalRepository
                 .query(FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_ID_INCLUDING_DETAILS,
-                        with("id", festivalId).parameters(), 1);
+                        with("id", festivalId).parameters(), Repository.SINGLE_RESULT);
         return festival.get(0);
     }
 
@@ -91,7 +94,7 @@ public class FestivalServiceImpl implements FestivalService {
         final List<FestivalEntity> festivalByName = this.festivalRepository.
                 query(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME,
                         with("name", name).
-                                parameters(), 1);
+                                parameters(), Repository.SINGLE_RESULT);
         if (festivalByName.isEmpty()) {
             return Optional.empty();
         } else {
@@ -104,7 +107,7 @@ public class FestivalServiceImpl implements FestivalService {
     public FestivalEntity retrieveFestivalByLineupDateId(Long lineupDateId) {
         final List<FestivalEntity> festivals = this.festivalRepository
                 .query(FestivalEntity.QUERY_NAME_RETRIEVE_FESTIVAL_BY_LINEUP_DATE_ID,
-                        with("lineupDateId", lineupDateId).parameters(), 1);
+                        with("lineupDateId", lineupDateId).parameters(), Repository.SINGLE_RESULT);
         return festivals.get(0);
     }
 
@@ -114,9 +117,7 @@ public class FestivalServiceImpl implements FestivalService {
         return festivalRepository.findAll();
     }
 
-    @WebMethod(exclude = true)
-    @Override
-    public List<FestivalEntity> findFestivalsByStatus(StatusEnum... status) {
+    private List<FestivalEntity> findFestivalsByStatus(StatusEnum... status) {
         final List<FestivalEntity> festivals = this.festivalRepository
                 .query(FestivalEntity.QUERY_NAME_FIND_FESTIVALS_BY_STATUS,
                         with("status", Arrays.asList(status)).parameters(), Repository.NO_LIMIT);

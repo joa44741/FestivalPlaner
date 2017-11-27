@@ -115,7 +115,22 @@
         </div>
         <div class="col-12">
             <hr/>
-            <h3>B&uuml;hnen</h3>
+            <h3>Lineup</h3>
+        </div>
+        <h:form class="col-12">
+            <div class="row">
+                <ui:repeat value="#{festivaldetailsBean.festival.lineupDates.toArray()}" var="lineup">
+                    <div class="col-4">
+                        <ui:include src="/partials/bandCard.xhtml">
+                            <ui:param name="band" value="#{lineup.band}" />
+                        </ui:include>
+                    </div>
+                </ui:repeat>
+            </div>
+        </h:form>
+        <div class="col-12">
+            <hr/>
+            <h3>Timetable</h3>
         </div>
         <ui:repeat value="#{festivaldetailsBean.festival.buehnen.toArray()}" var="buehne">
             <div class="col-#{festivaldetailsBean.calculateBootstrapColSize()}">
@@ -160,9 +175,9 @@
         <h:form class="col-12">
             <div class="row">
                 <div class="col-12 buttonGroupWithMargin">
-                <h:commandButton id="btnEditFestival" class="btn btn-primary" action="#{festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(festivaldetailsBean.festival.id)}" value="Festivaldaten &auml;ndern"/>
-                <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{festivaldetailsBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
-                    </div>
+                    <h:commandButton id="btnEditFestival" class="btn btn-primary" action="#{festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(festivaldetailsBean.festival.id)}" value="Festivaldaten &auml;ndern"/>
+                    <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{festivaldetailsBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
+                </div>
             </div>
         </h:form>
     </div>

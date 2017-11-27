@@ -35,7 +35,9 @@ public interface FestivalService {
 
     List<FestivalEntity> findFreigegebeneFestivals();
 
-    List<FestivalEntity> findFestivalsByStatus(StatusEnum... status);
+    List<FestivalEntity> findErstellteFestivals();
+
+    List<FestivalEntity> findZuLoeschendeFestivals();
 
     List<FestivalEntity> findAllFestivalsInFutureByStatus(StatusEnum... status);
 

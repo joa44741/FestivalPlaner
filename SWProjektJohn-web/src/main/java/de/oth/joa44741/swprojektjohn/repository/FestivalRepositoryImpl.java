@@ -25,7 +25,6 @@ public class FestivalRepositoryImpl extends RepositoryBaseImpl<FestivalEntity> {
 
     @Override
     public FestivalEntity persistEntity(FestivalEntity entity) {
-        LOG.info("persistEntity called for :" + entity);
         if (entity.getLocation().getId() != null) {
             final LocationEntity mergedLocationEntity = getEntityManager().find(LocationEntity.class, entity.getLocation().getId());
             entity.setLocation(mergedLocationEntity);
