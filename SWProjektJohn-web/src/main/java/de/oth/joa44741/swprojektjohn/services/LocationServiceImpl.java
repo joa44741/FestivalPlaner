@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.services;
 
+import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
 import de.oth.joa44741.swprojektjohn.core.qualifier.LocationRepository;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
  * @author Johnny
  */
 @RequestScoped
+@DoLogging
 public class LocationServiceImpl implements LocationService {
 
     @Inject

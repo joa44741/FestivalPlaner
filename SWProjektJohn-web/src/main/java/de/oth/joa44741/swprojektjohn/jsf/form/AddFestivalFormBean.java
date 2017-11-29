@@ -28,7 +28,7 @@ import javax.inject.Named;
 public class AddFestivalFormBean extends FestivalFormBeanBase {
 
     @Inject
-    private FestivalOptionalDataFormBean festivalOptionalDataFormBean;
+    private CampingAndTicketFormBean campingAndTicketFormBean;
 
     @Inject
     private UpdateFestivalFormBean updateFestivalFormBean;
@@ -68,7 +68,7 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
         initFields();
         // TODO good comment
         updateFestivalFormBean.initFields();
-        return festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(persistedFestival.getId());
+        return campingAndTicketFormBean.loadAndShowTicketsAndCampingPage(persistedFestival.getId());
     }
 
     public void validateFestivalName(FacesContext context, UIComponent component, Object value) throws ValidatorException {

@@ -52,9 +52,9 @@
             am <h:outputText value="#{festivaldetailsBean.festival.datumVon}">
                 <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
             </h:outputText>:<br/>
-            #{festivaldetailsBean.weatherForecast.avgTemperatur}&#x2103;<br/>
-            #{festivaldetailsBean.weatherForecast.wolkenTyp}<br/>
-            Niederschlagswahrscheinlichkeit: #{festivaldetailsBean.weatherForecast.regenwahrscheinlichkeit}%
+            #{festivaldetailsBean.festival.wetterDto.avgTemperatur}&#x2103;<br/>
+            #{festivaldetailsBean.festival.wetterDto.wolkenTyp}<br/>
+            Niederschlagswahrscheinlichkeit: #{festivaldetailsBean.festival.wetterDto.regenwahrscheinlichkeit}%
         </div>
         <div class="col-12">
             <hr/>
@@ -133,13 +133,13 @@
             <h3>Timetable</h3>
         </div>
         <ui:repeat value="#{festivaldetailsBean.festival.buehnen.toArray()}" var="buehne">
-            <div class="col-#{festivaldetailsBean.calculateBootstrapColSize()}">
+            <div class="col-#{utilsBean.calculateBootstrapColSize(festivaldetailsBean.festival.buehnen.size())}">
                 <div class="card">
                     <div class="card-header">
                         <h5>#{buehne.name}</h5>
                     </div>
                     <div class="card-body">
-                        <ui:repeat var="tag" value="#{festivaldetailsBean.getTageOfLineupDatesByBuehne(buehne.id)}">
+                        <ui:repeat var="tag" value="#{lineupBean.getTageOfLineupDatesByBuehne(buehne.id)}">
                             <h4>
                                 <h:outputText value="#{tag}" rendered="#{tag != null}">
                                     <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
@@ -148,7 +148,7 @@
                             <h4>
                                 <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
                             </h4>
-                            <h:dataTable value = "#{festivaldetailsBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
+                            <h:dataTable value = "#{lineupBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
                                          class = "table">
                                 <h:column>    				
                                     <f:facet name = "header">Von</f:facet>    				
@@ -175,7 +175,7 @@
         <h:form class="col-12">
             <div class="row">
                 <div class="col-12 buttonGroupWithMargin">
-                    <h:commandButton id="btnEditFestival" class="btn btn-primary" action="#{festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(festivaldetailsBean.festival.id)}" value="Festivaldaten &auml;ndern"/>
+                    <h:commandButton id="btnEditFestival" class="btn btn-primary" action="#{campingAndTicketFormBean.loadAndShowTicketsAndCampingPage(festivaldetailsBean.festival.id)}" value="Festivaldaten &auml;ndern"/>
                     <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{festivaldetailsBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
                 </div>
             </div>

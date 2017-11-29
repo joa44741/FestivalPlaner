@@ -34,7 +34,10 @@ public class UpdateFestivalFormBean extends FestivalFormBeanBase {
     private LocationEntity locationOfFestivalToUpdate;
 
     @Inject
-    private FestivalOptionalDataFormBean festivalOptionalDataFormBean;
+    private CampingAndTicketFormBean campingAndTicketFormBean;
+
+    @Inject
+    private LineupFormBean lineupFormBean;
 
     @PostConstruct
     @Override
@@ -89,11 +92,11 @@ public class UpdateFestivalFormBean extends FestivalFormBeanBase {
     }
 
     public String loadAndShowTicketAndCampingPage() {
-        return festivalOptionalDataFormBean.loadAndShowTicketsAndCampingPage(selectedFestival.getId());
+        return campingAndTicketFormBean.loadAndShowTicketsAndCampingPage(selectedFestival.getId());
     }
 
     public String loadAndShowLineupPage() {
-        return festivalOptionalDataFormBean.loadAndShowLineupPage(selectedFestival.getId());
+        return lineupFormBean.loadAndShowLineupPage(selectedFestival.getId());
     }
 
     public String setStatusOfFestivalToLoeschungAngefordert() {

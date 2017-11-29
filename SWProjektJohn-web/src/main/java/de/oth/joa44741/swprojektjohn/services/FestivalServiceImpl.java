@@ -8,6 +8,7 @@ package de.oth.joa44741.swprojektjohn.services;
 import de.oth.joa44741.swprojektjohn.core.FestivalWithDetailsDto;
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
+import de.oth.joa44741.swprojektjohn.core.qualifier.BuehneRepository;
 import de.oth.joa44741.swprojektjohn.core.qualifier.FestivalRepository;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
@@ -16,6 +17,7 @@ import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
 import de.oth.joa44741.swprojektjohn.repository.Repository;
+import de.oth.joa44741.swprojektjohn.services.weatherservice.WeatherSoapServiceClient;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +42,13 @@ public class FestivalServiceImpl implements FestivalService {
     @FestivalRepository
     private Repository<FestivalEntity> festivalRepository;
 
+    @Inject
+    @BuehneRepository
+    private Repository<BuehneEntity> buehneRepository;
+
+    @Inject
+    private WeatherSoapServiceClient weatherClient;
+
     @WebMethod(exclude = true)
     @Override
     public List<FestivalEntity> findErstellteFestivals() {
@@ -54,21 +63,15 @@ public class FestivalServiceImpl implements FestivalService {
 
     @Override
     public List<FestivalEntity> findFreigegebeneFestivals() {
-        // festivals are also FREIGEGEBEN if a non-admin user set the status to LOESCHUNG_ANGEFORDERT
         final List<FestivalEntity> festivals = findFestivalsByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
         return festivals;
     }
 
-//    private void handleLazyLoadingFields(FestivalEntity festival) {
-//        festivalRepository.detachFestival(festival);
-//        festival.clearBuehnen();
-//        festival.clearCampingVarianten();
-//        festival.clearTicketArten();
-//    }
     @Override
     public FestivalWithDetailsDto retrieveFestivalDtoByIdIncludingDetails(Long festivalId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
-        final FestivalWithDetailsDto dto = new FestivalWithDetailsDto(festival);
+        final WeatherSoapServiceClient.WetterDto wetterDto = weatherClient.getWeather(festival);
+        final FestivalWithDetailsDto dto = new FestivalWithDetailsDto(festival, wetterDto);
         return dto;
     }
 
@@ -221,6 +224,11 @@ public class FestivalServiceImpl implements FestivalService {
         Optional<BuehneEntity> optionalBuehne = festival.getBuehnen().stream().filter(buehne -> buehne.getId().equals(buehnenId)).findFirst();
         festival.removeBuehne(optionalBuehne.get());
         return updateFestival(festival);
+    }
+
+    @WebMethod(exclude = true)
+    public BuehneEntity retrieveBuehneById(Long buehneId) {
+        return buehneRepository.retrieveById(buehneId);
     }
 
 }

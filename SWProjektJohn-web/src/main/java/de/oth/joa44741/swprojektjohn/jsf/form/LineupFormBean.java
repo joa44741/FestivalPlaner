@@ -5,36 +5,32 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
-import de.oth.joa44741.swprojektjohn.core.enums.CampingArtEnum;
-import de.oth.joa44741.swprojektjohn.core.enums.TagArtEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
-import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
-import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
-import de.oth.joa44741.swprojektjohn.jsf.FestivalBeanBase;
 import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
-import java.text.SimpleDateFormat;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 // TODO: refactor! own Bean for Band, Lineup, Ticket, Camping
-@Named("festivalOptionalDataFormBean")
+@Named("lineupFormBean")
 @SessionScoped
-public class FestivalOptionalDataFormBean extends FestivalBeanBase {
+public class LineupFormBean implements Serializable {
+
+    private FestivalEntity festival;
 
     @Inject
     private FestivalService festivalService;
@@ -43,10 +39,6 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
     private BandService bandService;
 
     private static final long serialVersionUID = 1L;
-
-    private TicketArtEntity transientTicketArt;
-
-    private CampingVarianteEntity transientCampingVariante;
 
     private List<BandEntity> availableBands;
 
@@ -58,20 +50,13 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     private Long selectedBandId;
 
-    public String loadAndShowTicketsAndCampingPage(Long id) {
-        initFields(id);
-        return PageNames.INSERT_OPTIONAL_FESTIVAL_DATA_TICKETS_AND_CAMPING;
-    }
-
     public String loadAndShowLineupPage(Long id) {
         initFields(id);
-        return PageNames.INSERT_OPTIONAL_FESTIVAL_DATA_LINEUP;
+        return PageNames.INSERT_LINEUP;
     }
 
     @PostConstruct
     private void initTransientFields() {
-        transientTicketArt = new TicketArtEntity();
-        transientCampingVariante = new CampingVarianteEntity();
         transientBuehne = new BuehneEntity();
         transientLineupDate = new LineupDateEntity();
         selectedBandId = null;
@@ -84,49 +69,13 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         initTransientFields();
     }
 
-    public TicketArtEntity getTransientTicketArt() {
-        return transientTicketArt;
-    }
-
-    public CampingVarianteEntity getTransientCampingVariante() {
-        return transientCampingVariante;
-    }
-
-    public String persistTicketArt() {
-        festival = festivalService.addTicketArt(festival.getId(), transientTicketArt);
-        final FacesMessage msg = new FacesMessage("Die Ticketart wurde angelegt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        return PageNames.CURRENT_PAGE;
-    }
-
     public String persistLineupDate() {
         final BandEntity band = bandService.retrieveBandById(selectedBandId);
-        final BuehneEntity buehne = festival.getBuehnen().stream().filter(b -> b.getId().equals(selectedBuehnenId)).findFirst().get();
+        final Optional<BuehneEntity> optBuehne = festival.getBuehnen().stream().filter(b -> b.getId().equals(selectedBuehnenId)).findFirst();
         transientLineupDate.setBand(band);
-        transientLineupDate.setBuehne(buehne);
+        optBuehne.ifPresent(b -> transientLineupDate.setBuehne(b));
         festival = festivalService.addLineupDate(festival.getId(), transientLineupDate);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gespeichert");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        return PageNames.CURRENT_PAGE;
-    }
-
-    public String persistCampingVariante() {
-        festival = festivalService.addCampingVariante(festival.getId(), transientCampingVariante);
-        final FacesMessage msg = new FacesMessage("Die Campingvariante wurde angelegt");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        return PageNames.CURRENT_PAGE;
-    }
-
-    public String deleteTicketArt(Long ticketId) {
-        festival = festivalService.removeTicketArt(festival.getId(), ticketId);
-        final FacesMessage msg = new FacesMessage("Die Ticketart wurde gelöscht");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        return PageNames.CURRENT_PAGE;
-    }
-
-    public String deleteCampingVariante(Long campingId) {
-        festival = festivalService.removeCampingVariante(festival.getId(), campingId);
-        final FacesMessage msg = new FacesMessage("Die Campingvariante wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         return PageNames.CURRENT_PAGE;
     }
@@ -152,14 +101,6 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
 
     public FestivalEntity getPersistedFestival() {
         return festival;
-    }
-
-    public List<TagArtEnum> getTagArtenAsList() {
-        return Arrays.asList(TagArtEnum.values());
-    }
-
-    public List<CampingArtEnum> getCampingArtenAsList() {
-        return Arrays.asList(CampingArtEnum.values());
     }
 
     public LineupDateEntity getTransientLineupDate() {
@@ -202,13 +143,5 @@ public class FestivalOptionalDataFormBean extends FestivalBeanBase {
         }
         possibleDates.add(cal.getTime());
         return possibleDates;
-    }
-
-    public String getDateAsString(Date date) {
-        return new SimpleDateFormat("dd.MM.yyyy").format(date);
-    }
-
-    public void handleEvent(ComponentSystemEvent event) {
-        initFields(festival.getId());
     }
 }

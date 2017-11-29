@@ -15,8 +15,8 @@ public final class PageNames {
     public static final String FESTIVAL_DETAIL = "festivaldetails.xhtml";
     public static final String BAND_DETAILS = "bandDetails.xhtml";
     public static final String INSERT_MAIN_FESTIVAL_DATA = "insertMainFestivalData.xhtml";
-    public static final String INSERT_OPTIONAL_FESTIVAL_DATA_TICKETS_AND_CAMPING = "insertOptionalFestivalDataTicketsAndCamping.xhtml";
-    public static final String INSERT_OPTIONAL_FESTIVAL_DATA_LINEUP = "insertOptionalFestivalDataLineup.xhtml";
+    public static final String INSERT_CAMPING_AND_TICKETS = "insertCampingAndTickets.xhtml";
+    public static final String INSERT_LINEUP = "insertLineup.xhtml";
 
     public static final String VERWALTUNG = "verwaltung.xhtml";
     public static final String LOGIN_DATA = "login.xhtml";

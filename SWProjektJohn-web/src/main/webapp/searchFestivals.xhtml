@@ -7,7 +7,9 @@
             <ui:include src="pageHeader.xhtml" />
         </ui:define>
         <ui:define name="navigation">
-            <ui:include src="navigation.xhtml"/>
+            <ui:include src="navigation.xhtml">
+                <ui:param name="activeElement" value="searchFestivals"/>
+            </ui:include>        
         </ui:define>
         <ui:define name="pageContent">
             <ui:include src="searchFestivalsContent.xhtml" />

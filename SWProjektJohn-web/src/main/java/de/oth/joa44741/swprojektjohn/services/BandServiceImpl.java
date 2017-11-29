@@ -6,6 +6,7 @@
 package de.oth.joa44741.swprojektjohn.services;
 
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
+import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
 import de.oth.joa44741.swprojektjohn.core.qualifier.BandRepository;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
@@ -21,6 +22,7 @@ import javax.inject.Inject;
  * @author Johnny
  */
 @RequestScoped
+@DoLogging
 public class BandServiceImpl implements BandService {
 
     @Inject

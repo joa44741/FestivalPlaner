@@ -23,7 +23,7 @@
         </div>
         <h:form class="col-12">
             <div class="row">
-                <ui:repeat var="festival" value="#{festivalsBean.getUpcomingFestivals(3)}" varStatus="status">
+                <ui:repeat var="festival" value="#{homeContentBean.getUpcomingFestivals(3)}" varStatus="status">
                     <div class="col-4">
                         <ui:include src="/partials/festivalCard.xhtml">
                             <ui:param name="festival" value="#{festival}" />
@@ -33,7 +33,7 @@
                 <div class="col-12">
                     <h3>Zuf&auml;llige Bands</h3>
                 </div>
-                <ui:repeat var="band" value="#{festivalsBean.getRandomBands(6)}">
+                <ui:repeat var="band" value="#{homeContentBean.getRandomBands(6)}">
                     <div class="col-4">
                         <ui:include src="/partials/bandCard.xhtml">
                             <ui:param name="band" value="#{band}" />

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.oth.joa44741.swprojektjohn.jsf.weatherservice;
+package de.oth.joa44741.swprojektjohn.services.weatherservice;
 
+import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import java.util.Date;
 import javax.enterprise.context.RequestScoped;
@@ -18,9 +19,11 @@ public class WeatherSoapServiceClient {
 
     private static final String GERMANY = "Deutschland";
 
-    public WetterDto getWeather(LocationEntity location, Date date) {
+    public WetterDto getWeather(FestivalEntity festival) {
+        final LocationEntity location = festival.getLocation();
+        final Date date = festival.getDatumVon();
         final Ort ort = new Ort();
-        ort.bundesland = location.getBundesland().getText();
+        ort.bundesland = festival.getLocation().getBundesland().getText();
         ort.land = GERMANY;
         ort.name = location.getOrt();
 

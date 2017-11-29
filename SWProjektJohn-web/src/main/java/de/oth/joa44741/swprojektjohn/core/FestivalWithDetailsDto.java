@@ -12,6 +12,7 @@ import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
+import de.oth.joa44741.swprojektjohn.services.weatherservice.WeatherSoapServiceClient;
 import java.util.Date;
 import java.util.Set;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -43,6 +44,9 @@ public class FestivalWithDetailsDto {
     private final Set<BuehneEntity> buehnen;
     private final StatusEnum status;
 
+    private final WeatherSoapServiceClient.WetterDto wetterDto;
+
+    // needed for JAXB
     private FestivalWithDetailsDto() {
         this.id = null;
         this.name = null;
@@ -60,9 +64,10 @@ public class FestivalWithDetailsDto {
         this.ticketArten = null;
         this.buehnen = null;
         this.status = null;
+        this.wetterDto = null;
     }
 
-    public FestivalWithDetailsDto(FestivalEntity entity) {
+    public FestivalWithDetailsDto(FestivalEntity entity, WeatherSoapServiceClient.WetterDto wetterDto) {
         this.id = entity.getId();
         this.name = entity.getName();
         this.veranstalter = entity.getVeranstalter();
@@ -79,5 +84,75 @@ public class FestivalWithDetailsDto {
         this.ticketArten = entity.getTicketArten();
         this.buehnen = entity.getBuehnen();
         this.status = entity.getStatus();
+        this.wetterDto = wetterDto;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getVeranstalter() {
+        return veranstalter;
+    }
+
+    public String getWebseite() {
+        return webseite;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public LocationEntity getLocation() {
+        return location;
+    }
+
+    public Integer getTicketKontingent() {
+        return ticketKontingent;
+    }
+
+    public Integer getVerkaufteTickets() {
+        return verkaufteTickets;
+    }
+
+    public String getLageplan() {
+        return lageplan;
+    }
+
+    public Date getDatumVon() {
+        return datumVon;
+    }
+
+    public Date getDatumBis() {
+        return datumBis;
+    }
+
+    public Set<ZusatzeigenschaftEnum> getZusatzeigenschaften() {
+        return zusatzeigenschaften;
+    }
+
+    public Set<CampingVarianteEntity> getCampingVarianten() {
+        return campingVarianten;
+    }
+
+    public Set<TicketArtEntity> getTicketArten() {
+        return ticketArten;
+    }
+
+    public Set<BuehneEntity> getBuehnen() {
+        return buehnen;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public WeatherSoapServiceClient.WetterDto getWetterDto() {
+        return wetterDto;
+    }
+
 }

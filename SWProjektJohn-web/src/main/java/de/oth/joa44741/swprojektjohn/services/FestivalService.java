@@ -62,4 +62,6 @@ public interface FestivalService {
     FestivalEntity addLineupDate(Long festivalId, LineupDateEntity lineupDate);
 
     FestivalEntity removeLineupDate(Long festivalId, Long lineupDateId);
+
+    BuehneEntity retrieveBuehneById(Long buehneId);
 }

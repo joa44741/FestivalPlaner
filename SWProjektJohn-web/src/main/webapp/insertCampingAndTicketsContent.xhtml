@@ -32,7 +32,7 @@
                                 <h5>Ticketarten</h5>
                             </div>
                             <div id="transientTicketsDiv" class="col-8">
-                                <h:dataTable id="transientTickets" var="ticket" class="table" value="#{festivalOptionalDataFormBean.persistedFestival.ticketArten}">
+                                <h:dataTable id="transientTickets" var="ticket" class="table" value="#{campingAndTicketFormBean.persistedFestival.ticketArten}">
                                     <h:column>    				
                                         <f:facet name = "header">Tagart</f:facet>    				
                                         <h:outputLabel value="#{ticket.tagArt.text}"/>
@@ -51,7 +51,7 @@
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Ticketart l&ouml;schen</f:facet>    				
-                                        <h:commandLink action="#{festivalOptionalDataFormBean.deleteTicketArt(ticket.id)}" immediate="true">
+                                        <h:commandLink action="#{campingAndTicketFormBean.deleteTicketArt(ticket.id)}" immediate="true">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </h:commandLink>
                                     </h:column>
@@ -62,30 +62,30 @@
                             </div>
                             <div class="col-3 form-group required">
                                 <h:outputLabel class="col-form-label control-label" for="selectedTagArt">Tagart</h:outputLabel>
-                                <h:selectOneMenu id="selectedTagArt" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientTicketArt.tagArt}">
-                                    <f:selectItems id="tagArt" value="#{festivalOptionalDataFormBean.tagArtenAsList}" var="tagArt"
+                                <h:selectOneMenu id="selectedTagArt" styleClass="form-control" value="#{campingAndTicketFormBean.transientTicketArt.tagArt}">
+                                    <f:selectItems id="tagArt" value="#{campingAndTicketFormBean.tagArtenAsList}" var="tagArt"
                                                    itemLabel="#{tagArt.text}" itemValue="#{tagArt}" />
                                     <f:ajax execute="selectedTagArt" event="change" render="selectedTag"/> 
                                 </h:selectOneMenu>
                             </div>  
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="selectedTag">Tag</h:outputLabel>
-                                <h:selectOneMenu id="selectedTag" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientTicketArt.tag}" disabled="#{festivalOptionalDataFormBean.transientTicketArt.tagArt != 'TAGESTICKET'}">
-                                    <f:selectItems value="#{festivalOptionalDataFormBean.possibleTagesticketDates}" var="tag"
-                                                   itemLabel="#{festivalOptionalDataFormBean.getDateAsString(tag)}" itemValue="#{tag}" />
+                                <h:selectOneMenu id="selectedTag" styleClass="form-control" value="#{campingAndTicketFormBean.transientTicketArt.tag}" disabled="#{campingAndTicketFormBean.transientTicketArt.tagArt != 'TAGESTICKET'}">
+                                    <f:selectItems value="#{campingAndTicketFormBean.possibleTagesticketDates}" var="tag"
+                                                   itemLabel="#{utilsBean.getDateAsString(tag)}" itemValue="#{tag}" />
                                     <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
                                 </h:selectOneMenu>
                             </div>
                             <div class="col-3 form-group required">
                                 <h:outputLabel class="col-form-label control-label" for="preis">Preis in Euro</h:outputLabel>
-                                <h:inputText class="form-control" id="preis" value="#{festivalOptionalDataFormBean.transientTicketArt.preis}" required="true" requiredMessage="Preis muss angegeben werden">
+                                <h:inputText class="form-control" id="preis" value="#{campingAndTicketFormBean.transientTicketArt.preis}" required="true" requiredMessage="Preis muss angegeben werden">
                                     <f:passThroughAttribute name="type" value="number"/>
                                     <f:passThroughAttribute name="step" value="0.01"/>
                                     <f:validateBean disabled="true"/>
                                 </h:inputText>
                             </div>
                         </div>
-                        <h:commandButton class="btn btn-primary" action="#{festivalOptionalDataFormBean.persistTicketArt()}" value="Ticketart anlegen"/>
+                        <h:commandButton class="btn btn-primary" action="#{campingAndTicketFormBean.persistTicketArt()}" value="Ticketart anlegen"/>
                     </h:form>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                                 <h5>Campingvarianten</h5>
                             </div>
                             <div id="transientCampingDiv" class="col-12">
-                                <h:dataTable id="transientCampingarten" var="camping" class="table" value="#{festivalOptionalDataFormBean.persistedFestival.campingVarianten}">
+                                <h:dataTable id="transientCampingarten" var="camping" class="table" value="#{campingAndTicketFormBean.persistedFestival.campingVarianten}">
                                     <h:column>    				
                                         <f:facet name = "header">Campingart</f:facet>    				
                                         <h:outputLabel value="#{camping.campingArt.text}"/>
@@ -120,7 +120,7 @@
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Campingvariante l&ouml;schen</f:facet>    				
-                                        <h:commandLink action="#{festivalOptionalDataFormBean.deleteCampingVariante(camping.id)}" immediate="true">
+                                        <h:commandLink action="#{campingAndTicketFormBean.deleteCampingVariante(camping.id)}" immediate="true">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </h:commandLink>
                                     </h:column>
@@ -131,14 +131,14 @@
                             </div>
                             <div class="col-3 form-group required">
                                 <h:outputLabel class="col-form-label control-label" for="selectedCampingArt">Campingart</h:outputLabel>
-                                <h:selectOneMenu id="selectedCampingArt" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientCampingVariante.campingArt}">
-                                    <f:selectItems id="campingArt" value="#{festivalOptionalDataFormBean.campingArtenAsList}" var="campingArt"
+                                <h:selectOneMenu id="selectedCampingArt" styleClass="form-control" value="#{campingAndTicketFormBean.transientCampingVariante.campingArt}">
+                                    <f:selectItems id="campingArt" value="#{campingAndTicketFormBean.campingArtenAsList}" var="campingArt"
                                                    itemLabel="#{campingArt.text}" itemValue="#{campingArt}" />
                                 </h:selectOneMenu>
                             </div>
                             <div class="col-3 form-group required">
                                 <h:outputLabel class="col-form-label control-label" for="extrakosten">Extrakosten in Euro</h:outputLabel>
-                                <h:inputText class="form-control" id="extrakosten" value="#{festivalOptionalDataFormBean.transientCampingVariante.extrakosten}" required="true" requiredMessage="Extrakosten m&uuml;ssen angegeben werden">
+                                <h:inputText class="form-control" id="extrakosten" value="#{campingAndTicketFormBean.transientCampingVariante.extrakosten}" required="true" requiredMessage="Extrakosten m&uuml;ssen angegeben werden">
                                     <f:passThroughAttribute name="type" value="number"/>
                                     <f:passThroughAttribute name="step" value="0.01"/>
                                     <f:validateBean disabled="true"/>
@@ -146,7 +146,7 @@
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="grillen">Grillen erlaubt</h:outputLabel>
-                                <h:selectOneMenu id="grillen" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientCampingVariante.grillenErlaubt}">
+                                <h:selectOneMenu id="grillen" styleClass="form-control" value="#{campingAndTicketFormBean.transientCampingVariante.grillenErlaubt}">
                                     <f:selectItem itemValue="#{null}" itemLabel="keine Ahnung" />
                                     <f:selectItem itemValue="#{true}" itemLabel="Ja" />
                                     <f:selectItem itemValue="#{false}" itemLabel="Nein" />
@@ -154,20 +154,22 @@
                             </div>
                             <div class="col-3 form-group">
                                 <h:outputLabel class="col-form-label control-label" for="glasflaschen">Glasflaschen erlaubt</h:outputLabel>
-                                <h:selectOneMenu id="glasflaschen" styleClass="form-control" value="#{festivalOptionalDataFormBean.transientCampingVariante.glasflaschenErlaubt}">
+                                <h:selectOneMenu id="glasflaschen" styleClass="form-control" value="#{campingAndTicketFormBean.transientCampingVariante.glasflaschenErlaubt}">
                                     <f:selectItem itemValue="#{null}" itemLabel="keine Ahnung" />
                                     <f:selectItem itemValue="#{true}" itemLabel="Ja" />
                                     <f:selectItem itemValue="#{false}" itemLabel="Nein" />
                                 </h:selectOneMenu>
                             </div>
                         </div>
-                        <h:commandButton class="btn btn-primary" action="#{festivalOptionalDataFormBean.persistCampingVariante()}" value="Campingvariante anlegen"/>
+                        <h:commandButton class="btn btn-primary" action="#{campingAndTicketFormBean.persistCampingVariante()}" value="Campingvariante anlegen"/>
                     </h:form>
                 </div>
             </div>
         </div>
         <div class="col-2">
-            <h:outputLink class="btn btn-primary" value="insertOptionalFestivalDataLineup.xhtml">Weiter zum Lineup</h:outputLink>
+            <h:form>
+                <h:commandButton class="btn btn-primary" action="#{lineupFormBean.loadAndShowLineupPage(campingAndTicketFormBean.persistedFestival.id)}" value="Weiter zum Lineup"/>
+            </h:form>
         </div>
         <div class="col-2">
             <h:outputLink class="btn btn-primary" value="index.xhtml">Fertig bearbeitet</h:outputLink>

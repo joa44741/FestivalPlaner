@@ -18,12 +18,11 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-@Named("festivalsBean")
+@Named("homeContentBean")
 
 //TODO: Prof. fragen, warum RequestScoped nicht funktioniert...
 @SessionScoped
-// TODO: andere Benennung
-public class FestivalsBean implements Serializable {
+public class HomeContentBean implements Serializable {
 
     @Inject
     private FestivalService festivalService;
