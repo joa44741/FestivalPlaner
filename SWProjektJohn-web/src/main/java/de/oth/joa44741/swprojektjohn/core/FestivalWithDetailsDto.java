@@ -10,6 +10,7 @@ import de.oth.joa44741.swprojektjohn.core.enums.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
+import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import de.oth.joa44741.swprojektjohn.services.weatherservice.WeatherSoapServiceClient;
@@ -41,6 +42,7 @@ public class FestivalWithDetailsDto {
     private final Set<ZusatzeigenschaftEnum> zusatzeigenschaften;
     private final Set<CampingVarianteEntity> campingVarianten;
     private final Set<TicketArtEntity> ticketArten;
+    private final Set<LineupDateEntity> lineupDates;
     private final Set<BuehneEntity> buehnen;
     private final StatusEnum status;
 
@@ -62,6 +64,7 @@ public class FestivalWithDetailsDto {
         this.zusatzeigenschaften = null;
         this.campingVarianten = null;
         this.ticketArten = null;
+        this.lineupDates = null;
         this.buehnen = null;
         this.status = null;
         this.wetterDto = null;
@@ -82,6 +85,7 @@ public class FestivalWithDetailsDto {
         this.zusatzeigenschaften = entity.getZusatzeigenschaften();
         this.campingVarianten = entity.getCampingVarianten();
         this.ticketArten = entity.getTicketArten();
+        this.lineupDates = entity.getLineupDates();
         this.buehnen = entity.getBuehnen();
         this.status = entity.getStatus();
         this.wetterDto = wetterDto;
@@ -141,6 +145,10 @@ public class FestivalWithDetailsDto {
 
     public Set<TicketArtEntity> getTicketArten() {
         return ticketArten;
+    }
+
+    public Set<LineupDateEntity> getLineupDates() {
+        return lineupDates;
     }
 
     public Set<BuehneEntity> getBuehnen() {

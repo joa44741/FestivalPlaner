@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <div class="row">
         <div class="col-12">
             <h2>Festivaldaten eintragen</h2>
@@ -14,11 +13,6 @@
             <h3>Optionale Festivaldaten angeben</h3>
         </div>
         <div class="col-12">
-            <c:if test="#{facesContext.messageList.size() > 0}">
-                <div class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
-                    <h:messages layout="table"/>
-                </div>
-            </c:if>
             <div class="row">
                 <div class="offset-8 col-4">
                     <h4 class="pull-right">Schritt 3 von 3</h4>
@@ -57,7 +51,7 @@
                                         </h:outputText>
                                     </h:column>
                                     <h:column>    				
-                                        <f:facet name = "header">Bis</f:facet>    				
+                                        <f:facet name = "header">B&uuml;hne</f:facet>    				
                                         <h:outputText value="#{lineup.buehne.name}"/>
                                     </h:column>
                                     <h:column>    				

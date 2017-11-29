@@ -7,14 +7,6 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <div class="row">
         <div class="col-12">
-            <!-- TODO: in header rein, weil es ueberall gebraucht wird... -->
-            <c:if test="#{facesContext.messageList.size() > 0}">
-                <div class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
-                    <h:messages layout="table"/>
-                </div>
-            </c:if>
-        </div>
-        <div class="col-12">
             <h2>Home</h2>
             <hr/>
         </div>

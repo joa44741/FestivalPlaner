@@ -2,9 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <div class="row">
         <div class="col-12">
             <h2>Administrator&uuml;bersicht</h2>
@@ -12,13 +10,6 @@
         </div>
         <div class="col-12">
             <h3>Verwaltung</h3>
-        </div>
-         <div class="col-12">
-            <c:if test="#{facesContext.messageList.size() > 0}">
-                <div class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
-                    <h:messages layout="table"/>
-                </div>
-            </c:if>
         </div>
         <div class="col-12">
             <div class="card">

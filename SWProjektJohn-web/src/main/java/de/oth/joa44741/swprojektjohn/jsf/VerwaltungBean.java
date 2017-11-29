@@ -55,6 +55,7 @@ public class VerwaltungBean implements Serializable {
         initFields();
         final FacesMessage msg = new FacesMessage("Festival wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        //TODO: muss event auslösen, damit update Festival Form upgedated wird
         return PageNames.CURRENT_PAGE;
     }
 

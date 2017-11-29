@@ -45,7 +45,13 @@ public class UpdateFestivalFormBean extends FestivalFormBeanBase {
         super.initFields();
         existingFestivals = festivalService.findFestivals();
         selectedFestival = new FestivalEntity();
+        selectedFestivalId = null;
         locationOfFestivalToUpdate = new LocationEntity();
+    }
+
+    public String loadAndShowPage() {
+        initFields();
+        return PageNames.EDIT_MAIN_FESTIVAL_DATA;
     }
 
     public List<FestivalEntity> getExistingFestivals() {

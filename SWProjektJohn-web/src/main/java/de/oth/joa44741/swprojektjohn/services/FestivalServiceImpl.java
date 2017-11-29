@@ -25,6 +25,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 /**
@@ -200,11 +201,15 @@ public class FestivalServiceImpl implements FestivalService {
 
     @WebMethod(exclude = true)
     @Override
+    @Transactional
     public FestivalEntity removeLineupDate(Long festivalId, Long lineupDateId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
         final Optional<LineupDateEntity> optLineupDate = festival.getLineupDates().stream().filter(lineup -> lineup.getId().equals(lineupDateId)).findFirst();
+        final Optional<BuehneEntity> optBuehne = Optional.ofNullable(optLineupDate.get().getBuehne());
+        optBuehne.ifPresent(b -> b.removeLineupDate(optLineupDate.get()));
         festival.removeLineupDate(optLineupDate.get());
-        return updateFestival(festival);
+//                return updateFestival(festival);
+        return festival;
     }
 
     @WebMethod(exclude = true)
@@ -219,14 +224,16 @@ public class FestivalServiceImpl implements FestivalService {
 
     @WebMethod(exclude = true)
     @Override
+    @Transactional
     public FestivalEntity removeBuehne(Long festivalId, Long buehnenId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
-        Optional<BuehneEntity> optionalBuehne = festival.getBuehnen().stream().filter(buehne -> buehne.getId().equals(buehnenId)).findFirst();
+        final Optional<BuehneEntity> optionalBuehne = festival.getBuehnen().stream().filter(buehne -> buehne.getId().equals(buehnenId)).findFirst();
         festival.removeBuehne(optionalBuehne.get());
         return updateFestival(festival);
     }
 
     @WebMethod(exclude = true)
+    @Override
     public BuehneEntity retrieveBuehneById(Long buehneId) {
         return buehneRepository.retrieveById(buehneId);
     }

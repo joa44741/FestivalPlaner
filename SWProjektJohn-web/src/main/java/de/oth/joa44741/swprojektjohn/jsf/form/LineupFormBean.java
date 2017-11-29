@@ -77,6 +77,7 @@ public class LineupFormBean implements Serializable {
         festival = festivalService.addLineupDate(festival.getId(), transientLineupDate);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gespeichert");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
@@ -84,11 +85,13 @@ public class LineupFormBean implements Serializable {
         festival = festivalService.removeLineupDate(festival.getId(), lineupId);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
     public String persistBuehne() {
         festival = festivalService.addBuehne(festival.getId(), transientBuehne);
+        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 
@@ -96,6 +99,7 @@ public class LineupFormBean implements Serializable {
         festival = festivalService.removeBuehne(festival.getId(), buehneId);
         final FacesMessage msg = new FacesMessage("Die Bühne wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage("buehnenForm", msg);
+        initFields(festival.getId());
         return PageNames.CURRENT_PAGE;
     }
 

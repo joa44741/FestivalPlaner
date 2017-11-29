@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -17,6 +18,15 @@
             <ui:insert name="pageHeader">Page-Header</ui:insert>
             <ui:insert name="navigation">Navigation</ui:insert>
             <article class="container mainContent">
+                <div class="row">
+                    <div class="col-12">
+                        <c:if test="#{facesContext.messageList.size() > 0}">
+                            <div class="alert #{facesContext.validationFailed ? 'alert-danger' : 'alert-success'}">
+                                <h:messages layout="table"/>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
                 <ui:insert name="pageContent">Content</ui:insert>
             </article>
         </div>
@@ -24,8 +34,8 @@
         <h:outputScript library="js" name="popper.min.js"/>
         <h:outputScript library="js" name="bootstrap.min.js"/>
         <script>$(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-        });
+                $('[data-toggle="tooltip"]').tooltip()
+            });
         </script>
     </h:body>
 
