@@ -6,15 +6,11 @@
 package de.oth.joa44741.swprojektjohn.repository;
 
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
-import javax.enterprise.context.RequestScoped;
-import javax.transaction.Transactional;
 
 /**
  *
- * @author Andi
+ * @author Johnny
  */
-@RequestScoped
-@Transactional
-public class BandRepositoryImpl extends RepositoryBaseImpl<BandEntity> implements BandRepository {
+public interface BandRepository extends Repository<BandEntity> {
 
 }

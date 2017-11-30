@@ -31,9 +31,6 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
     private CampingAndTicketFormBean campingAndTicketFormBean;
 
     @Inject
-    private UpdateFestivalFormBean updateFestivalFormBean;
-
-    @Inject
     private LoginBean loginBean;
 
     private static final long serialVersionUID = 1L;
@@ -66,8 +63,6 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
         final FacesMessage msg = new FacesMessage("Festival " + persistedFestival.getName() + " erfolgreich angelegt");
         FacesContext.getCurrentInstance().addMessage("newFormular", msg);
         initFields();
-        // TODO good comment
-        updateFestivalFormBean.initFields();
         return campingAndTicketFormBean.loadAndShowTicketsAndCampingPage(persistedFestival.getId());
     }
 
@@ -110,7 +105,7 @@ public class AddFestivalFormBean extends FestivalFormBeanBase {
         final Date vonDatum = (Date) vonDatumComponent.getValue();
         final Date bisDatum = (Date) value;
         if (bisDatum.before(vonDatum)) {
-            String msg = "Von Datum muss zeitlich vor dem Bis Datum liegen";
+            final String msg = "Von Datum muss zeitlich vor dem Bis Datum liegen";
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
         }
     }

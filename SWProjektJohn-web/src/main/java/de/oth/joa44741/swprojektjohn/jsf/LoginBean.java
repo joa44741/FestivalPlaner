@@ -5,7 +5,6 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf;
 
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.jsf.util.SessionUtils;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;

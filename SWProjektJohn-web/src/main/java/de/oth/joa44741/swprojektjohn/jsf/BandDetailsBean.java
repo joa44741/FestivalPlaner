@@ -10,7 +10,6 @@ import de.oth.joa44741.swprojektjohn.core.util.LineupDateUtils;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
@@ -44,6 +43,7 @@ public class BandDetailsBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public String showBandDetails(Long id) {
+        System.out.println("Bandid: " + id);
         this.band = bandService.retrieveBandByIdIncludingDetails(id);
         this.band.getLineupDates().forEach(lineup -> lineupIdToFestivalMap.put(lineup.getId(), festivalService.retrieveFestivalByLineupDateId(lineup.getId())));
         return PageNames.BAND_DETAILS;

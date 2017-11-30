@@ -8,7 +8,6 @@ package de.oth.joa44741.swprojektjohn.jsf;
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
@@ -55,7 +54,6 @@ public class VerwaltungBean implements Serializable {
         initFields();
         final FacesMessage msg = new FacesMessage("Festival wurde gelöscht");
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        //TODO: muss event auslösen, damit update Festival Form upgedated wird
         return PageNames.CURRENT_PAGE;
     }
 

@@ -17,7 +17,7 @@ import java.util.Map;
 public interface Repository<T extends AbstractLongEntity> {
 
     public static final int NO_LIMIT = 0;
-    public static final int SINGLE_RESULT = 0;
+    public static final int SINGLE_RESULT = 1;
 
     T retrieveById(Long id);
 

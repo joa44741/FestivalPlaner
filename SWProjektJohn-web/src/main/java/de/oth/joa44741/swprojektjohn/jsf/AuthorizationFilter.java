@@ -5,7 +5,6 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf;
 
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

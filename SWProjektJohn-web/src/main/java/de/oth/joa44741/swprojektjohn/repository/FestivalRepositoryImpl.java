@@ -5,7 +5,6 @@
  */
 package de.oth.joa44741.swprojektjohn.repository;
 
-import de.oth.joa44741.swprojektjohn.core.qualifier.FestivalRepository;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import javax.enterprise.context.RequestScoped;
@@ -18,8 +17,7 @@ import org.jboss.logging.Logger;
  */
 @RequestScoped
 @Transactional
-@FestivalRepository
-public class FestivalRepositoryImpl extends RepositoryBaseImpl<FestivalEntity> {
+public class FestivalRepositoryImpl extends RepositoryBaseImpl<FestivalEntity> implements FestivalRepository {
 
     private static final Logger LOG = Logger.getLogger(FestivalRepositoryImpl.class);
 

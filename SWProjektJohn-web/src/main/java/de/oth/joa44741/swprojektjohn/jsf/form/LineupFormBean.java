@@ -9,7 +9,7 @@ import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
+import de.oth.joa44741.swprojektjohn.jsf.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
@@ -25,7 +25,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-// TODO: refactor! own Bean for Band, Lineup, Ticket, Camping
 @Named("lineupFormBean")
 @SessionScoped
 public class LineupFormBean implements Serializable {

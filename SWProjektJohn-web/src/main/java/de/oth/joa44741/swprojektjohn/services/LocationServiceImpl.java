@@ -6,8 +6,8 @@
 package de.oth.joa44741.swprojektjohn.services;
 
 import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
-import de.oth.joa44741.swprojektjohn.core.qualifier.LocationRepository;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
+import de.oth.joa44741.swprojektjohn.repository.LocationRepository;
 import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
 import de.oth.joa44741.swprojektjohn.repository.Repository;
 import java.util.List;
@@ -23,8 +23,7 @@ import javax.inject.Inject;
 public class LocationServiceImpl implements LocationService {
 
     @Inject
-    @LocationRepository
-    private Repository<LocationEntity> locationRepository;
+    private LocationRepository locationRepository;
 
     @Override
     public LocationEntity retrieveLocationById(Long id) {

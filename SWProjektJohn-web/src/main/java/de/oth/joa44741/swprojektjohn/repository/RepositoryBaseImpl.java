@@ -15,7 +15,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-public class RepositoryBaseImpl<T extends AbstractLongEntity> implements Repository<T> {
+public abstract class RepositoryBaseImpl<T extends AbstractLongEntity> implements Repository<T> {
 
     @PersistenceContext(unitName = "sw_projekt_john_pu")
     private EntityManager entityManager;

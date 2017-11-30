@@ -10,7 +10,7 @@ import de.oth.joa44741.swprojektjohn.core.enums.TagArtEnum;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
+import de.oth.joa44741.swprojektjohn.jsf.PageNames;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,6 +68,7 @@ public class CampingAndTicketFormBean implements Serializable {
         persistedFestival = festivalService.addTicketArt(persistedFestival.getId(), transientTicketArt);
         final FacesMessage msg = new FacesMessage("Die Ticketart wurde angelegt");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        initTransientFields();
         return PageNames.CURRENT_PAGE;
     }
 
@@ -75,6 +76,7 @@ public class CampingAndTicketFormBean implements Serializable {
         persistedFestival = festivalService.addCampingVariante(persistedFestival.getId(), transientCampingVariante);
         final FacesMessage msg = new FacesMessage("Die Campingvariante wurde angelegt");
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        initTransientFields();
         return PageNames.CURRENT_PAGE;
     }
 

@@ -8,7 +8,6 @@ package de.oth.joa44741.swprojektjohn.jsf;
 import de.oth.joa44741.swprojektjohn.core.FestivalWithDetailsDto;
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;

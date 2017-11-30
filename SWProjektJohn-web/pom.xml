@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.oth.joa44741</groupId>
-    <artifactId>SWProjektJohn-web</artifactId>
+    <artifactId>FestivalPlaner-John</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>  
     <dependencies>
@@ -61,7 +61,7 @@
         <hibernate.version>5.2.4.Final</hibernate.version>
     </properties>
     <build>
-        <finalName>SWProjektJohn-web</finalName>
+        <finalName>FestivalPlaner-John</finalName>
     </build>
 
 </project>

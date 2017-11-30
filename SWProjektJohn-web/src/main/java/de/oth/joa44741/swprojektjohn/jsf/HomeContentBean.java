@@ -19,8 +19,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("homeContentBean")
-
-//TODO: Prof. fragen, warum RequestScoped nicht funktioniert...
 @SessionScoped
 public class HomeContentBean implements Serializable {
 
@@ -39,6 +37,11 @@ public class HomeContentBean implements Serializable {
     public void initFields() {
         festivalsInFuture = festivalService.findAllFestivalsInFutureByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
         randomBands = bandService.findRandomBandsByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
+    }
+
+    public String loadAndShowPage() {
+        initFields();
+        return PageNames.INDEX;
     }
 
     public List<FestivalEntity> getUpcomingFestivals(int numberOfFestivals) {

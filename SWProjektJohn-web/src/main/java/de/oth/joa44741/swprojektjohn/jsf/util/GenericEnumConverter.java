@@ -15,8 +15,11 @@ import javax.faces.convert.FacesConverter;
 /**
  *
  * @author Andi
+ *
+ * adapted from:
+ * https://stackoverflow.com/questions/3822058/use-enum-in-hselectmanycheckbox
+ * (first answer)
  */
-// TODO: stackoverflow comment
 @FacesConverter(value = "genericEnumConverter")
 public class GenericEnumConverter implements Converter {
 
@@ -33,7 +36,6 @@ public class GenericEnumConverter implements Converter {
     }
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         Class<Enum> enumType = (Class<Enum>) component.getAttributes().get(ATTRIBUTE_ENUM_TYPE);
         try {

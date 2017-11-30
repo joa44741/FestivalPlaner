@@ -9,7 +9,7 @@ import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.jsf.LoginBean;
-import de.oth.joa44741.swprojektjohn.jsf.util.PageNames;
+import de.oth.joa44741.swprojektjohn.jsf.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -100,9 +100,7 @@ public class BandFormBean implements Serializable {
         try {
             final BandEntity band = bandService.retrieveBandById(bandId);
             return Optional.of(band);
-
         } catch (EntityNotFoundException ex) {
-            // TODO: logger
             return Optional.empty();
         }
     }

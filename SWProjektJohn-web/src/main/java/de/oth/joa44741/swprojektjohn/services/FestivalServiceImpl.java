@@ -8,13 +8,13 @@ package de.oth.joa44741.swprojektjohn.services;
 import de.oth.joa44741.swprojektjohn.core.FestivalWithDetailsDto;
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
-import de.oth.joa44741.swprojektjohn.core.qualifier.BuehneRepository;
-import de.oth.joa44741.swprojektjohn.core.qualifier.FestivalRepository;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.CampingVarianteEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LineupDateEntity;
 import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
+import de.oth.joa44741.swprojektjohn.repository.BuehneRepository;
+import de.oth.joa44741.swprojektjohn.repository.FestivalRepository;
 import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
 import de.oth.joa44741.swprojektjohn.repository.Repository;
 import de.oth.joa44741.swprojektjohn.services.weatherservice.WeatherSoapServiceClient;
@@ -33,19 +33,17 @@ import org.jboss.logging.Logger;
  * @author Andi
  */
 @RequestScoped
-@WebService
+@WebService(serviceName = "FestivalService", portName = "FestivalPort")
 @DoLogging
 public class FestivalServiceImpl implements FestivalService {
 
     private static final Logger LOG = Logger.getLogger(FestivalServiceImpl.class);
 
     @Inject
-    @FestivalRepository
-    private Repository<FestivalEntity> festivalRepository;
+    private FestivalRepository festivalRepository;
 
     @Inject
-    @BuehneRepository
-    private Repository<BuehneEntity> buehneRepository;
+    private BuehneRepository buehneRepository;
 
     @Inject
     private WeatherSoapServiceClient weatherClient;

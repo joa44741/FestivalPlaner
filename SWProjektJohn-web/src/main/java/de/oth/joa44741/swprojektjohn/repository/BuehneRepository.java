@@ -6,15 +6,11 @@
 package de.oth.joa44741.swprojektjohn.repository;
 
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
-import javax.enterprise.context.RequestScoped;
-import javax.transaction.Transactional;
 
 /**
  *
- * @author Andi
+ * @author Johnny
  */
-@RequestScoped
-@Transactional
-public class BuehneRepositoryImpl extends RepositoryBaseImpl<BuehneEntity> implements BuehneRepository {
+public interface BuehneRepository extends Repository<BuehneEntity> {
 
 }

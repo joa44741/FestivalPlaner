@@ -7,8 +7,9 @@ package de.oth.joa44741.swprojektjohn.services;
 
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
-import de.oth.joa44741.swprojektjohn.core.qualifier.BandRepository;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
+import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
+import de.oth.joa44741.swprojektjohn.repository.BandRepository;
 import static de.oth.joa44741.swprojektjohn.repository.QueryParam.with;
 import de.oth.joa44741.swprojektjohn.repository.Repository;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -26,8 +28,10 @@ import javax.inject.Inject;
 public class BandServiceImpl implements BandService {
 
     @Inject
-    @BandRepository
-    private Repository<BandEntity> bandRepository;
+    private BandRepository bandRepository;
+
+    @Inject
+    private FestivalService festivalService;
 
     @Override
     public BandEntity retrieveBandById(Long id) {
@@ -68,7 +72,14 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
+    @Transactional
     public void removeBand(Long id) {
+        final BandEntity bandToRemove = bandRepository.retrieveById(id);
+
+        bandToRemove.getLineupDates().forEach(lineup -> {
+            final FestivalEntity festival = festivalService.retrieveFestivalByLineupDateId(lineup.getId());
+            festivalService.removeLineupDate(festival.getId(), lineup.getId());
+        });
         bandRepository.remove(id);
     }
 
