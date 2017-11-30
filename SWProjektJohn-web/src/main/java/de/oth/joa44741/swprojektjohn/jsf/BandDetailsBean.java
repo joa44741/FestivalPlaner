@@ -43,7 +43,6 @@ public class BandDetailsBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public String showBandDetails(Long id) {
-        System.out.println("Bandid: " + id);
         this.band = bandService.retrieveBandByIdIncludingDetails(id);
         this.band.getLineupDates().forEach(lineup -> lineupIdToFestivalMap.put(lineup.getId(), festivalService.retrieveFestivalByLineupDateId(lineup.getId())));
         return PageNames.BAND_DETAILS;

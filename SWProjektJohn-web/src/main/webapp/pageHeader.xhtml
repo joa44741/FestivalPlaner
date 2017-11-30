@@ -4,7 +4,9 @@
       xmlns:h="http://java.sun.com/jsf/html">
     <header class="container">
         <div class="jumbotron">
-            <h1><commandLink action="#{homeContentBean.loadAndShowPage()}">Festival Planer</h:commandLink></h1>
+            <h:form>
+                <h1><h:commandLink action="#{homeContentBean.loadAndShowPage()}">Festival Planer</h:commandLink></h1>
+            </h:form>
         </div>
     </header>
 </html>
