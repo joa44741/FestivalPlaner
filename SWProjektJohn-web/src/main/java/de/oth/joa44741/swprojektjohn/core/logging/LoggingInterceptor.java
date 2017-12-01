@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.core.logging;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
@@ -18,10 +19,12 @@ import org.jboss.logging.Logger;
  */
 @Interceptor
 @DoLogging
-public class LoggingInterceptor {
+public class LoggingInterceptor implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Inject
-    private Logger logger;
+    private transient Logger logger;
 
     @AroundInvoke
     public Object logMethodCalls(InvocationContext context) {

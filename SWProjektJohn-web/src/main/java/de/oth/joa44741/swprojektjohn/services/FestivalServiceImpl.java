@@ -25,6 +25,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
@@ -93,14 +94,14 @@ public class FestivalServiceImpl implements FestivalService {
     @WebMethod(exclude = true)
     @Override
     public Optional<FestivalEntity> findFestivalByName(String name) {
-        final List<FestivalEntity> festivalByName = this.festivalRepository.
-                query(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME,
-                        with("name", name).
-                                parameters(), Repository.SINGLE_RESULT);
-        if (festivalByName.isEmpty()) {
-            return Optional.empty();
-        } else {
+        try {
+            final List<FestivalEntity> festivalByName = this.festivalRepository.
+                    query(FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME,
+                            with("name", name).
+                                    parameters(), Repository.SINGLE_RESULT);
             return Optional.of(festivalByName.get(0));
+        } catch (EntityNotFoundException ex) {
+            return Optional.empty();
         }
     }
 

@@ -83,7 +83,13 @@ public abstract class RepositoryBaseImpl<T extends AbstractLongEntity> implement
         rawParameters.forEach((entry) -> {
             query.setParameter(entry.getKey(), entry.getValue());
         });
-        return query.getResultList();
+        final List<T> resultList = query.getResultList();
+        if (resultLimit == SINGLE_RESULT && resultList.isEmpty()) {
+            throw new EntityNotFoundException(
+                    "Keine Entity vom Typ " + this.clazz.getSimpleName() + " gefunden!");
+        } else {
+            return resultList;
+        }
     }
 
     @Override

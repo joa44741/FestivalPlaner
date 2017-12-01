@@ -5,6 +5,7 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
+import de.oth.joa44741.swprojektjohn.core.UpdateEvent;
 import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Event;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -30,6 +32,9 @@ import javax.persistence.EntityNotFoundException;
 @Named("bandFormBean")
 @SessionScoped
 public class BandFormBean implements Serializable {
+
+    @Inject
+    private Event<UpdateEvent> events;
 
     @Inject
     private BandService bandService;
@@ -57,6 +62,7 @@ public class BandFormBean implements Serializable {
         transientBand.setStatus(newStatus);
         final BandEntity persistedBand = bandService.persistBand(transientBand);
         transientAddedBands.add(persistedBand);
+        events.fire(new UpdateEvent(persistedBand.getClass()));
         final FacesMessage msg = new FacesMessage("Die Band " + transientBand.getName() + " wurde angelegt");
         FacesContext.getCurrentInstance().addMessage(null, msg);
         initFields();

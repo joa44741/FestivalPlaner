@@ -5,6 +5,8 @@
  */
 package de.oth.joa44741.swprojektjohn.jsf.form;
 
+import de.oth.joa44741.swprojektjohn.core.UpdateEvent;
+import de.oth.joa44741.swprojektjohn.core.logging.DoLogging;
 import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
@@ -13,13 +15,11 @@ import de.oth.joa44741.swprojektjohn.jsf.PageNames;
 import de.oth.joa44741.swprojektjohn.services.BandService;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.event.Observes;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -134,17 +134,10 @@ public class LineupFormBean implements Serializable {
         this.selectedBandId = selectedBandId;
     }
 
-    public List<Date> getPossibleTagesticketDates() {
-        final List<Date> possibleDates = new ArrayList<>();
-        Date datumVon = this.festival.getDatumVon();
-        Date datumBis = this.festival.getDatumBis();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(datumVon);
-        while (!cal.getTime().equals(datumBis)) {
-            possibleDates.add(cal.getTime());
-            cal.add(Calendar.DATE, 1);
+    @DoLogging
+    public void listenToUpdate(@Observes UpdateEvent updateEvent) {
+        if (updateEvent.getClazz() == BandEntity.class) {
+            availableBands = bandService.findAllBands();
         }
-        possibleDates.add(cal.getTime());
-        return possibleDates;
     }
 }

@@ -25,7 +25,7 @@ import javax.inject.Named;
 
 @Named("addFestivalFormBean")
 @SessionScoped
-public class AddFestivalFormBean extends FestivalFormBeanBase {
+public class AddFestivalMainDataFormBean extends FestivaMainDatalFormBeanBase {
 
     @Inject
     private CampingAndTicketFormBean campingAndTicketFormBean;

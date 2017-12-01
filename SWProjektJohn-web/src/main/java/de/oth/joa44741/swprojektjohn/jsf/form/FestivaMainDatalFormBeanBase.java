@@ -23,7 +23,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 
-public class FestivalFormBeanBase implements Serializable {
+public class FestivaMainDatalFormBeanBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

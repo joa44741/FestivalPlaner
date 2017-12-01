@@ -47,6 +47,12 @@
                                             <i class="fa fa-check-square-o" aria-hidden="true"></i>
                                         </h:commandLink>
                                     </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Festival l&ouml;schen</f:facet>    				
+                                        <h:commandLink action="#{verwaltungBean.removeFestival(festival.id)}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </h:commandLink>
+                                    </h:column>
                                 </h:dataTable>
                             </div>
                         </div>
@@ -115,6 +121,12 @@
                                         <f:facet name = "header">Band freigeben</f:facet>    				
                                         <h:commandLink action="#{verwaltungBean.setStatusFreigegebenOfBand(band.id)}">
                                             <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                                        </h:commandLink>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Band l&ouml;schen</f:facet>    				
+                                        <h:commandLink action="#{verwaltungBean.removeBand(band.id)}">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
                                         </h:commandLink>
                                     </h:column>
                                 </h:dataTable>

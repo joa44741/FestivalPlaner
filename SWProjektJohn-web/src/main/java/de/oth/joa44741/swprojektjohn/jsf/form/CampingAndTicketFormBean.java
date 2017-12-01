@@ -13,10 +13,7 @@ import de.oth.joa44741.swprojektjohn.entity.TicketArtEntity;
 import de.oth.joa44741.swprojektjohn.jsf.PageNames;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -106,17 +103,4 @@ public class CampingAndTicketFormBean implements Serializable {
         return Arrays.asList(CampingArtEnum.values());
     }
 
-    public List<Date> getPossibleTagesticketDates() {
-        final List<Date> possibleDates = new ArrayList<>();
-        Date datumVon = this.persistedFestival.getDatumVon();
-        Date datumBis = this.persistedFestival.getDatumBis();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(datumVon);
-        while (!cal.getTime().equals(datumBis)) {
-            possibleDates.add(cal.getTime());
-            cal.add(Calendar.DATE, 1);
-        }
-        possibleDates.add(cal.getTime());
-        return possibleDates;
-    }
 }

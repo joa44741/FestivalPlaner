@@ -86,7 +86,7 @@
                                 <h:outputLabel class="col-form-label control-label" for="selectedTag">Tag</h:outputLabel>
                                 <h:selectOneMenu id="selectedTag" styleClass="form-control" value="#{lineupFormBean.transientLineupDate.tag}">
                                     <f:selectItem itemValue="#{null}" itemLabel="--select--" />
-                                    <f:selectItems value="#{lineupFormBean.possibleTagesticketDates}" var="tag"
+                                    <f:selectItems value="#{utilsBean.getDatesInRangeOfFromAndToDate(lineupFormBean.persistedFestival.datumVon, lineupFormBean.persistedFestival.datumBis)}" var="tag"
                                                    itemLabel="#{utilsBean.getDateAsString(tag)}" itemValue="#{tag}" />
                                     <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
                                 </h:selectOneMenu>

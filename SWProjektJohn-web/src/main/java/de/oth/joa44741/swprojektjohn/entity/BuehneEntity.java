@@ -8,6 +8,7 @@ package de.oth.joa44741.swprojektjohn.entity;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = BuehneEntity.QUERY_NAME_FIND_BUEHNEN_BY_FESTIVAL_ID, query = "SELECT b FROM FestivalEntity f join f.lineupDates l join l.buehne b where f.id = :festivalId"),})
 @Entity
 @Table(name = "Buehnen")
+@Cacheable
 public class BuehneEntity extends AbstractLongEntity {
 
     public static final String QUERY_NAME_FIND_BUEHNEN_BY_FESTIVAL_ID = "findBuehnenByFestivalId";
