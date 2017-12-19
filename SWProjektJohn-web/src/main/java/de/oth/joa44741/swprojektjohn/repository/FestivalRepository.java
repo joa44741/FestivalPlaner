@@ -9,7 +9,7 @@ import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 
 /**
  *
- * @author Johnny
+ * @author Andreas John
  */
 public interface FestivalRepository extends Repository<FestivalEntity> {
 

@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 /**
  *
- * @author Johnny
+ * @author Andreas John
  */
 @RequestScoped
 @DoLogging

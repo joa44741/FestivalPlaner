@@ -21,7 +21,7 @@ import javax.transaction.Transactional;
 
 /**
  *
- * @author Johnny
+ * @author Andreas John
  */
 @RequestScoped
 @DoLogging

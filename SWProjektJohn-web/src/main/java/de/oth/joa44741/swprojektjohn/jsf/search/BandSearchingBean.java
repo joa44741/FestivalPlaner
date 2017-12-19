@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.oth.joa44741.swprojektjohn.jsf.search;
 
 import de.oth.joa44741.swprojektjohn.core.enums.GenreEnum;
@@ -19,6 +14,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ *
+ * @author Andreas John
+ */
 @Named("bandSearchingBean")
 @ViewScoped
 public class BandSearchingBean implements Serializable {

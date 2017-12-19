@@ -24,6 +24,7 @@ import java.util.Optional;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
@@ -31,7 +32,7 @@ import org.jboss.logging.Logger;
 
 /**
  *
- * @author Andi
+ * @author Andreas John
  */
 @RequestScoped
 @WebService(serviceName = "FestivalService", portName = "FestivalPort")
@@ -68,7 +69,7 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
     @Override
-    public FestivalWithDetailsDto retrieveFestivalDtoByIdIncludingDetails(Long festivalId) {
+    public FestivalWithDetailsDto retrieveFestivalDtoByIdIncludingDetails(@WebParam(name = "festivalId") Long festivalId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
         final WeatherSoapServiceClient.WetterDto wetterDto = weatherClient.getWeather(festival);
         final FestivalWithDetailsDto dto = new FestivalWithDetailsDto(festival, wetterDto);

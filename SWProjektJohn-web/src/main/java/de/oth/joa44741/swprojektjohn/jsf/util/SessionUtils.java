@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.oth.joa44741.swprojektjohn.jsf.util;
 
 import javax.faces.context.FacesContext;
@@ -10,8 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ * @author Andreas John
  *
- * @author Johnny
+ * adapted from:
+ * http://www.javaknowledge.info/authentication-based-secure-login-logout-using-jsf-2-0-and-primefaces-3-4-1/
  */
 public class SessionUtils {
 

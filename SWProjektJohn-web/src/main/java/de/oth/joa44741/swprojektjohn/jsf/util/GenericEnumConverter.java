@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.oth.joa44741.swprojektjohn.jsf.util;
 
 import javax.faces.application.FacesMessage;
@@ -14,7 +9,7 @@ import javax.faces.convert.FacesConverter;
 
 /**
  *
- * @author Andi
+ * @author Andreas John
  *
  * adapted from:
  * https://stackoverflow.com/questions/3822058/use-enum-in-hselectmanycheckbox

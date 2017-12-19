@@ -9,7 +9,7 @@ import de.oth.joa44741.swprojektjohn.entity.BandEntity;
 
 /**
  *
- * @author Johnny
+ * @author Andreas John
  */
 public interface BandRepository extends Repository<BandEntity> {
 

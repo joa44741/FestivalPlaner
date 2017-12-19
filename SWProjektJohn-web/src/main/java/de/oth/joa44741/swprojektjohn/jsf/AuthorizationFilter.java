@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.oth.joa44741.swprojektjohn.jsf;
 
 import java.io.IOException;
@@ -18,9 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * @author Andreas John
  *
- * @author Johnny
- *
+ * adapted from:
+ * http://www.javaknowledge.info/authentication-based-secure-login-logout-using-jsf-2-0-and-primefaces-3-4-1/
  */
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"*.xhtml"})
 public class AuthorizationFilter implements Filter {
@@ -42,12 +38,11 @@ public class AuthorizationFilter implements Filter {
             HttpServletResponse resp = (HttpServletResponse) response;
             HttpSession ses = reqt.getSession(false);
             String reqURI = reqt.getRequestURI();
-
-            if (reqURI.endsWith(PageNames.VERWALTUNG)) {
+            if (reqURI.endsWith(PageNames.VERWALTUNG + ".xhtml")) {
                 if (ses != null && ses.getAttribute("adminLoggedIn") != null) {
                     chain.doFilter(request, response);
                 } else {
-                    resp.sendRedirect(reqt.getContextPath() + "/" + PageNames.LOGIN_DATA);
+                    resp.sendRedirect(reqt.getContextPath() + "/" + PageNames.LOGIN_DATA + ".xhtml");
                 }
             } else {
                 chain.doFilter(request, response);

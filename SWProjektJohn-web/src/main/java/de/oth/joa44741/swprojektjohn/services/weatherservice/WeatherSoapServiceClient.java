@@ -12,7 +12,7 @@ import javax.enterprise.context.RequestScoped;
 
 /**
  *
- * @author Andi
+ * @author Andreas John
  */
 @RequestScoped
 public class WeatherSoapServiceClient {

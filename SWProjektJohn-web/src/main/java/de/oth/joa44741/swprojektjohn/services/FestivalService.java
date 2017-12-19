@@ -17,7 +17,7 @@ import java.util.Optional;
 
 /**
  *
- * @author Andi
+ * @author Andreas John
  */
 public interface FestivalService {
 

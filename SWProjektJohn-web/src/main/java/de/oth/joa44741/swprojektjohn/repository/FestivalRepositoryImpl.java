@@ -13,7 +13,7 @@ import org.jboss.logging.Logger;
 
 /**
  *
- * @author Andi
+ * @author Andreas John
  */
 @RequestScoped
 @Transactional

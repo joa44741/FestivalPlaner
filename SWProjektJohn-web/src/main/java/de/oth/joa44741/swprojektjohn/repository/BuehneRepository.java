@@ -9,7 +9,7 @@ import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
 
 /**
  *
- * @author Johnny
+ * @author Andreas John
  */
 public interface BuehneRepository extends Repository<BuehneEntity> {
 
