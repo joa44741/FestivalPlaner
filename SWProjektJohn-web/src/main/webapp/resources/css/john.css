@@ -12,6 +12,12 @@ and open the template in the editor.
     max-height: 100px;
 }
 
+footer{
+    padding-top: 20px;
+    padding-bottom: 5px;
+    color: white;
+}
+
 .tableWithoutBorder td{
     border-style:none;
 }
@@ -34,7 +40,7 @@ h3{
     margin-bottom: 20px;
 }
 
-.card-header, nav div, .progress-bar,.btn-primary{
+.card-header, nav div, .progress-bar,.btn-primary, footer{
     background-color: #D68910;
 }
 
@@ -83,18 +89,21 @@ nav div{
     padding: 10px 0px;
 }
 
+header .jumbotron{
+    background:url("../resources/images/bgPic.jpg") no-repeat center center; 
+    background-size: cover; 
+}
+
 .jumbotron{
     padding-bottom: 20px;
     border-radius: 0px;
     margin-bottom: 0px;
-    background:url("../resources/images/bgPic.jpg") no-repeat center center; 
-    background-size: cover;
 }
 
 .jumbotron h1{
     padding-top: 40px;
-    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-size: 56px;
+    font-size: 60px;
+    font-family: 'Kaushan Script', cursive;
 }
 
 .mainContainer{
@@ -106,15 +115,12 @@ body{
     background: #f7971e; /* fallback for old browsers */
     background: -webkit-linear-gradient(to bottom, #f7971e, #ffd200); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to bottom, #f7971e, #ffd200);
+    background-attachment: fixed;
 }
 
 html{
     min-height: 100%;
 }
-
-/*h5{
-    margin-top: 16px;
-}*/
 
 .mainContent{
     padding-bottom: 20px;
@@ -137,6 +143,10 @@ img{
 
 header a{
     color:white;
+}
+
+header a:hover{
+    color:#D68910;
 }
 
 a:hover{

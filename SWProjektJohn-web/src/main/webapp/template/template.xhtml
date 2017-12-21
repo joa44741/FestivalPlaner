@@ -10,12 +10,19 @@
         <h:outputStylesheet library="css" name="bootstrap.css" />
         <h:outputStylesheet library="css" name="john.css" />
         <h:outputStylesheet library="css" name="font-awesome.css" />
+        <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet"/>
         <title>Festival Planer</title>
     </h:head>
 
     <h:body>
         <div class="mainContainer">
-            <ui:insert name="pageHeader">Page-Header</ui:insert>
+            <header class="container">
+                <div class="jumbotron">
+                    <h:form>
+                        <h1><h:commandLink action="#{homeContentBean.loadAndShowPage()}">Festival Planer</h:commandLink></h1>
+                    </h:form>
+                </div>
+            </header>
             <ui:insert name="navigation">Navigation</ui:insert>
             <article class="container mainContent">
                 <div class="row">
@@ -29,6 +36,9 @@
                 </div>
                 <ui:insert name="pageContent">Content</ui:insert>
             </article>
+            <footer class="container">
+                Andreas John | IN7 OTH Regensburg | SW | WS 2017/2018
+            </footer>
         </div>
         <h:outputScript library="js" name="jquery-3.2.1.slim.min.js"/>
         <h:outputScript library="js" name="popper.min.js"/>

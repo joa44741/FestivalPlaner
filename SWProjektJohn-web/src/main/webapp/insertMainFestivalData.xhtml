@@ -1,18 +1,159 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="template/template.xhtml">
-        <ui:define name="pageHeader">
-            <ui:include src="pageHeader.xhtml" />
-        </ui:define>
         <ui:define name="navigation">
             <ui:include src="navigation.xhtml">
                 <ui:param name="activeElement" value="dataInput"/>
             </ui:include>        
         </ui:define>
         <ui:define name="pageContent">
-            <ui:include src="insertMainFestivalDataContent.xhtml" />
+            <div class="row">
+                <div class="col-12">
+                    <h2>Festivaldaten eintragen</h2>
+                    <hr/>
+                </div>
+                <div id="newFestivalDiv" class="col-12">
+                    <h:form id="newFestival">
+                        <div class="row">
+                            <div class="offset-8 col-4">
+                                <h4 class="pull-right">Schritt 1 von 3</h4>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Allgemeine Daten</h5>
+                                    </div>
+                                    <div class="col-3 form-group required">
+                                        <h:outputLabel class="col-form-label control-label" for="name">Name</h:outputLabel>
+                                        <h:inputText class="form-control" id="name" required="true" value="#{addFestivalFormBean.transientFestival.name}" requiredMessage="Name des Festivals muss angegeben werden" validator="#{addFestivalFormBean.validateFestivalName}"/>
+                                    </div>
+                                    <div class="col-3 form-group required">
+                                        <h:outputLabel class="col-form-label control-label" for="datumVon">Von</h:outputLabel>
+                                        <h:inputText class="form-control" binding="#{datumVonComponent}" id="datumVon" required="true" value="#{addFestivalFormBean.transientFestival.datumVon}" requiredMessage="Datum (von) des Festivals muss angegeben werden">
+                                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                                            <f:passThroughAttribute name="type" value="date" />
+                                        </h:inputText>
+                                    </div>
+                                    <div class="col-3 form-group required">
+                                        <h:outputLabel class="col-form-label control-label" for="datumBis">Bis</h:outputLabel>
+                                        <h:inputText class="form-control" id="datumBis" required="true" value="#{addFestivalFormBean.transientFestival.datumBis}" requiredMessage="Datum (bis) des Festivals muss angegeben werden" validator="#{addFestivalFormBean.validateVonBisDatum}">
+                                            <f:convertDateTime pattern="yyyy-MM-dd" />
+                                            <f:passThroughAttribute name="type" value="date"/>
+                                            <f:attribute name="datumVonComponent" value="#{datumVonComponent}" />
+                                        </h:inputText>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="veranstalter">Veranstalter</h:outputLabel>
+                                        <h:inputText class="form-control" id="veranstalter" value="#{addFestivalFormBean.transientFestival.veranstalter}"/>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="webseite">Webseite</h:outputLabel>
+                                        <h:inputText class="form-control" id="webseite" value="#{addFestivalFormBean.transientFestival.webseite}"/>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="logo">Logo(URL)</h:outputLabel>
+                                        <h:inputText class="form-control" id="logo" value="#{addFestivalFormBean.transientFestival.logoUrl}"/>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="ticketkontingent">Ticketkontingent</h:outputLabel>                           
+                                        <h:inputText class="form-control" binding="#{ticketkontingentComponentAddForm}"  id="ticketkontingent" value="#{addFestivalFormBean.transientFestival.ticketKontingent}">
+                                            <f:passThroughAttribute name="type" value="number"/>
+                                            <f:convertNumber integerOnly="true" type="number" />
+                                            <!-- disable default validator because own messages are written in validateVerkaufteTicketsAndKontingent() method-->
+                                            <f:validateBean disabled="true"/>
+                                        </h:inputText>
+
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="verkaufteTickets">Verkaufte Tickets</h:outputLabel>
+                                        <h:inputText class="form-control" id="verkaufteTickets" value="#{addFestivalFormBean.transientFestival.verkaufteTickets}" validator="#{addFestivalFormBean.validateVerkaufteTicketsAndKontingent}">
+                                            <f:passThroughAttribute name="type" value="number"/>
+                                            <f:convertNumber integerOnly="true" type="number" />
+                                            <!-- disable default validator because own messages are written in validateVerkaufteTicketsAndKontingent() method-->
+                                            <f:validateBean disabled="true"/>
+                                            <f:attribute name="ticketkontingentComponent" value="#{ticketkontingentComponentAddForm}" />
+                                        </h:inputText>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="lageplan">Lageplan(URL)</h:outputLabel>
+                                        <h:inputText class="form-control" id="lageplan" value="#{addFestivalFormBean.transientFestival.lageplan}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Zusatzeigenschaften</h5>
+                                    </div>
+                                    <div class="col-12 tableWithoutBorder">
+                                        <h:selectManyCheckbox class="table" value="#{addFestivalFormBean.selectedZusatzeigenschaftenList}">
+                                            <f:converter converterId="genericEnumConverter" />
+                                            <f:selectItems value="#{addFestivalFormBean.zusatzeigenschaftenAsMap}"/>
+                                        </h:selectManyCheckbox>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Location</h5>
+                                    </div>
+                                    <div class="col-12">
+                                        <h6>Bestehende Location</h6>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:selectOneMenu styleClass="form-control" value="#{addFestivalFormBean.selectedLocationId}">
+                                            <h:outputLabel class="col-form-label" for="existingLocation">Location</h:outputLabel>
+                                            <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                                            <f:selectItems id="existingLocation" value="#{addFestivalFormBean.availableLocations}" var="existingLocation"
+                                                           itemLabel="#{existingLocation.locationAsString}" itemValue="#{existingLocation.id}" />
+                                            <f:ajax render="locationName strasse ort plz selectedBundeslandMenu" listener="#{addFestivalFormBean.updateLocationFields()}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-12">
+                                        <h6>Neue Location</h6>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="locationName">Location Name</h:outputLabel>
+                                        <h:inputText class="form-control" id="locationName" disabled="#{addFestivalFormBean.selectedLocationId != null}" value="#{addFestivalFormBean.transientFestival.location.name}"/>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="strasse">Stra&szlig;e</h:outputLabel>
+                                        <h:inputText class="form-control" disabled="#{addFestivalFormBean.selectedLocationId != null}" id="strasse" value="#{addFestivalFormBean.transientFestival.location.strasse}"/>
+                                    </div>
+                                    <div class="col-3 form-group required">
+                                        <h:outputLabel id="ortLabel" class="col-form-label control-label" for="ort">Ort</h:outputLabel>
+                                        <h:inputText class="form-control" disabled="#{addFestivalFormBean.selectedLocationId != null}" id="ort" required="true" value="#{addFestivalFormBean.transientFestival.location.ort}" requiredMessage="Ort der Location muss angegeben werden" />
+                                    </div>
+                                    <div class="col-3 form-group required">
+                                        <h:outputLabel class="col-form-label control-label" for="plz">Postleitzahl</h:outputLabel>
+                                        <h:inputText class="form-control" disabled="#{addFestivalFormBean.selectedLocationId != null}" id="plz" required="true" value="#{addFestivalFormBean.transientFestival.location.plz}" requiredMessage="Postleitzahl der Location muss angegeben werden" />
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label" for="selectedBundeslandMenu">Bundesland</h:outputLabel>
+                                        <h:selectOneMenu id="selectedBundeslandMenu" styleClass="form-control" disabled="#{addFestivalFormBean.selectedLocationId != null}" value="#{addFestivalFormBean.transientFestival.location.bundesland}">
+                                            <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                                            <f:selectItems id="bundesland" value="#{addFestivalFormBean.bundeslaenderAsList}" var="bundesland"
+                                                           itemLabel="#{bundesland.text}" itemValue="#{bundesland}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h:commandButton class="btn btn-primary" action="#{addFestivalFormBean.persistMainFestivalData()}" value="Festival anlegen"/>
+                    </h:form>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 </html>

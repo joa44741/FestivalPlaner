@@ -1,18 +1,175 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="template/template.xhtml">
-        <ui:define name="pageHeader">
-            <ui:include src="pageHeader.xhtml" />
-        </ui:define>
         <ui:define name="navigation">
             <ui:include src="navigation.xhtml">
                 <ui:param name="activeElement" value="dataInput"/>
             </ui:include>        
         </ui:define>
         <ui:define name="pageContent">
-            <ui:include src="insertLineupContent.xhtml" />
+            <div class="row">
+                <div class="col-12">
+                    <h2>Festivaldaten eintragen</h2>
+                    <hr/>
+                </div>
+                <div class="col-12">
+                    <h3>Optionale Festivaldaten angeben</h3>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="offset-8 col-4">
+                            <h4 class="pull-right">Schritt 3 von 3</h4>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h:form id="lineupForm">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>Lineup</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <h:dataTable id="lineupTable" class="table" value="#{lineupFormBean.persistedFestival.lineupDates}" var="lineup">
+                                            <h:column>    				
+                                                <f:facet name = "header">Band</f:facet>    				
+                                                <h:outputText value="#{lineup.band.name}"></h:outputText>
+                                            </h:column>
+                                            <h:column>    				
+                                                <f:facet name = "header">Tag</f:facet>    				
+                                                <h:outputText value="#{lineup.tag}">
+                                                    <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                                </h:outputText>
+                                            </h:column>
+                                            <h:column>    				
+                                                <f:facet name = "header">Von</f:facet>    				
+                                                <h:outputText value="#{lineup.uhrzeitVon}">
+                                                    <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                                                </h:outputText>
+                                            </h:column>
+                                            <h:column>    				
+                                                <f:facet name = "header">Bis</f:facet>    				
+                                                <h:outputText value="#{lineup.uhrzeitBis}">
+                                                    <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                                                </h:outputText>
+                                            </h:column>
+                                            <h:column>    				
+                                                <f:facet name = "header">B&uuml;hne</f:facet>    				
+                                                <h:outputText value="#{lineup.buehne.name}"/>
+                                            </h:column>
+                                            <h:column>    				
+                                                <f:facet name = "header">Lineup Eintrag l&ouml;schen</f:facet>    				
+                                                <h:commandLink action="#{lineupFormBean.deleteLineupDate(lineup.id)}" immediate="true">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </h:commandLink>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Lineup anlegen</h5>
+                                    </div>
+                                    <div class="col-3 form-group required">
+                                        <h:selectOneMenu required="true" styleClass="form-control" value="#{lineupFormBean.selectedBandId}" requiredMessage="Die Band muss angegeben werden">
+                                            <h:outputLabel class="col-form-label control-label" for="existingBand">Band</h:outputLabel>
+                                            <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                                            <f:selectItems id="existingBand" value="#{lineupFormBean.availableBands}" var="band"
+                                                           itemLabel="#{band.name}" itemValue="#{band.id}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:selectOneMenu styleClass="form-control" value="#{lineupFormBean.selectedBuehnenId}">
+                                            <h:outputLabel class="col-form-label control-label" for="existingBuehne">B&uuml;hne</h:outputLabel>
+                                            <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                                            <f:selectItems id="existingBuehne" value="#{lineupFormBean.persistedFestival.buehnen}" var="buehne"
+                                                           itemLabel="#{buehne.name}" itemValue="#{buehne.id}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="selectedTag">Tag</h:outputLabel>
+                                        <h:selectOneMenu id="selectedTag" styleClass="form-control" value="#{lineupFormBean.transientLineupDate.tag}">
+                                            <f:selectItem itemValue="#{null}" itemLabel="--select--" />
+                                            <f:selectItems value="#{utilsBean.getDatesInRangeOfFromAndToDate(lineupFormBean.persistedFestival.datumVon, lineupFormBean.persistedFestival.datumBis)}" var="tag"
+                                                           itemLabel="#{utilsBean.getDateAsString(tag)}" itemValue="#{tag}" />
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="von">Von</h:outputLabel>
+                                        <h:inputText class="form-control" id="von" value="#{lineupFormBean.transientLineupDate.uhrzeitVon}">
+                                            <f:convertDateTime pattern="HH:mm" timeZone="Europe/Berlin"/>
+                                            <f:passThroughAttribute name="type" value="time" />
+                                        </h:inputText>
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="bis">Bis</h:outputLabel>
+                                        <h:inputText class="form-control" id="bis" value="#{lineupFormBean.transientLineupDate.uhrzeitBis}">
+                                            <f:convertDateTime pattern="HH:mm" timeZone="Europe/Berlin"/>
+                                            <f:passThroughAttribute name="type" value="time" />
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                <h:commandButton class="btn btn-primary" action="#{lineupFormBean.persistLineupDate()}" value="Lineup Eintrag anlegen"/>
+                            </h:form>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <h:form id="buehnenForm">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h4>B&uuml;hnen</h4>
+                                    </div>
+                                    <div class="col-12">
+                                        <h:dataTable id="transientBuehnen" var="buehne" class="table" value="#{lineupFormBean.persistedFestival.buehnen}">
+                                            <h:column>    				
+                                                <f:facet name = "header">B&uuml;hnenname</f:facet>    				
+                                                <h:outputLabel value="#{buehne.name}"/>
+                                            </h:column>
+                                            <h:column>    				
+                                                <f:facet name = "header">&Uuml;berdacht</f:facet>    				
+                                                <h:outputLabel rendered="#{buehne.ueberdacht}"><i class="fa fa-check-square-o" aria-hidden="true"></i></h:outputLabel>
+                                                <h:outputLabel rendered="#{buehne.ueberdacht != null &amp;&amp; !buehne.ueberdacht}"><i class="fa fa-square-o" aria-hidden="true"></i></h:outputLabel>
+                                            </h:column>
+                                            <h:column>
+                                                <f:facet name = "header">B&uuml;hne l&ouml;schen</f:facet>    				
+                                                <h:commandLink action="#{lineupFormBean.deleteBuehne(buehne.id)}" immediate="true">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </h:commandLink>
+                                            </h:column>
+                                        </h:dataTable>
+                                    </div>
+                                    <div class="col-12">
+                                        <h5>B&uuml;hne anlegen</h5>
+                                    </div>
+                                    <div class="col-3 form-group required">
+                                        <h:outputLabel class="col-form-label control-label" for="buehne">B&uuml;hnenname  (z.B. Hauptb&uuml;hne)</h:outputLabel>
+                                        <h:inputText class="form-control" id="buehne" required="true" value="#{lineupFormBean.transientBuehne.name}" requiredMessage="Name der B&uuml;hne muss angegeben werden" />
+                                    </div>
+                                    <div class="col-3 form-group">
+                                        <h:outputLabel class="col-form-label control-label" for="ueberdacht">&Uuml;berdacht</h:outputLabel>
+                                        <h:selectOneMenu id="ueberdacht" styleClass="form-control" value="#{lineupFormBean.transientBuehne.ueberdacht}">
+                                            <f:selectItem itemValue="#{null}" itemLabel="keine Ahnung" />
+                                            <f:selectItem itemValue="#{true}" itemLabel="Ja" />
+                                            <f:selectItem itemValue="#{false}" itemLabel="Nein" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <h:commandButton class="btn btn-primary" action="#{lineupFormBean.persistBuehne()}" value="Buehne anlegen"/>
+                            </h:form>
+                        </div>
+                    </div>
+                    <ui:include src="/partials/bandForm.xhtml">
+                    </ui:include>
+                </div>
+                <div class="col-2">
+                    <h:outputLink class="btn btn-primary" value="index.xhtml">Fertig bearbeitet</h:outputLink>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 </html>

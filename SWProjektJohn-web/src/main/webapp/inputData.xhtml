@@ -1,18 +1,37 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:composition template="template/template.xhtml">
-        <ui:define name="pageHeader">
-            <ui:include src="pageHeader.xhtml" />
-        </ui:define>
         <ui:define name="navigation">
             <ui:include src="navigation.xhtml">
                 <ui:param name="activeElement" value="dataInput"/>
             </ui:include>        
         </ui:define>
         <ui:define name="pageContent">
-            <ui:include src="inputDataContent.xhtml" />
+            <h:form>
+                <div class="row">
+                    <div class="col-12">
+                        <h2>Festivaldaten eintragen</h2>
+                        <hr/>
+                    </div>
+                    <div class="col-12">
+                        <h3>Neues Festival</h3>
+                        <h:commandLink action="insertMainFestivalData.xhtml"  class="btn btn-primary">Formular &ouml;ffnen</h:commandLink>
+                    </div>
+                    <div class="col-12">
+                        <hr/>
+                        <h3>Daten f&uuml;r Festival erg&auml;nzen</h3>
+                        <h:commandLink action="#{updateFestivalFormBean.loadAndShowPage()}"  class="btn btn-primary">Formular &ouml;ffnen</h:commandLink>
+                    </div>
+                    <div class="col-12">
+                        <hr/>
+                        <h3>Bands eintragen</h3>
+                        <h:commandLink action="insertBands.xhtml" class="btn btn-primary">Formular &ouml;ffnen</h:commandLink>
+                    </div>
+                </div>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

@@ -3,16 +3,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="template/template.xhtml">
-        <ui:define name="pageHeader">
-            <ui:include src="pageHeader.xhtml" />
-        </ui:define>
         <ui:define name="navigation">
             <ui:include src="navigation.xhtml">
                 <ui:param name="activeElement" value="dataInput"/>
             </ui:include>        
         </ui:define>
         <ui:define name="pageContent">
-            <ui:include src="insertBandsContent.xhtml" />
+            <div class="row">
+                <div class="col-12">
+                    <h2>Bands eintragen</h2>
+                    <hr/>
+                </div>
+                <div id="insertBandsDiv" class="col-12">
+                    <ui:include src="partials/bandForm.xhtml">
+                    </ui:include>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 </html>

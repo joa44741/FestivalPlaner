@@ -1,16 +1,191 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="template/template.xhtml">
-        <ui:define name="pageHeader">
-            <ui:include src="pageHeader.xhtml" />
-        </ui:define>
         <ui:define name="navigation">
             <ui:include src="navigation.xhtml"/>
         </ui:define>
         <ui:define name="pageContent">
-            <ui:include src="festivaldetailsContent.xhtml" />
+            <div class="row">
+                <div class="col-12">
+                    <h2>#{festivaldetailsBean.festival.name}</h2>
+                    <hr/>
+                </div>
+                <div class="col-6">
+                    <h3>Location</h3>
+                    <div class="row">
+                        <div class="col-5">
+                            #{festivaldetailsBean.festival.location.name}<br/>
+                            #{festivaldetailsBean.festival.location.strasse}<br/>
+                            #{festivaldetailsBean.festival.location.plz}<br/>
+                            #{festivaldetailsBean.festival.location.ort}<br/>
+                            <div id="zusatzeigenschaften" class="row">
+                                <ui:repeat value="#{festivaldetailsBean.festival.zusatzeigenschaften.toArray()}" var="zusatzeigenschaft">
+                                    <div class="col-1">
+                                        <h:outputLabel rendered="#{zusatzeigenschaft == 'SANITAERE_ANLAGEN'}">
+                                            <i class="fa fa-shower" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                        </h:outputLabel>
+                                        <h:outputLabel rendered="#{zusatzeigenschaft == 'ESSENSSTAENDE'}">
+                                            <i class="fa fa-cutlery" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                        </h:outputLabel>
+                                        <h:outputLabel rendered="#{zusatzeigenschaft == 'PARKMOEGLICHKEITEN'}">
+                                            <i class="fa fa-car" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                        </h:outputLabel>
+                                        <h:outputLabel rendered="#{zusatzeigenschaft == 'MUELLPFAND'}">
+                                            <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                        </h:outputLabel>
+                                        <h:outputLabel rendered="#{zusatzeigenschaft == 'UNTER_18'}">
+                                            <i class="fa fa-child" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="#{zusatzeigenschaft.text}"></i>
+                                        </h:outputLabel>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe src="https://www.google.com/maps?q=#{festivaldetailsBean.festival.location.addressAsString}&amp;output=embed"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-6">
+                    <h3>Wetter</h3>
+                    am <h:outputText value="#{festivaldetailsBean.festival.datumVon}">
+                        <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                    </h:outputText>:<br/>
+                    #{festivaldetailsBean.festival.wetterDto.avgTemperatur}&#x2103;<br/>
+                    #{festivaldetailsBean.festival.wetterDto.wolkenTyp}<br/>
+                    Niederschlagswahrscheinlichkeit: #{festivaldetailsBean.festival.wetterDto.regenwahrscheinlichkeit}%
+                </div>
+                <div class="col-12">
+                    <hr/>
+                </div>
+                <div class="col-6">
+                    <h3>Campingvarianten</h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <h:dataTable value="#{festivaldetailsBean.festival.campingVarianten}" var="camping" class="table">
+                                <h:column>  
+                                    <f:facet name = "header">Art</f:facet>    				
+                                    <h:outputText value="#{camping.campingArt.text}"/>
+                                </h:column>
+                                <h:column>  
+                                    <f:facet name = "header">Extrakosten</f:facet>    	
+                                    <h:outputText value="#{camping.extrakosten}">
+                                        <f:convertNumber type="currency" currencySymbol="&euro;"/>
+                                    </h:outputText>
+                                </h:column>
+                                <h:column>    				
+                                    <f:facet name = "header">Grillen erlaubt</f:facet>    				
+                                    <h:outputLabel rendered="#{camping.grillenErlaubt}"><i class="fa fa-check-square-o" aria-hidden="true"></i></h:outputLabel>
+                                    <h:outputLabel rendered="#{camping.grillenErlaubt != null &amp;&amp; !camping.grillenErlaubt}"><i class="fa fa-square-o" aria-hidden="true"></i></h:outputLabel>
+                                </h:column>
+                                <h:column>    				
+                                    <f:facet name = "header">Glasflaschen erlaubt</f:facet>    				
+                                    <h:outputLabel rendered="#{camping.glasflaschenErlaubt}"><i class="fa fa-check-square-o" aria-hidden="true"></i></h:outputLabel>
+                                    <h:outputLabel rendered="#{camping.glasflaschenErlaubt != null &amp;&amp; !camping.glasflaschenErlaubt}"><i class="fa fa-square-o" aria-hidden="true"></i></h:outputLabel>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h3>Ticketarten</h3>
+                    <div class="row">
+                        <div class="col-12">
+                            <h:dataTable value="#{festivaldetailsBean.festival.ticketArten}" var="ticket" class="table">
+                                <h:column>  
+                                    <f:facet name = "header">Art</f:facet>    				
+                                    <h:outputText value="#{ticket.tagArt.text}"/>
+                                </h:column>
+                                <h:column>  
+                                    <f:facet name = "header">Preis</f:facet>    	
+                                    <h:outputText value="#{ticket.preis}">
+                                        <f:convertNumber type="currency" currencySymbol="&euro;"/>
+                                    </h:outputText>
+                                </h:column>
+                                <h:column>    				
+                                    <f:facet name = "header">Tag</f:facet>    
+                                    <h:outputLabel value="#{ticket.tag}">
+                                        <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                    </h:outputLabel>
+                                </h:column>
+                            </h:dataTable>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <hr/>
+                    <h3>Lineup</h3>
+                </div>
+                <h:form class="col-12">
+                    <div class="row">
+                        <ui:repeat value="#{festivaldetailsBean.festival.lineupDates.toArray()}" var="lineup">
+                            <div class="col-4">
+                                <ui:include src="/partials/bandCard.xhtml">
+                                    <ui:param name="band" value="#{lineup.band}" />
+                                </ui:include>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </h:form>
+                <div class="col-12">
+                    <hr/>
+                    <h3>Timetable</h3>
+                </div>
+                <ui:repeat value="#{festivaldetailsBean.festival.buehnen.toArray()}" var="buehne">
+                    <div class="col-#{utilsBean.calculateBootstrapColSize(festivaldetailsBean.festival.buehnen.size())}">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>#{buehne.name}</h5>
+                            </div>
+                            <div class="card-body">
+                                <ui:repeat var="tag" value="#{lineupBean.getTageOfLineupDatesByBuehne(buehne.id)}">
+                                    <h4>
+                                        <h:outputText value="#{tag}" rendered="#{tag != null}">
+                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                        </h:outputText>
+                                    </h4>
+                                    <h4>
+                                        <h:outputText value="Unbekannter Tag" rendered="#{tag == null}"/>
+                                    </h4>
+                                    <h:dataTable value = "#{lineupBean.getLineupDatesByBuehneAndTag(buehne.id, tag)}" var = "lineup"
+                                                 class = "table">
+                                        <h:column>    				
+                                            <f:facet name = "header">Von</f:facet>    				
+                                            <h:outputText value="#{lineup.uhrzeitVon}">
+                                                <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                                            </h:outputText>
+                                        </h:column>
+                                        <h:column>    				
+                                            <f:facet name = "header">Bis</f:facet>    				
+                                            <h:outputText value="#{lineup.uhrzeitBis}">
+                                                <f:convertDateTime pattern="HH:mm" type="time" timeZone="Europe/Berlin"/>
+                                            </h:outputText>
+                                        </h:column>
+                                        <h:column>    				
+                                            <f:facet name = "header">Band</f:facet>    				
+                                            <h:outputText value="#{lineup.band.name}"></h:outputText>
+                                        </h:column>
+                                    </h:dataTable>
+                                </ui:repeat>
+                            </div>
+                        </div>
+                    </div>
+                </ui:repeat>
+                <h:form class="col-12">
+                    <div class="row">
+                        <div class="col-12 buttonGroupWithMargin">
+                            <h:commandButton id="btnEditFestival" class="btn btn-primary" action="#{campingAndTicketFormBean.loadAndShowTicketsAndCampingPage(festivaldetailsBean.festival.id)}" value="Festivaldaten &auml;ndern"/>
+                            <h:commandButton id="btnDeleteFestival" class="btn btn-primary" action="#{festivaldetailsBean.setStatusOfFestivalToLoeschungAngefordert()}" value="Festival l&ouml;schen"/>
+                        </div>
+                    </div>
+                </h:form>
+            </div>        
         </ui:define>
     </ui:composition>
 </html>

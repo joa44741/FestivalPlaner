@@ -71,8 +71,8 @@ public class FestivalServiceImpl implements FestivalService {
     @Override
     public FestivalWithDetailsDto retrieveFestivalDtoByIdIncludingDetails(@WebParam(name = "festivalId") Long festivalId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
-        final WeatherSoapServiceClient.WetterDto wetterDto = weatherClient.getWeather(festival);
-        final FestivalWithDetailsDto dto = new FestivalWithDetailsDto(festival, wetterDto);
+        final Optional<WeatherSoapServiceClient.WetterDto> optWetterDto = weatherClient.getWeather(festival);
+        final FestivalWithDetailsDto dto = new FestivalWithDetailsDto(festival, optWetterDto.orElse(null));
         return dto;
     }
 
