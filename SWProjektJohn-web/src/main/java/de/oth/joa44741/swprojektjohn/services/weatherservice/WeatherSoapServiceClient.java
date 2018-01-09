@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.oth.joa44741.swprojektjohn.services.weatherservice;
 
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
@@ -66,7 +61,7 @@ public class WeatherSoapServiceClient {
         final WetterDto wetterDto = new WetterDto();
         wetterDto.ort = detailWettervorhersage.ort;
         wetterDto.datum = detailWettervorhersage.datum.toGregorianCalendar().getTime();
-        wetterDto.avgTemperatur = detailWettervorhersage.avgTemperature;
+        wetterDto.avgTemperatur = detailWettervorhersage.avgTemperatur;
         wetterDto.regenfall = detailWettervorhersage.regenfall;
         wetterDto.wetterWarnung = detailWettervorhersage.wetterwarnung;
         wetterDto.minTemperatur = detailWettervorhersage.minTemperatur;
@@ -80,7 +75,7 @@ public class WeatherSoapServiceClient {
     private Optional<DetailWettervorhersage> retrieveDetailWettervorhersage(Date date, LocationEntity location) {
         try {
             final DetailWettervorhersage result = doRetrieveWetterDto(date, location);
-            logger.info("retrieved DetailWettervorhersage from weather service: " + result.getAvgTemperature() + " Celsius, rain: " + result.getRegenwahrscheinlichkeit() * 100);
+            logger.info("retrieved DetailWettervorhersage from weather service: " + result.getAvgTemperatur() + " Celsius, rain: " + result.getRegenwahrscheinlichkeit() * 100);
             return Optional.of(result);
         } catch (Exception ex) {
             logger.error(ex.getMessage());

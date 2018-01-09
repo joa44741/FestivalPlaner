@@ -57,9 +57,15 @@
                     am <h:outputText value="#{festivaldetailsBean.festival.datumVon}">
                         <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
                     </h:outputText>:<br/>
-                    #{festivaldetailsBean.festival.wetterDto.avgTemperatur}&#x2103;<br/>
-                    #{festivaldetailsBean.festival.wetterDto.wolkenTyp}<br/>
-                    Niederschlagswahrscheinlichkeit: #{festivaldetailsBean.festival.wetterDto.regenwahrscheinlichkeit}%
+                    <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto != null}">
+                        #{festivaldetailsBean.festival.wetterDto.avgTemperatur}&#x2103;<br/>
+                        #{festivaldetailsBean.festival.wetterDto.wolkenTyp}<br/>
+                        Niederschlagswahrscheinlichkeit: #{festivaldetailsBean.festival.wetterDto.regenwahrscheinlichkeit}%
+                    </h:outputLabel>
+                    <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto == null}">
+                        derzeit keine Wetterdaten verf&uuml;gbar...
+                    </h:outputLabel>
+
                 </div>
                 <div class="col-12">
                     <hr/>

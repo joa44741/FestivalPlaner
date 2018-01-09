@@ -2,17 +2,27 @@
   <wsdl:types>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://services.sw.oth.de/" elementFormDefault="unqualified" targetNamespace="http://services.sw.oth.de/" version="1.0">
 
-  <xs:element name="holeAlleOrte" type="tns:holeAlleOrte"/>
+  <xs:element name="abstractEntity" type="tns:abstractEntity"/>
 
-  <xs:element name="holeAlleOrteResponse" type="tns:holeAlleOrteResponse"/>
+  <xs:element name="detailWettervorhersage" type="tns:detailWettervorhersage"/>
+
+  <xs:element name="findeDetailWettervorhersageBeiOrtundDatum" type="tns:findeDetailWettervorhersageBeiOrtundDatum"/>
+
+  <xs:element name="findeDetailWettervorhersageBeiOrtundDatumResponse" type="tns:findeDetailWettervorhersageBeiOrtundDatumResponse"/>
+
+  <xs:element name="fuelleWetterDatenbank" type="tns:fuelleWetterDatenbank"/>
+
+  <xs:element name="fuelleWetterDatenbankResponse" type="tns:fuelleWetterDatenbankResponse"/>
 
   <xs:element name="holeDetailWettervorhersage" type="tns:holeDetailWettervorhersage"/>
 
   <xs:element name="holeDetailWettervorhersageResponse" type="tns:holeDetailWettervorhersageResponse"/>
 
-  <xs:element name="holeWettervorhersage" type="tns:holeWettervorhersage"/>
+  <xs:element name="ort" type="tns:ort"/>
 
-  <xs:element name="holeWettervorhersageResponse" type="tns:holeWettervorhersageResponse"/>
+  <xs:element name="tageswetterEintragen" type="tns:tageswetterEintragen"/>
+
+  <xs:element name="tageswetterEintragenResponse" type="tns:tageswetterEintragenResponse"/>
 
   <xs:element name="wettervorhersageEintragen" type="tns:wettervorhersageEintragen"/>
 
@@ -30,12 +40,12 @@
     <xs:complexContent>
       <xs:extension base="tns:abstractEntity">
         <xs:sequence>
-          <xs:element minOccurs="0" name="adminToken" type="xs:string"/>
-          <xs:element name="gesperrt" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="heimatort" type="tns:ort"/>
-          <xs:element name="istAdmin" type="xs:boolean"/>
           <xs:element minOccurs="0" name="nutzername" type="xs:string"/>
           <xs:element minOccurs="0" name="passwort" type="xs:string"/>
+          <xs:element minOccurs="0" name="adminToken" type="xs:string"/>
+          <xs:element minOccurs="0" name="heimatort" type="tns:ort"/>
+          <xs:element name="gesperrt" type="xs:boolean"/>
+          <xs:element name="istAdmin" type="xs:boolean"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -43,6 +53,7 @@
 
   <xs:complexType name="abstractEntity">
     <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:long"/>
       <xs:element minOccurs="0" name="erstelltAm" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>
@@ -51,9 +62,9 @@
     <xs:complexContent>
       <xs:extension base="tns:abstractEntity">
         <xs:sequence>
-          <xs:element minOccurs="0" name="bundesland" type="tns:bundeslandEnum"/>
-          <xs:element minOccurs="0" name="land" type="tns:landEnum"/>
           <xs:element minOccurs="0" name="ortName" type="xs:string"/>
+          <xs:element minOccurs="0" name="land" type="tns:landEnum"/>
+          <xs:element minOccurs="0" name="bundesland" type="tns:bundeslandEnum"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -69,11 +80,11 @@
     <xs:complexContent>
       <xs:extension base="tns:wettervorhersage">
         <xs:sequence>
-          <xs:element name="maxTemperatur" type="xs:float"/>
-          <xs:element name="minTemperatur" type="xs:float"/>
-          <xs:element name="regenwahrscheinlichkeit" type="xs:float"/>
-          <xs:element name="windgeschwindigkeit" type="xs:float"/>
+          <xs:element minOccurs="0" name="minTemperatur" type="xs:float"/>
+          <xs:element minOccurs="0" name="maxTemperatur" type="xs:float"/>
+          <xs:element minOccurs="0" name="windgeschwindigkeit" type="xs:float"/>
           <xs:element minOccurs="0" name="wolkenTyp" type="tns:wolkenTypEnum"/>
+          <xs:element minOccurs="0" name="regenwahrscheinlichkeit" type="xs:float"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -83,48 +94,64 @@
     <xs:complexContent>
       <xs:extension base="tns:abstractEntity">
         <xs:sequence>
-          <xs:element name="avgTemperature" type="xs:float"/>
-          <xs:element minOccurs="0" name="datum" type="xs:dateTime"/>
           <xs:element minOccurs="0" name="ort" type="tns:ort"/>
-          <xs:element name="regenfall" type="xs:float"/>
+          <xs:element minOccurs="0" name="datum" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="avgTemperatur" type="xs:float"/>
+          <xs:element minOccurs="0" name="regenfall" type="xs:float"/>
           <xs:element name="wetterwarnung" type="xs:boolean"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="holeAlleOrte">
+  <xs:complexType name="findeDetailWettervorhersageBeiOrtundDatum">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:wettervorhersage"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="findeDetailWettervorhersageBeiOrtundDatumResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:detailWettervorhersage"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="tageswetterEintragen">
     <xs:sequence/>
   </xs:complexType>
 
-  <xs:complexType name="holeAlleOrteResponse">
+  <xs:complexType name="tageswetterEintragenResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="fuelleWetterDatenbank">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:ort"/>
+      <xs:element minOccurs="0" name="start" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="ende" type="xs:dateTime"/>
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="holeWettervorhersage">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="arg0" type="tns:ort"/>
-      <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="holeWettervorhersageResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:wettervorhersage"/>
-    </xs:sequence>
+  <xs:complexType name="fuelleWetterDatenbankResponse">
+    <xs:sequence/>
   </xs:complexType>
 
   <xs:complexType name="wettervorhersageEintragen">
     <xs:sequence>
-      <xs:element minOccurs="0" name="arg0" type="tns:detailWettervorhersage"/>
+      <xs:element minOccurs="0" name="neuesWetter" type="tns:detailWettervorhersage"/>
     </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="wettervorhersageEintragenResponse">
     <xs:sequence/>
   </xs:complexType>
+
+  <xs:simpleType name="landEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Deutschland"/>
+      <xs:enumeration value="Österreich"/>
+      <xs:enumeration value="Schweiz"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:simpleType name="bundeslandEnum">
     <xs:restriction base="xs:string">
@@ -147,27 +174,36 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="landEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Deutschland"/>
-      <xs:enumeration value="Österreich"/>
-      <xs:enumeration value="Schweiz"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="wolkenTypEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Schaefchenwolke"/>
       <xs:enumeration value="Gewitterwolke"/>
       <xs:enumeration value="Regenwolke"/>
       <xs:enumeration value="Wolkenfrei"/>
+      <xs:enumeration value="Schneewolke"/>
     </xs:restriction>
   </xs:simpleType>
 
 </xs:schema>
   </wsdl:types>
-  <wsdl:message name="holeWettervorhersage">
-    <wsdl:part element="tns:holeWettervorhersage" name="parameters">
+  <wsdl:message name="tageswetterEintragenResponse">
+    <wsdl:part element="tns:tageswetterEintragenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="tageswetterEintragen">
+    <wsdl:part element="tns:tageswetterEintragen" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findeDetailWettervorhersageBeiOrtundDatumResponse">
+    <wsdl:part element="tns:findeDetailWettervorhersageBeiOrtundDatumResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fuelleWetterDatenbank">
+    <wsdl:part element="tns:fuelleWetterDatenbank" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="fuelleWetterDatenbankResponse">
+    <wsdl:part element="tns:fuelleWetterDatenbankResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="holeDetailWettervorhersageResponse">
@@ -178,20 +214,12 @@
     <wsdl:part element="tns:wettervorhersageEintragen" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="holeWettervorhersageResponse">
-    <wsdl:part element="tns:holeWettervorhersageResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="holeAlleOrteResponse">
-    <wsdl:part element="tns:holeAlleOrteResponse" name="parameters">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="holeDetailWettervorhersage">
     <wsdl:part element="tns:holeDetailWettervorhersage" name="parameters">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="holeAlleOrte">
-    <wsdl:part element="tns:holeAlleOrte" name="parameters">
+  <wsdl:message name="findeDetailWettervorhersageBeiOrtundDatum">
+    <wsdl:part element="tns:findeDetailWettervorhersageBeiOrtundDatum" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="wettervorhersageEintragenResponse">
@@ -205,16 +233,22 @@
       <wsdl:output message="tns:holeDetailWettervorhersageResponse" name="holeDetailWettervorhersageResponse">
     </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="holeAlleOrte">
-      <wsdl:input message="tns:holeAlleOrte" name="holeAlleOrte">
+    <wsdl:operation name="findeDetailWettervorhersageBeiOrtundDatum">
+      <wsdl:input message="tns:findeDetailWettervorhersageBeiOrtundDatum" name="findeDetailWettervorhersageBeiOrtundDatum">
     </wsdl:input>
-      <wsdl:output message="tns:holeAlleOrteResponse" name="holeAlleOrteResponse">
+      <wsdl:output message="tns:findeDetailWettervorhersageBeiOrtundDatumResponse" name="findeDetailWettervorhersageBeiOrtundDatumResponse">
     </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="holeWettervorhersage">
-      <wsdl:input message="tns:holeWettervorhersage" name="holeWettervorhersage">
+    <wsdl:operation name="tageswetterEintragen">
+      <wsdl:input message="tns:tageswetterEintragen" name="tageswetterEintragen">
     </wsdl:input>
-      <wsdl:output message="tns:holeWettervorhersageResponse" name="holeWettervorhersageResponse">
+      <wsdl:output message="tns:tageswetterEintragenResponse" name="tageswetterEintragenResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fuelleWetterDatenbank">
+      <wsdl:input message="tns:fuelleWetterDatenbank" name="fuelleWetterDatenbank">
+    </wsdl:input>
+      <wsdl:output message="tns:fuelleWetterDatenbankResponse" name="fuelleWetterDatenbankResponse">
     </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="wettervorhersageEintragen">
@@ -235,21 +269,30 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="holeAlleOrte">
+    <wsdl:operation name="findeDetailWettervorhersageBeiOrtundDatum">
       <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="holeAlleOrte">
+      <wsdl:input name="findeDetailWettervorhersageBeiOrtundDatum">
         <soap:body use="literal"/>
       </wsdl:input>
-      <wsdl:output name="holeAlleOrteResponse">
+      <wsdl:output name="findeDetailWettervorhersageBeiOrtundDatumResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="holeWettervorhersage">
+    <wsdl:operation name="tageswetterEintragen">
       <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="holeWettervorhersage">
+      <wsdl:input name="tageswetterEintragen">
         <soap:body use="literal"/>
       </wsdl:input>
-      <wsdl:output name="holeWettervorhersageResponse">
+      <wsdl:output name="tageswetterEintragenResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fuelleWetterDatenbank">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="fuelleWetterDatenbank">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="fuelleWetterDatenbankResponse">
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>

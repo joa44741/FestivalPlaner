@@ -42,4 +42,18 @@ public class UtilsBean {
         possibleDates.add(cal.getTime());
         return possibleDates;
     }
+
+    public String shortenText(String text) {
+        if (text.length() < 200) {
+            return text;
+        } else {
+            String result = text.substring(0, 200);
+            String remainingText = text.substring(200);
+            int indexOfNextSpace = remainingText.indexOf(" ");
+            if (indexOfNextSpace != -1) {
+                result += remainingText.substring(0, indexOfNextSpace) + " ...";
+            }
+            return result;
+        }
+    }
 }

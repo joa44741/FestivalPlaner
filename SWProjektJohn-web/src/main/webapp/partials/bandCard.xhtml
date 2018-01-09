@@ -7,12 +7,12 @@
         <ui:composition>
             <div class="card">
                 <div class="card-header">
-                    <h5>#{band.name}</h5>
+                    <h:commandLink action="#{bandDetailsBean.showBandDetails(band.id)}"> <h5>#{band.name}</h5></h:commandLink>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
-                            <h:outputText value="#{band.beschreibung}"/>
+                            <h:outputText value="#{utilsBean.shortenText(band.beschreibung)}"/>
                         </div>
                         <div class="col-12" style="margin-bottom: 10px">
                             <h:commandLink class="font-weight-bold" action="#{bandDetailsBean.showBandDetails(band.id)}">zeige Details</h:commandLink>
