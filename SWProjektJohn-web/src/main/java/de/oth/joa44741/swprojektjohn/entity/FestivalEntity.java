@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVALS_BY_STATUS, query = "SELECT f FROM FestivalEntity f where f.status IN :status")
     ,
-    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVALS_IN_FUTURE_BY_STATUS, query = "SELECT f FROM FestivalEntity f where f.status IN :status and f.datumVon >= CURRENT_DATE ORDER BY f.datumVon")
+    @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVALS_IN_FUTURE_BY_STATUS, query = "SELECT f FROM FestivalEntity f where f.status IN :status and (f.datumVon >= CURRENT_DATE or f.datumVon < CURRENT_DATE and f.datumBis >= CURRENT_DATE) ORDER BY f.datumVon")
     ,
     @NamedQuery(name = FestivalEntity.QUERY_NAME_FIND_FESTIVAL_BY_NAME, query = "SELECT f FROM FestivalEntity f where f.name = :name")
     ,
