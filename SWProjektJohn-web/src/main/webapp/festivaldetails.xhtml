@@ -53,15 +53,38 @@
 
                 </div>
                 <div class="col-6">
-                    <h3>Wetter</h3>
-                    am <h:outputText value="#{festivaldetailsBean.festival.datumVon}">
-                        <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
-                    </h:outputText>:<br/>
-                    <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto != null}">
-                        #{festivaldetailsBean.festival.wetterDto.avgTemperatur}&#x2103;<br/>
-                        #{festivaldetailsBean.festival.wetterDto.wolkenTyp}<br/>
-                        Niederschlagswahrscheinlichkeit: #{festivaldetailsBean.festival.wetterDto.regenwahrscheinlichkeit}%
-                    </h:outputLabel>
+                    <h3>Wetter am <h:outputText value="#{festivaldetailsBean.festival.datumVon}">
+                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                        </h:outputText></h3>
+                    <h:panelGroup rendered="#{festivaldetailsBean.festival.wetterDto != null}">
+                        <div class="row">
+                            <div class="col-1">
+                                <i class="fa fa-thermometer-three-quarters" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Temperatur"></i> <br/>
+                                <i class="fa fa-tint" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Regenwahrscheinlichkeit"></i> <br/>
+                                <i class="wi wi-strong-wind" data-toggle="tooltip" data-placement="bottom" title="Windgeschwindigkeit"></i> <br/>
+                                <i class="wi wi-storm-warning" data-toggle="tooltip" data-placement="bottom" title="Wetterwarnung"></i> 
+                            </div>
+                            <div class="col-4">
+                                Temperatur:<br/>
+                                Regenwahrscheinlichkeit:<br/>
+                                Windgeschwindigkeit:<br/>
+                                Wetterwarnung:
+                            </div>
+                            <div class="col-2">
+                                 #{festivaldetailsBean.festival.wetterDto.avgTemperatur}&#x2103;<br/>
+                                #{festivaldetailsBean.festival.wetterDto.regenwahrscheinlichkeit}% <br/>
+                                #{festivaldetailsBean.festival.wetterDto.windgeschwindigkeit} m/s <br/>
+                                #{festivaldetailsBean.festival.wetterDto.wetterWarnung ? 'Ja' : 'Nein'} 
+                            </div>
+                            <div class="col-5 text-center" style="font-size: 100px">
+                                <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto.wolkenTyp == 'Schneewolke'}"><i class="wi wi-snow"></i></h:outputLabel>
+                                <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto.wolkenTyp == 'Schaefchenwolke'}"><i class="wi wi-cloud"></i></h:outputLabel>
+                                <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto.wolkenTyp == 'Regenwolke'}"><i class="wi wi-rain-mix"></i></h:outputLabel>
+                                <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto.wolkenTyp == 'Wolkenfrei'}"><i class="wi wi-day-sunny"></i></h:outputLabel>
+                                <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto.wolkenTyp == 'Gewitterwolke'}"><i class="wi wi-day-storm-showers"></i></h:outputLabel>
+                            </div>
+                        </div>
+                    </h:panelGroup>
                     <h:outputLabel rendered="#{festivaldetailsBean.festival.wetterDto == null}">
                         derzeit keine Wetterdaten verf&uuml;gbar...
                     </h:outputLabel>

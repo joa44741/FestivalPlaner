@@ -49,7 +49,7 @@ public class UtilsBean {
         } else {
             String result = text.substring(0, 200);
             String remainingText = text.substring(200);
-            int indexOfNextSpace = remainingText.indexOf(" ");
+            int indexOfNextSpace = remainingText.indexOf(' ');
             if (indexOfNextSpace != -1) {
                 result += remainingText.substring(0, indexOfNextSpace) + " ...";
             }

@@ -21,12 +21,9 @@ import javax.servlet.http.HttpSession;
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"*.xhtml"})
 public class AuthorizationFilter implements Filter {
 
-    public AuthorizationFilter() {
-    }
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        // do nothing here
     }
 
     @Override
@@ -55,6 +52,6 @@ public class AuthorizationFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        // do nothing here
     }
 }

@@ -10,6 +10,10 @@ import java.util.Date;
  */
 public class LineupDateUtils {
 
+    private LineupDateUtils() {
+        // hide implicit public constructor
+    }
+
     public static final Comparator<? super LineupDateEntity> LINEUP_DATE_TIME_COMPARATOR = (l1, l2) -> {
         final int tagCompareResult = getDateCompareResult(l1.getTag(), l2.getTag());
         if (tagCompareResult == 0) {
@@ -19,9 +23,7 @@ public class LineupDateUtils {
         }
     };
 
-    public static final Comparator<? super Date> NULL_SAFE_DATE_COMPARATOR = (l1, l2) -> {
-        return getDateCompareResult(l1, l2);
-    };
+    public static final Comparator<? super Date> NULL_SAFE_DATE_COMPARATOR = (l1, l2) -> getDateCompareResult(l1, l2);
 
     private static int getDateCompareResult(Date tag1, Date tag2) {
         if (tag1 == null && tag2 == null) {

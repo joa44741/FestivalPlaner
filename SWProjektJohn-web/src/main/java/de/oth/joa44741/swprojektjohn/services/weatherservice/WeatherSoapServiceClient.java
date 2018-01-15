@@ -59,7 +59,6 @@ public class WeatherSoapServiceClient {
 
     private WetterDto convertDetailWettervorhersageToWetterDto(DetailWettervorhersage detailWettervorhersage) {
         final WetterDto wetterDto = new WetterDto();
-        wetterDto.ort = detailWettervorhersage.ort;
         wetterDto.datum = detailWettervorhersage.datum.toGregorianCalendar().getTime();
         wetterDto.avgTemperatur = detailWettervorhersage.avgTemperatur;
         wetterDto.regenfall = detailWettervorhersage.regenfall;
@@ -101,19 +100,8 @@ public class WeatherSoapServiceClient {
         return result;
     }
 
-    private WetterDto createMockDto(Ort ort, Date date) {
-        final WetterDto weatherDto = new WetterDto();
-        weatherDto.ort = ort;
-        weatherDto.datum = date;
-        weatherDto.avgTemperatur = 14.6f;
-        weatherDto.wolkenTyp = "wolkig";
-        weatherDto.regenwahrscheinlichkeit = 0.35f;
-        return weatherDto;
-    }
-
     public static class WetterDto {
 
-        private Ort ort;
         private Date datum;
         private Float avgTemperatur;
         private Float regenfall;

@@ -12,6 +12,10 @@ import javax.servlet.http.HttpSession;
  */
 public class SessionUtils {
 
+    private SessionUtils() {
+        // hide implict public constructor
+    }
+
     public static HttpSession getSession() {
         return (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);

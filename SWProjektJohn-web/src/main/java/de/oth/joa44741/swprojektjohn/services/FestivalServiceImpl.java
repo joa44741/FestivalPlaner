@@ -208,7 +208,6 @@ public class FestivalServiceImpl implements FestivalService {
         final Optional<BuehneEntity> optBuehne = Optional.ofNullable(optLineupDate.get().getBuehne());
         optBuehne.ifPresent(b -> b.removeLineupDate(optLineupDate.get()));
         festival.removeLineupDate(optLineupDate.get());
-//                return updateFestival(festival);
         return festival;
     }
 
