@@ -5,14 +5,14 @@ import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.jsf.LoginBean;
+import de.oth.joa44741.swprojektjohn.jsf.form.validator.FestivalNameValidatorQualifier;
+import de.oth.joa44741.swprojektjohn.jsf.form.validator.VonBisDatumValidatorQualifier;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
@@ -24,7 +24,7 @@ import javax.inject.Named;
  */
 @Named("addFestivalFormBean")
 @SessionScoped
-public class AddFestivalMainDataFormBean extends FestivaMainDatalFormBeanBase {
+public class AddFestivalMainDataFormBean extends FestivaMainDataFormBeanBase {
 
     @Inject
     private CampingAndTicketFormBean campingAndTicketFormBean;
@@ -66,12 +66,7 @@ public class AddFestivalMainDataFormBean extends FestivaMainDatalFormBeanBase {
     }
 
     public void validateFestivalName(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        final String festivalName = (String) value;
-        festivalService.findFestivalByName(festivalName).ifPresent(festival -> {
-            final String errorMessage = "Das Festival mit dem Namen " + festivalName + " exisitiert bereits. Das Festival hat den Status " + festival.getStatus() + " und muss gegebenfalls erst vom Administrator gelöscht werden.";
-            final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, errorMessage, null);
-            throw new ValidatorException(msg);
-        });
+        formValidatorFactory.getValidator(FestivalNameValidatorQualifier.class).validate(context, component, value);
     }
 
     public List<BundeslandEnum> getBundeslaenderAsList() {
@@ -100,13 +95,7 @@ public class AddFestivalMainDataFormBean extends FestivaMainDatalFormBeanBase {
     }
 
     public void validateVonBisDatum(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        final UIInput vonDatumComponent = (UIInput) component.getAttributes().get("datumVonComponent");
-        final Date vonDatum = (Date) vonDatumComponent.getValue();
-        final Date bisDatum = (Date) value;
-        if (bisDatum.before(vonDatum)) {
-            final String msg = "Von Datum muss zeitlich vor dem Bis Datum liegen";
-            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg));
-        }
+        formValidatorFactory.getValidator(VonBisDatumValidatorQualifier.class).validate(context, component, value);
     }
 
 }

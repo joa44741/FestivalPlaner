@@ -19,7 +19,10 @@ public class LoginBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    // user: studentadmin
     private static final String HASHED_USER = "$2a$10$pMoeuG84oAVQw1cO0vOg/u8TVPLPJfHBE7a02n8PZpG7A6MWIkbLO";
+
+    // password: SW=super
     private static final String HASHED_PASSWORD = "$2a$10$lDg24xEjCht.U7W6gttbkeBSDl5k9npziwL3VmbvLIX2qLzau5PIW";
 
     private boolean isAdmin(String username, String password) {
@@ -52,7 +55,7 @@ public class LoginBean implements Serializable {
     public String validateIsAdmin() {
         boolean isAdmin = isAdmin(user, password);
         if (isAdmin) {
-            HttpSession session = SessionUtils.getSession();
+            final HttpSession session = SessionUtils.getSession();
             session.setAttribute("adminLoggedIn", true);
             this.user = null;
             this.password = null;
@@ -72,7 +75,7 @@ public class LoginBean implements Serializable {
     }
 
     public String logout() {
-        HttpSession session = SessionUtils.getSession();
+        final HttpSession session = SessionUtils.getSession();
         session.invalidate();
         return PageNames.LOGIN_DATA;
     }

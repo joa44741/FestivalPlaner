@@ -20,7 +20,7 @@ import javax.inject.Named;
  */
 @Named("updateFestivalFormBean")
 @SessionScoped
-public class UpdateFestivalMainDataFormBean extends FestivaMainDatalFormBeanBase {
+public class UpdateFestivalMainDataFormBean extends FestivaMainDataFormBeanBase {
 
     private static final long serialVersionUID = 1L;
 

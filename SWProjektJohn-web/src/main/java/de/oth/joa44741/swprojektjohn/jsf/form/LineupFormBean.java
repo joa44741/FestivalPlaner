@@ -70,8 +70,8 @@ public class LineupFormBean implements Serializable {
     public String persistLineupDate() {
         final BandEntity band = bandService.retrieveBandById(selectedBandId);
         final Optional<BuehneEntity> optBuehne = festival.getBuehnen().stream().filter(b -> b.getId().equals(selectedBuehnenId)).findFirst();
-        transientLineupDate.setBand(band);
         optBuehne.ifPresent(b -> transientLineupDate.setBuehne(b));
+        transientLineupDate.setBand(band);
         festival = festivalService.addLineupDate(festival.getId(), transientLineupDate);
         final FacesMessage msg = new FacesMessage("Der Lineup Eintrag wurde gespeichert");
         FacesContext.getCurrentInstance().addMessage(null, msg);
