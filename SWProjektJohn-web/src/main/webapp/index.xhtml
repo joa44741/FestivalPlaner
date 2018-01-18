@@ -136,7 +136,7 @@
                                             Integration mit Partnerprojekten: Meine Anwendung nutzt den Wetterdienst von Maximilian Fries. Der EventEvaluator von Markus Biersack nutzt meinen Webservice.
                                         </li>
                                     </ul>
-                                    Zus&auml;tzlich habe ich noch einen Interceptor (<code>LoggingInterceptor</code>) verwendet, um automatisch die aufgerufenen Methode, die &uuml;bergebenen Parameter, die R&uuml;ckgabewerte und die Dauer des Aufrufs zu protokollieren.<br/>
+                                    Zus&auml;tzlich habe ich noch einen Interceptor (<code>LoggingInterceptor</code>) verwendet, um automatisch die aufgerufenen Methoden, die &uuml;bergebenen Parameter, die R&uuml;ckgabewerte und die Dauer der Aufrufe zu protokollieren. Das Logging kann durch Verwendung der Annotation <code>@DoLogging</code> aktiviert werden.<br/>
                                     Mittels CDI-Events (<code>UpdateEvent, RemoveEvent</code>) aktualisiere ich beispielsweise das Formular zum Eintragen eines neuen Lineups, damit neu hinzugef&uuml;gte Bands sofort ausw&auml;hlbar sind.
                                     
                                 </p>
