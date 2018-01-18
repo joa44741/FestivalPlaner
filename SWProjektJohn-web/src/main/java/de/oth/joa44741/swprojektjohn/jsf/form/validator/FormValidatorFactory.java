@@ -13,6 +13,12 @@ import javax.inject.Inject;
 @RequestScoped
 public class FormValidatorFactory {
 
+    public enum ValidatorType {
+        VON_BIS_DATUM_VALIDATOR,
+        FESTIVAL_NAME_VALIDATOR,
+        VERKAUFTE_TICKETS_AND_KONTINGENT_VALIDATOR;
+    }
+
     @Inject
     @VonBisDatumValidatorQualifier
     private FormValidator vonBisDatumFormValidator;
@@ -25,17 +31,17 @@ public class FormValidatorFactory {
     @VerkaufteTicketsAndKontingentValidatorQualifier
     private FormValidator verkaufteTicketsAndKontingentFormValidator;
 
-    private Map<Class, FormValidator> qualifierToValidatorMap;
+    private Map<ValidatorType, FormValidator> qualifierToValidatorMap;
 
     @PostConstruct
     private void initFactoryEntries() {
         qualifierToValidatorMap = new HashMap<>();
-        qualifierToValidatorMap.put(VonBisDatumValidatorQualifier.class, vonBisDatumFormValidator);
-        qualifierToValidatorMap.put(FestivalNameValidatorQualifier.class, festivalNameFormValidator);
-        qualifierToValidatorMap.put(VerkaufteTicketsAndKontingentValidatorQualifier.class, verkaufteTicketsAndKontingentFormValidator);
+        qualifierToValidatorMap.put(ValidatorType.VON_BIS_DATUM_VALIDATOR, vonBisDatumFormValidator);
+        qualifierToValidatorMap.put(ValidatorType.FESTIVAL_NAME_VALIDATOR, festivalNameFormValidator);
+        qualifierToValidatorMap.put(ValidatorType.VERKAUFTE_TICKETS_AND_KONTINGENT_VALIDATOR, verkaufteTicketsAndKontingentFormValidator);
     }
 
-    public FormValidator getValidator(Class validatorQualifierClass) {
-        return qualifierToValidatorMap.get(validatorQualifierClass);
+    public FormValidator getValidator(ValidatorType validatorType) {
+        return qualifierToValidatorMap.get(validatorType);
     }
 }

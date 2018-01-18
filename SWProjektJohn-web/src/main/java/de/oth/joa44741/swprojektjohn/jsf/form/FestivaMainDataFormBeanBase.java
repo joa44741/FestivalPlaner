@@ -2,7 +2,7 @@ package de.oth.joa44741.swprojektjohn.jsf.form;
 
 import de.oth.joa44741.swprojektjohn.core.enums.ZusatzeigenschaftEnum;
 import de.oth.joa44741.swprojektjohn.jsf.form.validator.FormValidatorFactory;
-import de.oth.joa44741.swprojektjohn.jsf.form.validator.VerkaufteTicketsAndKontingentValidatorQualifier;
+import static de.oth.joa44741.swprojektjohn.jsf.form.validator.FormValidatorFactory.ValidatorType.VERKAUFTE_TICKETS_AND_KONTINGENT_VALIDATOR;
 import de.oth.joa44741.swprojektjohn.services.FestivalService;
 import de.oth.joa44741.swprojektjohn.services.LocationService;
 import java.io.Serializable;
@@ -55,7 +55,7 @@ public class FestivaMainDataFormBeanBase implements Serializable {
     }
 
     public void validateVerkaufteTicketsAndKontingent(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        formValidatorFactory.getValidator(VerkaufteTicketsAndKontingentValidatorQualifier.class).validate(context, component, value);
+        formValidatorFactory.getValidator(VERKAUFTE_TICKETS_AND_KONTINGENT_VALIDATOR).validate(context, component, value);
     }
 
 }

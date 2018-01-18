@@ -5,8 +5,8 @@ import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
 import de.oth.joa44741.swprojektjohn.entity.FestivalEntity;
 import de.oth.joa44741.swprojektjohn.entity.LocationEntity;
 import de.oth.joa44741.swprojektjohn.jsf.LoginBean;
-import de.oth.joa44741.swprojektjohn.jsf.form.validator.FestivalNameValidatorQualifier;
-import de.oth.joa44741.swprojektjohn.jsf.form.validator.VonBisDatumValidatorQualifier;
+import static de.oth.joa44741.swprojektjohn.jsf.form.validator.FormValidatorFactory.ValidatorType.FESTIVAL_NAME_VALIDATOR;
+import static de.oth.joa44741.swprojektjohn.jsf.form.validator.FormValidatorFactory.ValidatorType.VON_BIS_DATUM_VALIDATOR;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -66,7 +66,7 @@ public class AddFestivalMainDataFormBean extends FestivaMainDataFormBeanBase {
     }
 
     public void validateFestivalName(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        formValidatorFactory.getValidator(FestivalNameValidatorQualifier.class).validate(context, component, value);
+        formValidatorFactory.getValidator(FESTIVAL_NAME_VALIDATOR).validate(context, component, value);
     }
 
     public List<BundeslandEnum> getBundeslaenderAsList() {
@@ -95,7 +95,7 @@ public class AddFestivalMainDataFormBean extends FestivaMainDataFormBeanBase {
     }
 
     public void validateVonBisDatum(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        formValidatorFactory.getValidator(VonBisDatumValidatorQualifier.class).validate(context, component, value);
+        formValidatorFactory.getValidator(VON_BIS_DATUM_VALIDATOR).validate(context, component, value);
     }
 
 }

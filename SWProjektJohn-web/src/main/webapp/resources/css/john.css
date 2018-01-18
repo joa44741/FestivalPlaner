@@ -5,7 +5,7 @@ and open the template in the editor.
 */
 /* 
     Created on : 12.10.2017, 14:33:31
-    Author     : Johnny
+    Author     : Andreas John
 */
 
 /* #D68910 = orange background */
@@ -37,7 +37,7 @@ header.container, nav.container {
     color: white;
 } 
 
-h3{
+h3, .btn-primary, .btn-info{
     margin-bottom: 20px;
 }
 
@@ -47,7 +47,6 @@ h3{
 
 .btn-primary{
     border-color: #D68910;
-    margin-bottom: 20px;
 }
 
 .buttonGroupWithMargin .btn-primary{
@@ -65,7 +64,7 @@ h3{
     border-color: #D68910;
 }
 
-.btn-primary:focus, .btn-primary.focus {
+.btn-primary:focus, .btn-primary.focus, .btn-info:focus, .btn-info.focus {
     box-shadow: none;
 }
 
@@ -172,4 +171,20 @@ nav div a.active{
 
 .bandLinkIcon{
     margin-right: 20px;
+}
+
+.text-toggle[aria-expanded=false] .text-expanded {
+  display: none;
+}
+.text-toggle[aria-expanded=true] .text-collapsed {
+  display: none;
+}
+
+#informationDiv .card-body{
+    color: white;
+    background-color: #333;
+}
+
+#informationDiv h3{
+    color: #D68910;
 }
