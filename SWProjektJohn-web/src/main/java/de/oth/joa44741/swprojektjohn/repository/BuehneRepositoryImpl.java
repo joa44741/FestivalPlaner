@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.oth.joa44741.swprojektjohn.repository;
 
 import de.oth.joa44741.swprojektjohn.entity.BuehneEntity;
@@ -10,6 +5,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
 /**
+ * This class only needs the 'extends' keyword with the specific type
+ * 'BuehneEntity' for the generic super class. There are no special cases for
+ * this repository class that's why the body is empty.
  *
  * @author Andreas John
  */

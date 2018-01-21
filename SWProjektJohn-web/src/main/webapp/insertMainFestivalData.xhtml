@@ -64,7 +64,7 @@
                                         <h:outputLabel class="col-form-label control-label" for="ticketkontingent">Ticketkontingent</h:outputLabel>                           
                                         <h:inputText class="form-control" binding="#{ticketkontingentComponentAddForm}"  id="ticketkontingent" value="#{addFestivalFormBean.transientFestival.ticketKontingent}">
                                             <f:passThroughAttribute name="type" value="number"/>
-                                            <f:convertNumber integerOnly="true" type="number" />
+                                            <f:convertNumber integerOnly="true" type="number" groupingUsed="false"/>
                                             <!-- disable default validator because own messages are written in validateVerkaufteTicketsAndKontingent() method-->
                                             <f:validateBean disabled="true"/>
                                         </h:inputText>
@@ -74,7 +74,7 @@
                                         <h:outputLabel class="col-form-label control-label" for="verkaufteTickets">Verkaufte Tickets</h:outputLabel>
                                         <h:inputText class="form-control" id="verkaufteTickets" value="#{addFestivalFormBean.transientFestival.verkaufteTickets}" validator="#{addFestivalFormBean.validateVerkaufteTicketsAndKontingent}">
                                             <f:passThroughAttribute name="type" value="number"/>
-                                            <f:convertNumber integerOnly="true" type="number" />
+                                            <f:convertNumber integerOnly="true" type="number" groupingUsed="false"/>
                                             <!-- disable default validator because own messages are written in validateVerkaufteTicketsAndKontingent() method-->
                                             <f:validateBean disabled="true"/>
                                             <f:attribute name="ticketkontingentComponent" value="#{ticketkontingentComponentAddForm}" />

@@ -13,7 +13,7 @@ import javax.persistence.Query;
 /**
  *
  * @author Andreas John
- * @param <T>
+ * @param <T> the entity for which the CRUD methods should be called
  */
 public abstract class RepositoryBaseImpl<T extends AbstractLongEntity> implements Repository<T> {
 

@@ -44,11 +44,12 @@ public class UtilsBean {
     }
 
     public String shortenText(String text) {
-        if (text.length() < 200) {
+        final int maxTextLength = 200;
+        if (text.length() < maxTextLength) {
             return text;
         } else {
-            String result = text.substring(0, 200);
-            String remainingText = text.substring(200);
+            String result = text.substring(0, maxTextLength);
+            final String remainingText = text.substring(maxTextLength);
             int indexOfNextSpace = remainingText.indexOf(' ');
             if (indexOfNextSpace != -1) {
                 result += remainingText.substring(0, indexOfNextSpace) + " ...";

@@ -31,6 +31,14 @@ import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 
 /**
+ * This is the only class that is accessed by other applications via SOAP
+ * webservices
+ *
+ * There are only 2 methods that can be called from outside:
+ *
+ * - findFreigegebeneFestivals()
+ *
+ * - retrieveFestivalDtoByIdIncludingDetails()
  *
  * @author Andreas John
  */
@@ -62,12 +70,34 @@ public class FestivalServiceImpl implements FestivalService {
         return findFestivalsByStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
     }
 
+    /**
+     * This method can be called from another application via a SOAP webservice
+     * call. It searches for festivals with status 'FREIGEGEBEN' or
+     * 'LOESCHUNG_ANGEFORDERT'. The returned festivals haven't got all data. For
+     * example the lineup isn't included because it isn't always needed and
+     * would cause a higher data traffic. In order to see detailed data of a
+     * festival the method retrieveFestivalDtoByIdIncludingDetails has to be
+     * called.
+     *
+     * @return a list of all festivals that have been approved by the
+     * administrator and have not been fully deleted yet
+     */
     @Override
     public List<FestivalEntity> findFreigegebeneFestivals() {
         final List<FestivalEntity> festivals = findFestivalsByStatus(StatusEnum.FREIGEGEBEN, StatusEnum.LOESCHUNG_ANGEFORDERT);
         return festivals;
     }
 
+    /**
+     * This method returns all available data of a festival, for example lineup,
+     * band details and ticket variations. It also calls the webservice of the
+     * Wetterdienst application provided by Max Fries and adds this data to the
+     * result.
+     *
+     * @param festivalId - the id of the festival
+     * @return a data transfer object containing all the detail information of a
+     * festival
+     */
     @Override
     public FestivalWithDetailsDto retrieveFestivalDtoByIdIncludingDetails(@WebParam(name = "festivalId") Long festivalId) {
         final FestivalEntity festival = retrieveFestivalByIdIncludingDetails(festivalId);
@@ -199,6 +229,18 @@ public class FestivalServiceImpl implements FestivalService {
         return updateFestival(festival);
     }
 
+    /**
+     * This method is declared as transactional because otherwise removing
+     * didn't work. The problem was that after calling the remove method via the
+     * repository class, the entity wasn't deleted in the database. I think the
+     * bidirectional binding between LineupDateEntity and BuehneEntity was a
+     * problem here, maybe in addition to the second relation in the
+     * FestivalEntity.
+     *
+     * @param festivalId - the id of the related festival
+     * @param lineupDateId - the id of the festival that should be deleted
+     * @return the updated festival without the lineup entry
+     */
     @WebMethod(exclude = true)
     @Override
     @Transactional
@@ -221,6 +263,15 @@ public class FestivalServiceImpl implements FestivalService {
         return updateFestival(festival);
     }
 
+    /**
+     * The method is transactional because of the same problem that is described
+     * in the JavaDoc of the removeLineupDate method. The bidirectional binding
+     * caused some problems.
+     *
+     * @param festivalId - the id of the related festival
+     * @param buehnenId - the id of the stage (Buehne) that should be deleted
+     * @return the updated festival without the buehne entry
+     */
     @WebMethod(exclude = true)
     @Override
     @Transactional

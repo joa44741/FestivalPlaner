@@ -74,7 +74,7 @@
                                         <h:selectOneMenu id="selectedTag" styleClass="form-control" value="#{campingAndTicketFormBean.transientTicketArt.tag}" disabled="#{campingAndTicketFormBean.transientTicketArt.tagArt != 'TAGESTICKET'}">
                                             <f:selectItems value="#{utilsBean.getDatesInRangeOfFromAndToDate(campingAndTicketFormBean.persistedFestival.datumVon, campingAndTicketFormBean.persistedFestival.datumBis)}" var="tag"
                                                            itemLabel="#{utilsBean.getDateAsString(tag)}" itemValue="#{tag}" />
-                                            <f:convertDateTime type="date" dateStyle="medium" timeZone="Europe/Berlin"/>
+                                            <f:converter converterId="dateConverter" />
                                         </h:selectOneMenu>
                                     </div>
                                     <div class="col-3 form-group required">

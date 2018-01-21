@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.oth.joa44741.swprojektjohn.services;
 
 import de.oth.joa44741.swprojektjohn.core.enums.StatusEnum;
@@ -71,6 +66,13 @@ public class BandServiceImpl implements BandService {
         return bandRepository.persistEntity(band);
     }
 
+    /**
+     * The method is transactional because of the same problem that is described
+     * in the JavaDoc of the removeLineupDate method in the FestivalServiceImpl
+     * class. The bidirectional binding caused some problems.
+     *
+     * @param id - the id of the band that should be deleted
+     */
     @Override
     @Transactional
     public void removeBand(Long id) {

@@ -11,6 +11,11 @@ import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
 /**
+ * This class needs the 'extends' keyword with the specific type
+ * 'FestivalEntity' for the generic super class. There is only one special case
+ * when persisting an entity. That's why this method overrides the method of the
+ * super class. The location can already exist therefore it has to be merged to
+ * get managed by the entity manager.
  *
  * @author Andreas John
  */

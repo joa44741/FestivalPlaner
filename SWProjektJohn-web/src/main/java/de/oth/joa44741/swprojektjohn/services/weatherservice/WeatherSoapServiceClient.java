@@ -23,6 +23,10 @@ public class WeatherSoapServiceClient {
     @Inject
     private transient Logger logger;
 
+    /**
+     * maps the BundeslandEnum of the Wetterdienst webservice to the internal
+     * BundeslandEnum
+     */
     private static final Map<de.oth.joa44741.swprojektjohn.core.enums.BundeslandEnum, BundeslandEnum> BUNDESLAND_MAPPING = new HashMap();
 
     static {
@@ -54,7 +58,6 @@ public class WeatherSoapServiceClient {
         } else {
             return Optional.empty();
         }
-
     }
 
     private WetterDto convertDetailWettervorhersageToWetterDto(DetailWettervorhersage detailWettervorhersage) {
@@ -85,19 +88,28 @@ public class WeatherSoapServiceClient {
     private DetailWettervorhersage doRetrieveWetterDto(Date date, LocationEntity location) throws Exception {
         final WetterServiceService service = new WetterServiceService();
         final WetterService port = service.getWetterServicePort();
+        final RegistrierterNutzer regNutzer = createRegistrierterNutzer();
+        final Ort ort = createOrt(location);
+        final GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+        final DetailWettervorhersage result = port.holeDetailWettervorhersage(regNutzer, ort, xmlCal);
+        return result;
+    }
+
+    private RegistrierterNutzer createRegistrierterNutzer() {
         final RegistrierterNutzer regNutzer = new RegistrierterNutzer();
         regNutzer.setNutzername("Andi");
         regNutzer.setPasswort("John");
+        return regNutzer;
+    }
+
+    private Ort createOrt(LocationEntity location) {
         final Ort ort = new Ort();
         ort.setBundesland(BUNDESLAND_MAPPING.get(location.getBundesland()));
         ort.setLand(LandEnum.DEUTSCHLAND);
         ort.setOrtName(location.getOrt());
-        final GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(date);
-        final XMLGregorianCalendar xmlCal = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
-
-        final DetailWettervorhersage result = port.holeDetailWettervorhersage(regNutzer, ort, xmlCal);
-        return result;
+        return ort;
     }
 
     public static class WetterDto {

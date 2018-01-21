@@ -106,10 +106,15 @@ public class UpdateFestivalMainDataFormBean extends FestivaMainDataFormBeanBase 
 
     public String setStatusOfFestivalToLoeschungAngefordert() {
         final FestivalEntity festivalToDelete = this.existingFestivals.stream().filter(f -> f.getId().equals(selectedFestivalId)).findFirst().get();
-        festivalToDelete.setStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
-        festivalService.updateFestival(festivalToDelete);
-        final FacesMessage msg = new FacesMessage("Löschung für Festival " + festivalToDelete.getName() + " wurde beantragt");
-        FacesContext.getCurrentInstance().addMessage("updateFormular", msg);
+        if (festivalToDelete.getStatus() == StatusEnum.ERSTELLT) {
+            final FacesMessage msg = new FacesMessage("Das Festival " + festivalToDelete.getName() + " ist noch nicht freigegeben worden.");
+            FacesContext.getCurrentInstance().addMessage("updateFormular", msg);
+        } else {
+            festivalToDelete.setStatus(StatusEnum.LOESCHUNG_ANGEFORDERT);
+            festivalService.updateFestival(festivalToDelete);
+            final FacesMessage msg = new FacesMessage("Löschung für Festival " + festivalToDelete.getName() + " wurde beantragt");
+            FacesContext.getCurrentInstance().addMessage("updateFormular", msg);
+        }
         return PageNames.INDEX;
     }
 }
